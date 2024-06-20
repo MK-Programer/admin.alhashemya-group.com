@@ -1,21 +1,21 @@
-@extends('layouts.master-without-nav')
 
-@section('title')
-@lang('translation.Login')
-@endsection
 
-@section('css')
+<?php $__env->startSection('title'); ?>
+<?php echo app('translator')->get('translation.Login'); ?>
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('css'); ?>
 <!-- owl.carousel css -->
-    <link rel="stylesheet" href="{{ URL::asset('/build/libs/owl.carousel/assets/owl.carousel.min.css') }}">
-    <link rel="stylesheet" href="{{ URL::asset('/build/libs/owl.carousel/assets/owl.theme.default.min.css') }}">
-@endsection
+    <link rel="stylesheet" href="<?php echo e(URL::asset('/build/libs/owl.carousel/assets/owl.carousel.min.css')); ?>">
+    <link rel="stylesheet" href="<?php echo e(URL::asset('/build/libs/owl.carousel/assets/owl.theme.default.min.css')); ?>">
+<?php $__env->stopSection(); ?>
 
-@section('body')
+<?php $__env->startSection('body'); ?>
 
 <body class="auth-body-bg">
-    @endsection
+    <?php $__env->stopSection(); ?>
 
-    @section('content')
+    <?php $__env->startSection('content'); ?>
 
     <div>
         <div class="container-fluid p-0">
@@ -85,13 +85,13 @@
 
                             <div class="d-flex flex-column h-100">
                                 <div class="mb-4 mb-md-5">
-                                    {{-- <a href="index" class="d-block auth-logo"> --}}
+                                    
                                         <h5 style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif">Al-Hashemya Group</h5>
                                         
-                                        {{-- <img src="{{ URL::asset('/build/images/elhashemya-group-logo.png') }}" alt="" height="100" class="auth-logo-dark"> --}}
-                                         {{-- <img src="{{ URL::asset('/build/images/logo-dark.png') }}" alt="" height="18" class="auth-logo-dark"> --}}
-                                        {{-- <img src="{{ URL::asset('/build/images/logo-light.png') }}" alt="" height="18" class="auth-logo-light"> --}}
-                                    {{-- </a> --}}
+                                        
+                                         
+                                        
+                                    
                                 </div>
                                 <div class="my-auto">
 
@@ -100,47 +100,83 @@
                                         <p class="text-muted">Sign in to continue to Al-Hashemya Group.</p>
                                     </div>
 
-                                    @if (session()->get('danger'))
+                                    <?php if(session()->get('danger')): ?>
                                         <div class="alert alert-danger">
-                                            {{ session()->get('danger') }}
+                                            <?php echo e(session()->get('danger')); ?>
+
                                         </div>
-                                    @endif
+                                    <?php endif; ?>
                                     
                                     <div class="mt-4">
-                                        <form class="form-horizontal" method="POST" action="{{ route('login') }}">
-                                            @csrf
+                                        <form class="form-horizontal" method="POST" action="<?php echo e(route('login')); ?>">
+                                            <?php echo csrf_field(); ?>
                                             <div class="mb-3">
                                                 <label for="username" class="form-label">Email</label>
-                                                <input name="email" type="email" class="form-control @error('email') is-invalid @enderror" value="{{ old('email', 'admin@themesbrand.com') }}" id="username" placeholder="Enter Email" autocomplete="email" autofocus>
-                                                @error('email')
+                                                <input name="email" type="email" class="form-control <?php $__errorArgs = ['email'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" value="<?php echo e(old('email', 'admin@themesbrand.com')); ?>" id="username" placeholder="Enter Email" autocomplete="email" autofocus>
+                                                <?php $__errorArgs = ['email'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
                                                 <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
+                                                    <strong><?php echo e($message); ?></strong>
                                                 </span>
-                                                @enderror
+                                                <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                                             </div>
 
                                             <div class="mb-3">
                                                 <label class="form-label">Password</label>
-                                                <div class="input-group auth-pass-inputgroup @error('password') is-invalid @enderror">
-                                                    <input type="password" name="password" class="form-control  @error('password') is-invalid @enderror" id="userpassword" value="123456" placeholder="Enter password" aria-label="Password" aria-describedby="password-addon">
+                                                <div class="input-group auth-pass-inputgroup <?php $__errorArgs = ['password'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>">
+                                                    <input type="password" name="password" class="form-control  <?php $__errorArgs = ['password'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" id="userpassword" value="123456" placeholder="Enter password" aria-label="Password" aria-describedby="password-addon">
                                                     <button class="btn btn-light " type="button" id="password-addon"><i class="mdi mdi-eye-outline"></i></button>
-                                                    @error('password')
+                                                    <?php $__errorArgs = ['password'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
                                                     <span class="invalid-feedback" role="alert">
-                                                        <strong>{{ $message }}</strong>
+                                                        <strong><?php echo e($message); ?></strong>
                                                     </span>
-                                                    @enderror
+                                                    <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                                                 </div>
                                             </div>
 
                                             <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" id="remember" {{ old('remember') ? 'checked' : '' }}>
+                                                <input class="form-check-input" type="checkbox" id="remember" <?php echo e(old('remember') ? 'checked' : ''); ?>>
                                                 <label class="form-check-label" for="remember">
                                                     Remember me
                                                 </label>
                                                 <div class="float-end">
-                                                    @if (Route::has('password.request'))
-                                                    <a href="{{ route('password.request') }}" class="text-muted">Forgot password?</a>
-                                                    @endif
+                                                    <?php if(Route::has('password.request')): ?>
+                                                    <a href="<?php echo e(route('password.request')); ?>" class="text-muted">Forgot password?</a>
+                                                    <?php endif; ?>
                                                 </div>
                                             </div>
 
@@ -149,31 +185,9 @@
                                                     In</button>
                                             </div>
 
-                                            {{-- <div class="mt-4 text-center">
-                                                <h5 class="font-size-14 mb-3">Sign in with</h5>
-
-                                                <ul class="list-inline">
-                                                    <li class="list-inline-item">
-                                                        <a href="#" class="social-list-item bg-primary text-white border-primary">
-                                                            <i class="mdi mdi-facebook"></i>
-                                                        </a>
-                                                    </li>
-                                                    <li class="list-inline-item">
-                                                        <a href="#" class="social-list-item bg-info text-white border-info">
-                                                            <i class="mdi mdi-twitter"></i>
-                                                        </a>
-                                                    </li>
-                                                    <li class="list-inline-item">
-                                                        <a href="#" class="social-list-item bg-danger text-white border-danger">
-                                                            <i class="mdi mdi-google"></i>
-                                                        </a>
-                                                    </li>
-                                                </ul>
-                                            </div> --}}
+                                            
                                         </form>
-                                        {{-- <div class="mt-5 text-center">
-                                            <p>Don't have an account ? <a href="{{ url('register') }}" class="fw-medium text-primary"> Signup now </a> </p>
-                                        </div> --}}
+                                        
                                     </div>
                                 </div>
 
@@ -181,8 +195,7 @@
                                     <p class="mb-0">© <script>
                                             document.write(new Date().getFullYear())
                                         </script> AlHashemya Group
-                                         {{-- Crafted with <i class="mdi mdi-heart text-danger"></i> by
-                                        Themesbrand</p> --}}
+                                         
                                 </div>
                             </div>
 
@@ -197,10 +210,12 @@
         <!-- end container-fluid -->
     </div>
 
-    @endsection
-    @section('script')
+    <?php $__env->stopSection(); ?>
+    <?php $__env->startSection('script'); ?>
     <!-- owl.carousel js -->
-    <script src="{{ URL::asset('/build/libs/owl.carousel/owl.carousel.min.js') }}"></script>
+    <script src="<?php echo e(URL::asset('/build/libs/owl.carousel/owl.carousel.min.js')); ?>"></script>
     <!-- auth-2-carousel init -->
-    <script src="{{ URL::asset('/build/js/pages/auth-2-carousel.init.js') }}"></script>
-    @endsection
+    <script src="<?php echo e(URL::asset('/build/js/pages/auth-2-carousel.init.js')); ?>"></script>
+    <?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.master-without-nav', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH E:\elhashemya_group\resources\views/auth/login.blade.php ENDPATH**/ ?>

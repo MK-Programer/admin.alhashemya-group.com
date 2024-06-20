@@ -188,4 +188,7 @@ return [
   "List" => "List",
   "Overview" => "Overview",
   "Utilities" => "Utilities",
+
+
+  "loading" => "Loading...",
 ];

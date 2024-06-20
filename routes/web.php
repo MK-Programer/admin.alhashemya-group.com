@@ -14,15 +14,20 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Auth::routes();
+Auth::routes([
+    'register' => false, // Disable registration
+    'reset' => false,    // Disable password reset/verification
+]);
 
-Route::get('/', [App\Http\Controllers\HomeController::class, 'root'])->name('root');
+Route::group(['middleware' => ['auth', 'active.user']], function () {
+    Route::get('/', [App\Http\Controllers\HomeController::class, 'root'])->name('root');
 
-//Update User Details
-Route::post('/update-profile/{id}', [App\Http\Controllers\HomeController::class, 'updateProfile'])->name('updateProfile');
-Route::post('/update-password/{id}', [App\Http\Controllers\HomeController::class, 'updatePassword'])->name('updatePassword');
+    //Update User Details
+    Route::post('/update-profile/{id}', [App\Http\Controllers\HomeController::class, 'updateProfile'])->name('updateProfile');
+    Route::post('/update-password/{id}', [App\Http\Controllers\HomeController::class, 'updatePassword'])->name('updatePassword');
 
-Route::get('{any}', [App\Http\Controllers\HomeController::class, 'index'])->name('index');
+    Route::get('{any}', [App\Http\Controllers\HomeController::class, 'index'])->name('index');
 
-//Language Translation
-Route::get('index/{locale}', [App\Http\Controllers\HomeController::class, 'lang']);
+    //Language Translation
+    Route::get('index/{locale}', [App\Http\Controllers\HomeController::class, 'lang']);
+});

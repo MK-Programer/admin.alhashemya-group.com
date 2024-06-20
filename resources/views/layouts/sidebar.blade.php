@@ -71,7 +71,7 @@
                     </ul>
                 </li>
 
-                <li class="menu-title" key="t-apps">@lang('translation.Apps')</li>
+                {{-- <li class="menu-title" key="t-apps">@lang('translation.Apps')</li>
 
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
@@ -424,7 +424,7 @@
                             </ul>
                         </li>
                     </ul>
-                </li>
+                </li> --}}
 
             </ul>
         </div>

@@ -32,4 +32,4 @@
         alertHelper(msg);
         $("#alert").addClass("alert alert-danger");
     }
-</script>
+</script><?php /**PATH E:\elhashemya_group\resources\views/layouts/utils/success-danger.blade.php ENDPATH**/ ?>

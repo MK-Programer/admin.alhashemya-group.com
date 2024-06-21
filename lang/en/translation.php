@@ -189,6 +189,29 @@ return [
   "Overview" => "Overview",
   "Utilities" => "Utilities",
 
-
+  "alhashemya_group" => "Al-Hashemya Group",
+  "login" => "Login",
   "loading" => "Loading...",
+  "profile" => "Profile",
+  "logout" => "Logout",
+  "dashboard" => "Dashboard",
+  "error_404" => "Sorry, page not found",
+  "error_500" => "Internal Server Error, Please contact the adminstrator",  
+  "back_to_dashboard" => "Back To Dashboard",
+  "name" => "Name",
+  "enter_name" => "Enter name",
+  "email" => "Email",
+  "enter_email" => "Enter email",
+  "upload" => "Upload",
+  "update" => "Update",
+  "profile_picture" => "Profile Picture",
+  "current_password" => "Current Password",
+  "enter_current_password" => "Enter current password",
+  "new_password" => "New Password",
+  "enter_new_password" => "Enter new password",
+  "confirm_new_password" => "Confirm New Password",
+  "enter_confirm_new_password" => "Enter new password again",
+  "data_updated" => "Data Updated Successfully",
+  "data_not_updated" => "Error while updating the data, try again later..."
+
 ];

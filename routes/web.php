@@ -26,7 +26,7 @@ Route::group(['middleware' => ['auth', 'active.user']], function () {
     //User
     Route::get('user-profile', [UserController::class, 'showUserProfile'])->name('showUserProfile');
     Route::post('update-user-profile', [UserController::class, 'updateUserProfile'])->name('updateUserProfile');
-    // Route::post('/update-password/{id}', [HomeController::class, 'updatePassword'])->name('updatePassword');
+    Route::post('update-user-password', [UserController::class, 'updateUserPassword'])->name('updateUserPassword');
 
     Route::get('{any}', [HomeController::class, 'index'])->name('index');
 

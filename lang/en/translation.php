@@ -211,7 +211,9 @@ return [
   "enter_new_password" => "Enter new password",
   "confirm_new_password" => "Confirm New Password",
   "enter_confirm_new_password" => "Enter new password again",
-  "data_updated" => "Data Updated Successfully",
-  "data_not_updated" => "Error while updating the data, try again later..."
-
+  "profile_data_updated" => "Profile Data Updated Successfully",
+  "profile_data_not_updated" => "Error while updating the profile data, try again later...",
+  "current_password_doesnot_match_provided_password" => "Your Current password does not matches with the password you provided. Please try again.",
+  "password_updated" => "Password updated successfully!",
+  "password_not_updated" => "Error while updating the password, try again later...",
 ];

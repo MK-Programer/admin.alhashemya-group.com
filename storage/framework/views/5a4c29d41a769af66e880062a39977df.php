@@ -7,6 +7,12 @@
     }
 
     function alertHelper(msg){
+        if (Array.isArray(msg)) {
+            if(msg.length == 1){
+                msg = msg[0];
+            }
+        }
+
         if(Array.isArray(msg)){
             // Create a new ul element
             var ulElement = $('<ul>');

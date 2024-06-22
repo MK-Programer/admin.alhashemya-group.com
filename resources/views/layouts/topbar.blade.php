@@ -215,8 +215,8 @@
                     <img src="{{ URL::asset ('/build/images/flags/us.jpg') }}" alt="user-image" class="me-1" height="12"> <span class="align-middle">English</span>
                 </a>
                 <!-- item-->
-                <a href="{{ url('index/es') }}" class="dropdown-item notify-item language" data-lang="sp">
-                    <img src="{{ URL::asset ('/build/images/flags/spain.jpg') }}" alt="user-image" class="me-1" height="12"> <span class="align-middle">Spanish</span>
+                <a href="{{ url('index/ar') }}" class="dropdown-item notify-item language" data-lang="sp">
+                    <img src="{{ URL::asset ('/build/images/flags/spain.jpg') }}" alt="user-image" class="me-1" height="12"> <span class="align-middle">Arabic</span>
                 </a>
 
                 <!-- item-->
@@ -405,50 +405,3 @@
     </div>
 </div>
 </header>
-<!--  Change-Password example -->
-<div class="modal fade change-password" tabindex="-1" role="dialog"
-aria-labelledby="myLargeModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="myLargeModalLabel">Change Password</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                    aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form method="POST" id="change-password">
-                    @csrf
-                    <input type="hidden" value="{{ Auth::user()->id }}" id="data_id">
-                    <div class="mb-3">
-                        <label for="current_password">Current Password</label>
-                        <input id="current-password" type="password"
-                            class="form-control @error('current_password') is-invalid @enderror"
-                            name="current_password" autocomplete="current_password"
-                            placeholder="Enter Current Password" value="{{ old('current_password') }}">
-                        <div class="text-danger" id="current_passwordError" data-ajax-feedback="current_password"></div>
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="newpassword">New Password</label>
-                        <input id="password" type="password"
-                            class="form-control @error('password') is-invalid @enderror" name="password"
-                            autocomplete="new_password" placeholder="Enter New Password">
-                        <div class="text-danger" id="passwordError" data-ajax-feedback="password"></div>
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="userpassword">Confirm Password</label>
-                        <input id="password-confirm" type="password" class="form-control" name="password_confirmation"
-                            autocomplete="new_password" placeholder="Enter New Confirm password">
-                        <div class="text-danger" id="password_confirmError" data-ajax-feedback="password-confirm"></div>
-                    </div>
-
-                    <div class="mt-3 d-grid">
-                        <button class="btn btn-primary waves-effect waves-light UpdatePassword" data-id="{{ Auth::user()->id }}"
-                            type="submit">Update Password</button>
-                    </div>
-                </form>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->

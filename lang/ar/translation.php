@@ -23,6 +23,9 @@ return [
     "enter_new_password" => "أدخل كلمة المرور الجديدة",
     "confirm_new_password" => "تأكيد كلمة المرور الجديدة",
     "enter_confirm_new_password" => "أدخل كلمة المرور الجديدة",
-    "data_updated" => "تم تحديث البيانات بنجاح",
-    "data_not_updated" => "حدث خطأ أثناء تحديث البيانات، حاول مرة أخرى لاحقاً..."
+    "profile_data_updated" => "تم تحديث بيانات الملف الشخصي بنجاح",
+    "profile_data_not_updated" => "حدث خطأ أثناء تحديث بيانات الملف الشخصي، حاول مرة أخرى لاحقاً...",
+    "current_password_doesnot_match_provided_password" => "كلمة المرور الحالية الخاصة بك لا تتطابق مع كلمة المرور التي قدمتها. حاول مرة اخرى.",
+    "password_updated" => "تم تحديث كلمة السر بنجاح!",
+    "password_not_updated" => "حدث خطأ أثناء تحديث كلمة المرور، حاول مرة أخرى لاحقاً...",
 ];

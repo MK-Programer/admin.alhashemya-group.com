@@ -10,6 +10,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Lang;
 use Illuminate\Validation\ValidationException;
+use App\Rules\CurrentPasswordRule;
 
 use Illuminate\Support\Facades\Log;
 use Exception;
@@ -87,7 +88,7 @@ class UserController extends Controller
 
             Log::error("Error | Controller: UserController | Function: updateUserProfile | Code: ".$code." | Message: ".$msg);
 
-            return response()->json(lang::get('translation.error_500'), $code);
+            return response()->json(['message' => lang::get('translation.error_500')], $code);
         }
         
     }
@@ -99,35 +100,27 @@ class UserController extends Controller
             $authUser = Auth::user();
             $authUserPassword = $authUser->password;
 
-            $currentPassword = $request->get('current-password');
-            $newPassword = $request->get('new-password');
+            $currentPassword = $request->get('current_password');
+            $newPassword = $request->get('new_password');
 
             $request->validate([
-                'current-password' => ['required', 'string'],
-                'new-password' => ['required', 'string', 'min:6', 'confirmed'],
-                'new-password_confirmation' => ['required', 'string', 'min:6'],
+                'current_password' => ['required', 'string', new CurrentPasswordRule],
+                'new_password' => ['required', 'string', 'min:6', 'confirmed'],
+                'new_password_confirmation' => ['required', 'string', 'min:6'],
             ]);
-            $matchCurrentPassword = Hash::check($currentPassword, $authUserPassword);
-
-            if (!matchCurrentPassword) {
-                DB::rollBack();
-                return response()->json(
-                    [
-                        'message' => lang::get('translation.current_password_doesnot_match_provided_password')
-                    ], 400); 
+            
+            $authUser->password = Hash::make($newPassword);
+            $isPassowrdUpdated = $authUser->update();
+            if ($isPassowrdUpdated) {
+                return response()->json([
+                    'message' => lang::get('translation.password_updated')
+                ], 200);
             } else {
-                $authUser->password = Hash::make($newPassword);
-                $isPassowrdUpdated = $authUser->update();
-                if ($isPassowrdUpdated) {
-                    return response()->json([
-                        'message' => lang::get('translation.password_updated')
-                    ], 200);
-                } else {
-                    return response()->json([
-                        'message' => lang::get('translation.password_not_updated')
-                    ], 400);
-                }
+                return response()->json([
+                    'message' => lang::get('translation.password_not_updated')
+                ], 400);
             }
+            
         }catch(ValidationException $e){
             DB::rollBack();
         
@@ -145,7 +138,7 @@ class UserController extends Controller
 
             Log::error("Error | Controller: UserController | Function: updatePassword | Code: ".$code." | Message: ".$msg);
 
-            return response()->json(lang::get('translation.error_500'), $code);
+            return response()->json(['message' => lang::get('translation.error_500')], $code);
         }
     }
 }

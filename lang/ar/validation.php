@@ -147,7 +147,14 @@ return [
     |
     */
 
-    'attributes' => [],
+    'attributes' => [
+        'name' => 'اسم',
+        'email' => 'البريد الإلكتروني',
+        'avatar' => 'الصورة الشخصية',
+        'current_password' => 'كلمة السر الحالية',
+        'new_password' => 'كلمة السر الجديدة',
+        'new_password_confirmation' => 'تأكيد كلمة السر الجديدة'
+    ],
 
 ];
 

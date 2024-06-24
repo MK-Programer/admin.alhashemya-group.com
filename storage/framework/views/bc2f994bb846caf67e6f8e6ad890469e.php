@@ -14,12 +14,12 @@
         <div style="margin-top: 20px">
             <?php echo $__env->make('layouts.utils.success-danger', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
         </div>
-        <form class="form-horizontal" method="POST" enctype="multipart/form-data" id="update-user-profile">
+        <form class="form-horizontal" method="POST" enctype="multipart/form-data" id="update_user_profile">
             <?php echo csrf_field(); ?>
 
             <div class="mb-3">
                 <div class="text-start mt-2">
-                    <img src="<?php echo e(asset($authUser->avatar)); ?>" alt="" class="rounded-circle avatar-lg" id="profile-image">
+                    <img src="<?php echo e(asset($authUser->avatar)); ?>" alt="" class="rounded-circle avatar-lg" id="profile_image">
                 </div>
                 <label for="avatar"><?php echo app('translator')->get('translation.profile_picture'); ?></label>
                 <div class="input-group">
@@ -38,31 +38,30 @@
                 <input type="email" class="form-control" id="email" value="<?php echo e($authUser->email); ?>" name="email" placeholder="<?php echo app('translator')->get('translation.enter_email'); ?>" autofocus>
             </div>
 
-            
-
-            <div class="mt-3 d-grid">
+            <div class="mt-3">
                 <button class="btn btn-primary waves-effect waves-light UpdateProfile" type="submit"><?php echo app('translator')->get('translation.update'); ?></button>
             </div>
         </form>
 
-        <form class="form-horizontal mt-4" method="POST" id="update-user-password">
+        <form class="form-horizontal mt-4" method="POST" id="update_user_password">
             <?php echo csrf_field(); ?>
             <div class="mb-3">
-                <label for="current-password" class="form-label"><?php echo app('translator')->get('translation.current_password'); ?></label>
-                <input type="password" class="form-control" id="current-password" name="current-password" autofocus placeholder="<?php echo app('translator')->get('translation.enter_current_password'); ?>">
+                <label for="current_password" class="form-label"><?php echo app('translator')->get('translation.current_password'); ?></label>
+                <input type="password" class="form-control" id="current_password" name="current_password" autofocus placeholder="<?php echo app('translator')->get('translation.enter_current_password'); ?>">
             </div>
 
             <div class="mb-3">
-                <label for="new-password" class="form-label"><?php echo app('translator')->get('translation.new_password'); ?></label>
-                <input type="password" class="form-control" id="new-password" name="new-password" autofocus placeholder="<?php echo app('translator')->get('translation.enter_new_password'); ?>">
+                <label for="new_password" class="form-label"><?php echo app('translator')->get('translation.new_password'); ?></label>
+                <input type="password" class="form-control" id="new_password" name="new_password" autofocus placeholder="<?php echo app('translator')->get('translation.enter_new_password'); ?>">
             </div>
 
             <div class="mb-3">
-                <label for="new-password_confirmation" class="form-label"><?php echo app('translator')->get('translation.confirm_new_password'); ?></label>
-                <input type="password" class="form-control" id="new-password_confirmation" name="new-password_confirmation" autofocus placeholder="<?php echo app('translator')->get('translation.enter_confirm_new_password'); ?>">
+                <label for="new_password_confirmation" class="form-label"><?php echo app('translator')->get('translation.confirm_new_password'); ?></label>
+                <input type="password" class="form-control" id="new_password_confirmation" name="new_password_confirmation" autofocus placeholder="<?php echo app('translator')->get('translation.enter_confirm_new_password'); ?>">
              </div>
 
-            <div class="mt-3 d-grid">
+            
+             <div class="mt-3">
                 <button class="btn btn-primary waves-effect waves-light UpdateProfile" type="submit"><?php echo app('translator')->get('translation.update'); ?></button>
             </div>
         </form>
@@ -77,14 +76,11 @@
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         const fileInput = document.getElementById('avatar');
-        const profileImage = document.getElementById('profile-image');
-        const avatarError = document.getElementById('avatar-error');
+        const profileImage = document.getElementById('profile_image');
 
         fileInput.addEventListener('change', function(event) {
             const file = event.target.files[0];
             if (file) {
-                // Clear any previous error messages
-                avatarError.textContent = '';
                 
                 // Create a temporary URL for the selected file and update the image src
                 const imageUrl = URL.createObjectURL(file);
@@ -95,14 +91,11 @@
                     URL.revokeObjectURL(imageUrl);
                 };
             } 
-            // else {
-            //     console.log('No file selected');
-            // }
         });
     });
 
 
-    $('#update-user-profile').on('submit', function(event) {
+    $('#update_user_profile').on('submit', function(event) {
         event.preventDefault();
         showLoading();
         hideAlert();
@@ -136,13 +129,13 @@
                     // Example handling for email and name errors
                     
                     if (errors.hasOwnProperty('avatar')) {
-                        errorsList = errorsList.concat(errors.avatar);
+                        errorsList = errorsList.concat(errors['avatar']);
                     }
                     if (errors.hasOwnProperty('name')) {
-                        errorsList = errorsList.concat(errors.name);
+                        errorsList = errorsList.concat(errors['name']);
                     }
                     if (errors.hasOwnProperty('email')) {
-                        errorsList = errorsList.concat(errors.email);
+                        errorsList = errorsList.concat(errors['email']);
                     }
                     
                     setDanger(errorsList);
@@ -155,7 +148,7 @@
         });
     });
 
-    $('#update-user-password').on('submit', function(event) {
+    $('#update_user_password').on('submit', function(event) {
         event.preventDefault();
         showLoading();
         hideAlert();
@@ -188,18 +181,19 @@
                     var errorsList = [];
                     // Example handling for email and name errors
                     
-                    if (errors.hasOwnProperty('current-password')) {
-                        errorsList = errorsList.concat(errors['current-password']);
+                    if (errors.hasOwnProperty('current_password')) {
+                        errorsList = errorsList.concat(errors['current_password']);
                     }
-                    if (errors.hasOwnProperty('new-password')) {
-                        errorsList = errorsList.concat(errors['new-password']);
+                    if (errors.hasOwnProperty('new_password')) {
+                        errorsList = errorsList.concat(errors['new_password']);
                     }
-                    if (errors.hasOwnProperty('new-password_confirmation')) {
-                        errorsList = errorsList.concat(errors['new-password_confirmation']);
+                    if (errors.hasOwnProperty('new_password_confirmation')) {
+                        errorsList = errorsList.concat(errors['new_password_confirmation']);
                     }
                     
                     setDanger(errorsList);
                 } else {
+                    console.log(xhr);
                     // Server-side error caught in catch block
                     var msg = xhr.responseJSON.message;
                     setDanger(msg);

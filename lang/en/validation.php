@@ -118,7 +118,7 @@ return [
     'uploaded' => 'The :attribute failed to upload.',
     'url' => 'The :attribute format is invalid.',
     'uuid' => 'The :attribute must be a valid UUID.',
-
+    'not_match' => 'The :attribute does not match our records.',
     /*
     |--------------------------------------------------------------------------
     | Custom Validation Language Lines
@@ -154,8 +154,6 @@ return [
         'current_password' => 'Current Password',
         'new_password' => 'New Password',
         'new_password_confimation' => 'Confirm New Password'
-
-
     ],
 
 ];

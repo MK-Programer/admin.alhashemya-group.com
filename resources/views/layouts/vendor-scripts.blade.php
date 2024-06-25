@@ -44,6 +44,10 @@
     });
 </script>
 
+
+@include('layouts.utils.buttons-handler')
+
+
 @yield('script')
 
 <!-- App js -->

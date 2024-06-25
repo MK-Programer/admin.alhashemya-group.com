@@ -10,7 +10,8 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Lang;
 use Illuminate\Validation\ValidationException;
-use App\Rules\CurrentPasswordRule;
+use App\Rules\MatchOldPasswordRule;
+use App\Rules\UniqueEmailRule;
 
 use Illuminate\Support\Facades\Log;
 use Exception;
@@ -27,7 +28,7 @@ class UserController extends Controller
             $code = $e->getCode();
             $msg = $e->getMessage();
 
-            Log::error("Error | Controller: UserController | Function: showUserProfile | Code: ".$code." | Message: ".$msg);
+            Log::error("Error | Controller: UserControllers | Function: showUserProfile | Code: ".$code." | Message: ".$msg);
             return view('errors.500');
         }
     }
@@ -37,13 +38,16 @@ class UserController extends Controller
         try{
             DB::beginTransaction();
 
+            $authUser = Auth::user();
+            $authUserId = $authUser->id;
+
             $request->validate([
                 'name' => ['required', 'string', 'max:255'],
-                'email' => ['required', 'string', 'email', 'unique:users,email'],
+                'email' => ['required', 'string', 'email', new UniqueEmailRule($authUserId)],
                 'avatar' => ['nullable', 'image', 'mimes:jpg,jpeg,png', 'max:1024'],
             ]);
     
-            $authUser = Auth::user();
+            
             $authUser->name = $request->get('name');
             $authUser->email = $request->get('email');
     
@@ -86,7 +90,7 @@ class UserController extends Controller
             $code = $e->getCode();
             $msg = $e->getMessage();
 
-            Log::error("Error | Controller: UserController | Function: updateUserProfile | Code: ".$code." | Message: ".$msg);
+            Log::error("Error | Controller: UserControllers | Function: updateUserProfile | Code: ".$code." | Message: ".$msg);
 
             return response()->json(['message' => lang::get('translation.error_500')], $code);
         }
@@ -104,7 +108,7 @@ class UserController extends Controller
             $newPassword = $request->get('new_password');
 
             $request->validate([
-                'current_password' => ['required', 'string', new CurrentPasswordRule],
+                'current_password' => ['required', 'string', new MatchOldPasswordRule],
                 'new_password' => ['required', 'string', 'min:6', 'confirmed'],
                 'new_password_confirmation' => ['required', 'string', 'min:6'],
             ]);
@@ -136,9 +140,10 @@ class UserController extends Controller
             $code = $e->getCode();
             $msg = $e->getMessage();
 
-            Log::error("Error | Controller: UserController | Function: updatePassword | Code: ".$code." | Message: ".$msg);
+            Log::error("Error | Controller: UserControllers | Function: updatePassword | Code: ".$code." | Message: ".$msg);
 
             return response()->json(['message' => lang::get('translation.error_500')], $code);
         }
     }
+
 }

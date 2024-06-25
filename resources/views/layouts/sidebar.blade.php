@@ -10,6 +10,13 @@
                 <li class="menu-title" key="t-menu">@lang('translation.Menu')</li>
 
                 <li>
+                    <a href="{{ route('updateServices') }}">
+                        <i class="fas fa-wrench"></i>
+                        <span key="t-dashboards">@lang('translation.services')</span>
+                    </a>
+                </li>
+
+                {{-- <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
                         <i class="bx bx-home-circle"></i>
                         <span key="t-dashboards">@lang('translation.Dashboards')</span>
@@ -69,7 +76,7 @@
                             </ul>
                         </li>
                     </ul>
-                </li>
+                </li> --}}
 
             </ul>
         </div>

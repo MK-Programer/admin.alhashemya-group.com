@@ -118,7 +118,7 @@ return [
     'uploaded' => ':attribute فشل في التحميل.',
     'url' => 'صيغة :attribute غير صالحة.',
     'uuid' => ':attribute يجب أن يكون UUID صالحًا.',
-
+    'not_match' => ':attribute لا تتطابق مع سجلاتنا.',
     /*
     |--------------------------------------------------------------------------
     | Custom Validation Language Lines

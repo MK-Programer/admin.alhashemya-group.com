@@ -212,9 +212,11 @@ return [
   'enter_confirm_new_password' => 'Enter New Password Again',
   'profile_data_updated' => 'Profile Data Updated Successfully',
   'profile_data_not_updated' => 'Error While Updating The Profile Data, Try Again Later...',
-  'current_password_doesnot_match_provided_password' => 'The Current Password does not match the provided password.',
   'password_updated' => 'Password Updated Successfully!',
   'password_not_updated' => 'Error While Updating The Password, Try Again Later...',
+  'services' => 'Services',
+  'add_row' => 'Add Row',
+  'delete_rows' => 'Delete Rows',
 
   'error_404' => 'Sorry, Page Not Found',
   'error_500' => 'Internal Server Error, Please Contact The Adminstrator',  

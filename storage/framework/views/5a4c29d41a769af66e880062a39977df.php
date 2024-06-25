@@ -25,8 +25,8 @@
         }else{
             $('#alert').text(msg);
         }
-        
         $('#alert').show();
+        window.location.hash = '#alert';
     }
     
     function setSuccess(msg){

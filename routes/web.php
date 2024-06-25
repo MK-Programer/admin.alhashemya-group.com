@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ServiceController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -27,6 +28,12 @@ Route::group(['middleware' => ['auth', 'active.user']], function () {
     Route::get('user-profile', [UserController::class, 'showUserProfile'])->name('showUserProfile');
     Route::post('update-user-profile', [UserController::class, 'updateUserProfile'])->name('updateUserProfile');
     Route::post('update-user-password', [UserController::class, 'updateUserPassword'])->name('updateUserPassword');
+
+    //Services
+    Route::get('services', [ServiceController::class, 'showServices'])->name('showServices');
+    Route::post('update-services', [ServiceController::class, 'updateServices'])->name('updateServices');
+
+    Route::get('get-current-language', [HomeController::class, 'getCurrentLang'])->name('getCurrentLang');
 
     Route::get('{any}', [HomeController::class, 'index'])->name('index');
 

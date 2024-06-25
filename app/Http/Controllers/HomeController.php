@@ -52,4 +52,11 @@ class HomeController extends Controller
         }
     }
 
+
+    public function getCurrentLang(){
+        $currentLang = session('lang', 'en');
+
+        return response()->json(['language' => $currentLang], 200);
+    }
+
 }

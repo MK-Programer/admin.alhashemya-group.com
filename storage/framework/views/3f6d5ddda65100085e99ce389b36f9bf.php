@@ -10,7 +10,7 @@
                 <li class="menu-title" key="t-menu"><?php echo app('translator')->get('translation.Menu'); ?></li>
 
                 <li>
-                    <a href="<?php echo e(route('updateServices')); ?>">
+                    <a href="<?php echo e(route('showServices')); ?>">
                         <i class="fas fa-wrench"></i>
                         <span key="t-dashboards"><?php echo app('translator')->get('translation.services'); ?></span>
                     </a>

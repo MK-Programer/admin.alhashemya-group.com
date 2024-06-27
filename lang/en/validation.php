@@ -153,7 +153,7 @@ return [
         'avatar' => 'Profile Picture',
         'current_password' => 'Current Password',
         'new_password' => 'New Password',
-        'new_password_confimation' => 'Confirm New Password'
+        'new_password_confimation' => 'Confirm New Password',
     ],
 
 ];

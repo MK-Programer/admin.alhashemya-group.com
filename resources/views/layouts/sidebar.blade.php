@@ -10,7 +10,7 @@
                 <li class="menu-title" key="t-menu">@lang('translation.Menu')</li>
 
                 <li>
-                    <a href="{{ route('updateServices') }}">
+                    <a href="{{ route('showServices') }}">
                         <i class="fas fa-wrench"></i>
                         <span key="t-dashboards">@lang('translation.services')</span>
                     </a>

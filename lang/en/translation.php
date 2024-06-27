@@ -217,7 +217,9 @@ return [
   'services' => 'Services',
   'add_row' => 'Add Row',
   'delete_rows' => 'Delete Rows',
-
+  'services_created_update_success' => 'Services Created/Updated Successfully',
+  'services_created_update_failure' => 'Error While Creating/Updated The Services, Try Again Later...',
+  'update_create' => 'Update / Create',
   'error_404' => 'Sorry, Page Not Found',
   'error_500' => 'Internal Server Error, Please Contact The Adminstrator',  
 ];

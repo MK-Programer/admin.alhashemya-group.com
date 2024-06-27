@@ -22,7 +22,7 @@
             </div>
             <div class="card">
                 <div class="card-body">
-                    <form id="services_form" class="form-horizontal">
+                    <form id="services_form" class="form-horizontal" enctype="multipart/form-data">
                         @csrf
                         <table id="services_table" class="table table-bordered dt-responsive nowrap w-100">
                             <thead>
@@ -46,11 +46,11 @@
                                     
                                     <td>
                                         {{-- view by default img from db and when user select img view it --}}
-                                        <img alt="#" class="rounded-circle avatar-lg">
+                                        <img alt="#" class="avatar-lg">
                                         {{-- pictures from db --}}
                                         <input type="hidden" name="hidden_picture[]"> 
                                         {{-- selected pictures by user --}}
-                                        <input type="file" class="form-control" name="new_picture[]">
+                                        <input type="file" class="form-control" name="new_picture[]" onchange="updateImagePreview(event)">
                                     </td>
 
                                     <td>
@@ -80,7 +80,7 @@
                         <input type="button" id="add" class="btn btn-success" onclick="addRow()" value="@lang('translation.add_row')">
                         <input type="button" id="remove" style="display:none" class="btn btn-danger" onclick="deleteRow()" value="@lang('translation.delete_rows')">          
                         <div class="mt-3">
-                            <button class="btn btn-primary waves-effect waves-light" type="submit">@lang('translation.update')</button>
+                            <button class="btn btn-primary waves-effect waves-light" type="submit">@lang('translation.update_create')</button>
                         </div>
                     </form>
                 </div>
@@ -97,8 +97,9 @@
     <script src="{{ URL::asset('build/js/services/services.js') }}"></script>
     <script>
         $(document).ready(function() {
+            var assetPath = "{{ asset('') }}";
             var services = <?php echo $services; ?>;
-            createFetchedServices(services);
+            createFetchedServices(assetPath, services);
         });
     </script>
 @endsection

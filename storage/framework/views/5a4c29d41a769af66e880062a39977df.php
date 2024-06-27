@@ -4,6 +4,7 @@
     function hideAlert(){
         $('#alert').empty();
         $('#alert').hide();
+        $('#alert').addClass('');
     }
 
     function alertHelper(msg){
@@ -26,7 +27,10 @@
             $('#alert').text(msg);
         }
         $('#alert').show();
-        window.location.hash = '#alert';
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'  // Optional: smooth scrolling
+        });
     }
     
     function setSuccess(msg){

@@ -20,7 +20,7 @@ use DB;
 
 class UserController extends Controller
 {
-    private $imgPath = 'images/users/';
+    private $imagePath = 'images/users/';
 
     public function showUserProfile(){
         try{
@@ -56,9 +56,9 @@ class UserController extends Controller
             if ($request->file('avatar')) {
                 $avatar = $request->file('avatar');
                 $avatarName = time() . '.' . $avatar->getClientOriginalExtension();
-                $avatarPath = public_path($this->imgPath);
+                $avatarPath = public_path($this->imagePath);
                 $avatar->move($avatarPath, $avatarName);
-                $authUser->avatar = $this->imgPath.$avatarName;
+                $authUser->avatar = $this->imagePath.$avatarName;
             }
     
             $isUserUpdated = $authUser->update();

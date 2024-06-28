@@ -21,7 +21,7 @@ Auth::routes([
     'reset' => false,    // Disable password reset/verification
 ]);
 
-Route::group(['middleware' => ['auth', 'active.user']], function () {
+Route::middleware(['auth', 'active.user'])->group(function () {
     Route::get('/', [HomeController::class, 'root'])->name('root');
 
     //User

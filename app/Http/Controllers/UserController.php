@@ -22,9 +22,18 @@ class UserController extends Controller
 {
     private $imagePath = 'images/users/';
 
+    private $authUser;
+
+    public function __construct(){
+        $this->middleware(function ($request, $next) {
+            $this->authUser = Auth::user();
+            return $next($request);
+        });
+    }
+
     public function showUserProfile(){
         try{
-            $authUser = Auth::user();
+            $authUser = $this->authUser;
             return view('user.profile', compact('authUser'));
         }catch(Exception $e){
             $code = $e->getCode();
@@ -40,7 +49,7 @@ class UserController extends Controller
         try{
             DB::beginTransaction();
 
-            $authUser = Auth::user();
+            $authUser = $this->authUser;
             $authUserId = $authUser->id;
 
             $request->validate([
@@ -103,7 +112,7 @@ class UserController extends Controller
     {
         try{
             DB::beginTransaction();
-            $authUser = Auth::user();
+            $authUser = $this->authUser;
             $authUserPassword = $authUser->password;
 
             $currentPassword = $request->get('current_password');

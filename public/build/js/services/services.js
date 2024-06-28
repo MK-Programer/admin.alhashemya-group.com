@@ -276,10 +276,10 @@ function submitServicesForm(){
     fileInputs.each(function(index, fileInput) {
         let files = $(fileInput).prop('files');
         console.log(files);
-        if (files.length === 0) {
-            formData.append('new_picture[]', JSON.stringify({'file': null})); // Append null if no file selected
+        if (files.length > 0) {
+          formData.append(`new_picture[${index}]`, files[0]); // Append selected file
         } else {
-            formData.append('new_picture[]', JSON.stringify({'file': files[0]})); // Append selected file
+            formData.append(`new_picture[${index}]`, null); // Append null if no file selected
         }
     });
     hideLoading();
@@ -323,7 +323,7 @@ function createFetchedServices(assetPath, services){
         $('#services_table tbody tr').each((i, row) => {
             let service = services[i];
             $(row).find('input[type="hidden"][name="id[]"]').val(service.id);
-            $(row).find('input[type="hidden"][name="hidden_picture[]"]').val(`${assetPath}${service.picture}`);
+            $(row).find('input[type="hidden"][name="hidden_picture[]"]').val(`${service.picture}`);
             $(row).find('img').attr('src', `${assetPath}${service.picture}`);
             $(row).find('input[name="title_en[]"]').val(service.title_en);
             $(row).find('input[name="title_ar[]"]').val(service.title_ar);

@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Log;
 use Exception;
 use DB;
 
+
 class ServicesController extends Controller
 {
 
@@ -68,6 +69,7 @@ class ServicesController extends Controller
                             ->where('is_deleted', 0)
                             ->offset($offset)
                             ->limit($perPage)
+                            ->orderBy('sequence', 'ASC')
                             ->get();
 
             // Count total records
@@ -124,6 +126,80 @@ class ServicesController extends Controller
             $msg = $e->getMessage();
 
             Log::error("Error | Controller: ServicesController | Function: getPaginatedData | Code: ".$code." | Message: ".$msg);
+
+            return response()->json(['message' => $msg], $code);
+        }
+    }
+
+    public function showCreateService(){
+        try{
+            return view('services.create-new-service');
+        }catch(Exception $e){
+            $code = $e->getCode();
+            $msg = $e->getMessage();
+
+            Log::error("Error | Controller: ServicesController | Function: showCreateService | Code: ".$code." | Message: ".$msg);
+            return view('errors.500');
+        }
+    }
+
+    public function saveCreatedService(Request $request){
+        try{
+            DB::beginTransaction();
+            $request->validate([
+                'picture' => ['required', 'image', 'mimes:jpg,jpeg,png', 'max:5120'],
+                'title_en' => ['required', 'string', 'max:255'],
+                'title_ar' => ['required', 'string', 'max:255'],
+                'description_en' => ['required', 'string', 'max:1000'],
+                'description_ar' => ['required', 'string', 'max:1000'],
+                'sequence' => ['required', 'integer'],
+            ]);
+            $uuid = Str::uuid();
+            $picture = $request->file('picture');
+            $pictureName = $uuid . '.' . $picture->getClientOriginalExtension();
+            $picturePath = public_path($this->imagePath);
+            $picture->move($picturePath, $pictureName);
+            
+            $service = [
+                'company_id' => $this->authUser->company_id,
+                'setting_id' => $this->settingId,
+                'title_en' => $request->get('title_en'),
+                'title_ar' => $request->get('title_ar'),
+                'desc_en' => $request->get('description_en'),
+                'desc_ar' => $request->get('description_ar'),
+                'sequence' => $request->get('sequence'),
+                'picture' => $this->imagePath . $pictureName,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ];
+
+            $insertService = DB::table($this->servicesMetaData->table_name)
+                                ->insert($service);       
+            if($insertService == 1){
+                DB::commit();
+                $code = 200;
+                $msg = lang::get('translation.service_created');
+            }else{
+                DB::rollBack();
+                $code = 400;
+                $msg = lang::get('translation.service_not_created');
+            }
+            return response()->json(['message' => $msg], $code);
+        }catch(ValidationException $e){
+            DB::rollBack();
+        
+            // Handle validation errors
+            $errors = $e->validator->errors()->messages();
+
+            return response()->json([
+                'errors' => $errors
+            ], 422);
+        }catch(Exception $e){
+            DB::rollBack();
+            $code = $e->getCode();
+            $msg = $e->getMessage();
+
+            Log::error("Error | Controller: ServicesController | Function: saveCreatedService | Code: ".$code." | Message: ".$msg);
 
             return response()->json(['message' => $msg], $code);
         }

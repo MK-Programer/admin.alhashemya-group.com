@@ -154,6 +154,11 @@ return [
         'current_password' => 'Current Password',
         'new_password' => 'New Password',
         'new_password_confimation' => 'Confirm New Password',
+        'title_en' => 'Title (EN)',
+        'title_ar' => 'Title (AR)',
+        'description_en' => 'Description (EN)',
+        'description_ar' => 'Description (AR)',
+        'sequence' => 'Sequence',
     ],
 
 ];

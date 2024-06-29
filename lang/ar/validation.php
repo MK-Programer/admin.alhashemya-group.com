@@ -153,7 +153,13 @@ return [
         'avatar' => 'الصورة الشخصية',
         'current_password' => 'كلمة السر الحالية',
         'new_password' => 'كلمة السر الجديدة',
-        'new_password_confirmation' => 'تأكيد كلمة السر الجديدة'
+        'new_password_confirmation' => 'تأكيد كلمة السر الجديدة',
+        'title_en' => 'العنوان (EN)',
+        'title_ar' => 'العنوان (AR)',
+        'description_en' => 'الوصف (EN)',
+        'description_ar' => 'الوصف (AR)',
+        'sequence' => 'التسلسل'
+
     ],
 
 ];

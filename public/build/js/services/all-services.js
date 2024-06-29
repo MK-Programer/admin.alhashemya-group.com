@@ -66,8 +66,9 @@ $(document).ready(function() {
 
 
 function deleteService(serviceId){
-    hideAlert();
     showLoading();
+    hideAlert();
+    disableButtons();
 
     $.ajax({
         url: 'delete-service/' + serviceId, // Replace with your actual endpoint
@@ -79,7 +80,7 @@ function deleteService(serviceId){
             var msg = response.message;
             hideLoading();
             setSuccess(msg);
-
+            enableButtons();
             // Reload the page after 2 seconds (2000 milliseconds)
             setTimeout(function() {
                 window.location.reload();
@@ -88,6 +89,7 @@ function deleteService(serviceId){
         error: function(xhr, status, error) {
             hideLoading();
             setDanger(error);
+            enableButtons();
         }
 
     });

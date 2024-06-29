@@ -32,7 +32,7 @@
             <?php echo $__env->make('layouts.utils.success-danger', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
             <div class="card">
                 <div class="card-body">
-                    <a href="#" id="create_service" class="btn btn-primary"><?php echo app('translator')->get('translation.create_new_service'); ?></a>
+                    <a href="<?php echo e(route('showCreateService')); ?>" id="create_service" class="btn btn-primary"><?php echo app('translator')->get('translation.create_new_service'); ?></a>
                     <table id="services_table" class="table table-striped dt-responsive nowrap w-100">
                         <thead>
                             <tr>
@@ -72,7 +72,7 @@
         var deleteText = '<?php echo app('translator')->get('translation.delete'); ?>';
     </script>
     
-    <script src="<?php echo e(URL::asset('build/js/services/services.js')); ?>"></script>
+    <script src="<?php echo e(URL::asset('build/js/services/all-services.js')); ?>"></script>
 <?php $__env->stopSection(); ?>
 
 <?php echo $__env->make('layouts.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH E:\elhashemya_group\resources\views/services/all-services.blade.php ENDPATH**/ ?>

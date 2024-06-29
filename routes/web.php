@@ -34,7 +34,8 @@ Route::middleware(['auth', 'active.user'])->group(function () {
     Route::get('services', [ServicesController::class, 'showServices'])->name('showServices');
     Route::get('get-paginated-services-data', [ServicesController::class, 'getPaginatedServicesData'])->name('getPaginatedServicesData');
     Route::delete('delete-service/{id}', [ServicesController::class, 'deleteService'])->name('deleteService');
-
+    Route::get('create-service', [ServicesController::class, 'showCreateService'])->name('showCreateService');
+    Route::post('save-created-service', [ServicesController::class, 'saveCreatedService'])->name('saveCreatedService');
 
     Route::get('{any}', [DashBoardController::class, 'index'])->name('index');
 

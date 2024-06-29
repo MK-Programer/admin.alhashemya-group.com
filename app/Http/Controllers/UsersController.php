@@ -73,19 +73,18 @@ class UsersController extends Controller
             $isUserUpdated = $authUser->update();
             if ($isUserUpdated) {
                 DB::commit();
-                return response()->json(
-                    [
-                    'message' => lang::get('translation.profile_data_updated') 
-                    ],
-                     200); 
+                $code = 200;
+                $msg = lang::get('translation.profile_data_updated');
             } else {
                 DB::rollBack();
-                return response()->json(
-                    [
-                    'message' => lang::get('translation.profile_data_not_updated') 
-                    ],
-                    400);
+                $code = 400;
+                $msg = lang::get('translation.profile_data_not_updated');
             }
+            return response()->json(
+                [
+                'message' => $msg
+                ],
+                $code); 
         }catch(ValidationException $e){
             DB::rollBack();
         
@@ -127,15 +126,18 @@ class UsersController extends Controller
             $authUser->password = Hash::make($newPassword);
             $isPassowrdUpdated = $authUser->update();
             if ($isPassowrdUpdated) {
-                return response()->json([
-                    'message' => lang::get('translation.password_updated')
-                ], 200);
+                DB::commit();
+                $code = 200;
+                $msg = lang::get('translation.password_updated');
+                
             } else {
-                return response()->json([
-                    'message' => lang::get('translation.password_not_updated')
-                ], 400);
+                DB::rollBack();
+                $code = 400;
+                $msg = lang::get('translation.password_not_updated');
             }
-            
+            return response()->json([
+                'message' => $msg
+            ], $code);
         }catch(ValidationException $e){
             DB::rollBack();
         

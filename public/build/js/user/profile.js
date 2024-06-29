@@ -23,12 +23,13 @@ $('#update_user_profile').on('submit', function(event) {
     event.preventDefault();
     showLoading();
     hideAlert();
+    disableButtons();
 
     let formData = new FormData(this);
     
     $.ajax({
         url: "update-user-profile",
-        type: "POST",
+        type: "post",
         data: formData,
         contentType: false,
         processData: false,
@@ -37,6 +38,7 @@ $('#update_user_profile').on('submit', function(event) {
 
             hideLoading();
             setSuccess(msg);
+            enableButtons();
 
             // Reload the page after 2 seconds (2000 milliseconds)
             setTimeout(function() {
@@ -67,6 +69,7 @@ $('#update_user_profile').on('submit', function(event) {
             } else {
                 setDanger(error);
             }
+            enableButtons();
         }
     });
 });
@@ -75,11 +78,12 @@ $('#update_user_password').on('submit', function(event) {
     event.preventDefault();
     showLoading();
     hideAlert();
+    disableButtons();
 
     let formData = new FormData(this);
     $.ajax({
         url: "update-user-password",
-        type: "POST",
+        type: "post",
         data: formData,
         contentType: false,
         processData: false,
@@ -88,7 +92,7 @@ $('#update_user_password').on('submit', function(event) {
 
             hideLoading();
             setSuccess(msg);
-
+            enableButtons();
             // Reload the page after 2 seconds (2000 milliseconds)
             setTimeout(function() {
                 window.location.reload();
@@ -119,6 +123,7 @@ $('#update_user_password').on('submit', function(event) {
                 console.log(xhr);
                 setDanger(error);
             }
+            enableButtons();
         }
     });
 });

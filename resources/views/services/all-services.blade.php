@@ -32,7 +32,7 @@
             @include('layouts.utils.success-danger')
             <div class="card">
                 <div class="card-body">
-                    <a href="#" id="create_service" class="btn btn-primary">@lang('translation.create_new_service')</a>
+                    <a href="{{ route('showCreateService') }}" id="create_service" class="btn btn-primary">@lang('translation.create_new_service')</a>
                     <table id="services_table" class="table table-striped dt-responsive nowrap w-100">
                         <thead>
                             <tr>
@@ -72,5 +72,5 @@
         var deleteText = '@lang('translation.delete')';
     </script>
     
-    <script src="{{ URL::asset('build/js/services/services.js') }}"></script>
+    <script src="{{ URL::asset('build/js/services/all-services.js') }}"></script>
 @endsection

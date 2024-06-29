@@ -18,7 +18,7 @@ use Exception;
 use DB;
 
 
-class UserController extends Controller
+class UsersController extends Controller
 {
     private $imagePath = 'images/users/';
 
@@ -39,7 +39,7 @@ class UserController extends Controller
             $code = $e->getCode();
             $msg = $e->getMessage();
 
-            Log::error("Error | Controller: UserControllers | Function: showUserProfile | Code: ".$code." | Message: ".$msg);
+            Log::error("Error | Controller: UsersControllers | Function: showUserProfile | Code: ".$code." | Message: ".$msg);
             return view('errors.500');
         }
     }
@@ -101,7 +101,7 @@ class UserController extends Controller
             $code = $e->getCode();
             $msg = $e->getMessage();
 
-            Log::error("Error | Controller: UserControllers | Function: updateUserProfile | Code: ".$code." | Message: ".$msg);
+            Log::error("Error | Controller: UsersControllers | Function: updateUserProfile | Code: ".$code." | Message: ".$msg);
 
             return response()->json(['message' => lang::get('translation.error_500')], $code);
         }
@@ -151,7 +151,7 @@ class UserController extends Controller
             $code = $e->getCode();
             $msg = $e->getMessage();
 
-            Log::error("Error | Controller: UserControllers | Function: updatePassword | Code: ".$code." | Message: ".$msg);
+            Log::error("Error | Controller: UsersControllers | Function: updatePassword | Code: ".$code." | Message: ".$msg);
 
             return response()->json(['message' => lang::get('translation.error_500')], $code);
         }

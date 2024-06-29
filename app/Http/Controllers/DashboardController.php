@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Session;
 
-class HomeController extends Controller
+class DashBoardController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -38,25 +38,4 @@ class HomeController extends Controller
     {
         return view('index');
     }
-
-    /*Language Translation*/
-    public function lang($locale)
-    {
-        if ($locale) {
-            App::setLocale($locale);
-            Session::put('lang', $locale);
-            Session::save();
-            return redirect()->back()->with('locale', $locale);
-        } else {
-            return redirect()->back();
-        }
-    }
-
-
-    public function getCurrentLang(){
-        $currentLang = session('lang', 'en');
-
-        return response()->json(['language' => $currentLang], 200);
-    }
-
 }

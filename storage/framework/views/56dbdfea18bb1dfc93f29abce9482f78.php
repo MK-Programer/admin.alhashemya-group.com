@@ -67,7 +67,7 @@
 <?php $__env->stopSection(); ?>
 <?php $__env->startSection('script'); ?>
 
-<script src="<?php echo e(URL::asset('build/js/services/create-new-service.js')); ?>"></script>
+<script src="<?php echo e(asset('build/js/services/create-new-service.js')); ?>"></script>
 
 <?php $__env->stopSection(); ?>
 <?php echo $__env->make('layouts.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH E:\elhashemya_group\resources\views/services/create-new-service.blade.php ENDPATH**/ ?>

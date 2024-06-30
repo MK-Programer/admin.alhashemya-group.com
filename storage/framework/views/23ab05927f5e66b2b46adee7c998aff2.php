@@ -27,7 +27,7 @@
                 <div class="row justify-content-center">
                     <div class="col-md-8 col-xl-6">
                         <div>
-                            <img src="<?php echo e(URL::asset('/build/images/error-img.png')); ?>" alt="" class="img-fluid">
+                            <img src="<?php echo e(asset('build/images/error-img.png')); ?>" alt="" class="img-fluid">
                         </div>
                     </div>
                 </div>

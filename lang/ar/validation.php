@@ -158,7 +158,8 @@ return [
         'title_ar' => 'العنوان (AR)',
         'description_en' => 'الوصف (EN)',
         'description_ar' => 'الوصف (AR)',
-        'sequence' => 'التسلسل'
+        'sequence' => 'التسلسل',
+        'is_active' => 'هل هو نشط؟',
 
     ],
 

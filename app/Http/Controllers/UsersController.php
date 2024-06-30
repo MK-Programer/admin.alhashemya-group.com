@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Str;
 
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
@@ -63,8 +64,10 @@ class UsersController extends Controller
             $authUser->email = $request->get('email');
     
             if ($request->file('avatar')) {
+                
                 $avatar = $request->file('avatar');
-                $avatarName = time() . '.' . $avatar->getClientOriginalExtension();
+                $uuid = Str::uuid();
+                $avatarName = $uuid . '.' . $avatar->getClientOriginalExtension();
                 $avatarPath = public_path($this->imagePath);
                 $avatar->move($avatarPath, $avatarName);
                 $authUser->avatar = $this->imagePath.$avatarName;

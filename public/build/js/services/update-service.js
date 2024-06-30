@@ -18,17 +18,15 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-
-$('#new_service').on('submit', function(event) {
+$('#update_service').on('submit', function(event) {
     event.preventDefault();
     showLoading();
     hideAlert();
     disableButtons();
 
     let formData = new FormData(this);
-    
     $.ajax({
-        url: "/services/save-created-service",
+        url: "/services/save-updated-service",
         type: "post",
         data: formData,
         contentType: false,
@@ -73,6 +71,9 @@ $('#new_service').on('submit', function(event) {
                 }
                 if (errors.hasOwnProperty('sequence')) {
                     errorsList = errorsList.concat(errors['sequence']);
+                }
+                if (errors.hasOwnProperty('is_active')) {
+                    errorsList = errorsList.concat(errors['is_active']);
                 }
                 
                 setDanger(errorsList);

@@ -19,7 +19,7 @@
 
                     <div class="mb-3">
                         <div class="text-start mt-2">
-                            <img src="{{ asset($authUser->avatar) }}" alt="" class="rounded-circle avatar-lg" id="profile_image">
+                            <img src="{{ asset($authUser->avatar) }}" alt="#" class="rounded-circle avatar-lg" id="profile_image">
                         </div>
                         <label for="avatar">@lang('translation.profile_picture')</label>
                         <div class="input-group">
@@ -76,6 +76,6 @@
 @endsection
 @section('script')
 
-<script src="{{ URL::asset('build/js/user/profile.js') }}"></script>
+<script src="{{ asset('build/js/user/profile.js') }}"></script>
 
 @endsection

@@ -67,6 +67,6 @@
 @endsection
 @section('script')
 
-<script src="{{ URL::asset('build/js/services/create-new-service.js') }}"></script>
+<script src="{{ asset('build/js/services/create-new-service.js') }}"></script>
 
 @endsection

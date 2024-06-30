@@ -7,7 +7,7 @@ $(document).ready(function() {
 
       "ordering": false,
       "ajax": {
-          "url": "get-paginated-services-data",
+          "url": "/services/get-paginated-services-data",
           "type": "GET",
           "dataSrc": function (json) {
               console.log("Server Response:", json); // Log the JSON response for debugging
@@ -43,16 +43,16 @@ $(document).ready(function() {
           { 
             "data": null,
             "render": function (data, type, row) {
-                return '<button class="btn btn-primary" onclick="window.location.href=update-service?id=' + row.id + '">' + updateText + '</button>';
+                return data.is_active == 1 ? yesText : noText;
             },
-        },
-        { 
-          "data": null,
-          "render": function (data, type, row) {
-              // Customize the content of this column with a button
-              return '<button class="btn btn-danger" onclick="deleteService(' + row.id + ' )">' + deleteText + '</button>';
           },
-        }
+          { 
+            "data": null,
+            "render": function (data, type, row) {
+                return '<button class="btn btn-primary" onclick="redirectToUpdateService(' + data.id + ')">' + updateText + '</button>';
+            },
+          },
+          
       ],
       "language": {
           "url": "lang/datatables_" + currentLang + ".json" // Adjust language file URL dynamically
@@ -64,33 +64,7 @@ $(document).ready(function() {
   });
 });
 
-
-function deleteService(serviceId){
-    showLoading();
-    hideAlert();
-    disableButtons();
-
-    $.ajax({
-        url: 'delete-service/' + serviceId, // Replace with your actual endpoint
-        type: 'DELETE', // Use the appropriate HTTP method (e.g., DELETE, POST)
-        data: {
-            "_token": csrfToken, // Include CSRF token for security
-        },
-        success: function(response) {
-            var msg = response.message;
-            hideLoading();
-            setSuccess(msg);
-            enableButtons();
-            // Reload the page after 2 seconds (2000 milliseconds)
-            setTimeout(function() {
-                window.location.reload();
-            }, 2000);
-        },
-        error: function(xhr, status, error) {
-            hideLoading();
-            setDanger(error);
-            enableButtons();
-        }
-
-    });
+function redirectToUpdateService(id) {
+    window.location.href = '/services/update-service/' + id;
 }
+

@@ -159,6 +159,7 @@ return [
         'description_en' => 'Description (EN)',
         'description_ar' => 'Description (AR)',
         'sequence' => 'Sequence',
+        'is_active' => 'Is Active ?',
     ],
 
 ];

@@ -5,19 +5,19 @@
             <div class="navbar-brand-box">
                 <a href="index" class="logo logo-dark">
                     <span class="logo-sm">
-                        <img src="<?php echo e(URL::asset('/build/images/logo.svg')); ?>" alt="" height="22">
+                        <img src="<?php echo e(asset('build/images/logo.svg')); ?>" alt="" height="22">
                     </span>
                     <span class="logo-lg">
-                        <img src="<?php echo e(URL::asset('/build/images/logo-dark.png')); ?>" alt="" height="17">
+                        <img src="<?php echo e(asset('build/images/logo-dark.png')); ?>" alt="" height="17">
                     </span>
                 </a>
 
                 <a href="index" class="logo logo-light">
                     <span class="logo-sm">
-                        <img src="<?php echo e(URL::asset('/build/images/logo-light.svg')); ?>" alt="" height="22">
+                        <img src="<?php echo e(asset('build/images/logo-light.svg')); ?>" alt="" height="22">
                     </span>
                     <span class="logo-lg">
-                        <img src="<?php echo e(URL::asset('/build/images/logo-light.png')); ?>" alt="" height="19">
+                        <img src="<?php echo e(asset('build/images/logo-light.png')); ?>" alt="" height="19">
                     </span>
                 </a>
             </div>
@@ -155,7 +155,7 @@
 
                             <div class="col-sm-5">
                                 <div>
-                                    <img src="<?php echo e(URL::asset ('/build/images/megamenu-img.png')); ?>" alt="" class="img-fluid mx-auto d-block">
+                                    <img src="<?php echo e(asset ('build/images/megamenu-img.png')); ?>" alt="" class="img-fluid mx-auto d-block">
                                 </div>
                             </div>
                         </div>
@@ -193,30 +193,30 @@
                 data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <?php switch(Session::get('lang')):
                     case ('ru'): ?>
-                        <img src="<?php echo e(URL::asset('/build/images/flags/russia.jpg')); ?>" alt="Header Language" height="16">
+                        <img src="<?php echo e(asset('build/images/flags/russia.jpg')); ?>" alt="Header Language" height="16">
                     <?php break; ?>
                     <?php case ('it'): ?>
-                        <img src="<?php echo e(URL::asset('/build/images/flags/italy.jpg')); ?>" alt="Header Language" height="16">
+                        <img src="<?php echo e(asset('build/images/flags/italy.jpg')); ?>" alt="Header Language" height="16">
                     <?php break; ?>
                     <?php case ('de'): ?>
-                        <img src="<?php echo e(URL::asset('/build/images/flags/germany.jpg')); ?>" alt="Header Language" height="16">
+                        <img src="<?php echo e(asset('build/images/flags/germany.jpg')); ?>" alt="Header Language" height="16">
                     <?php break; ?>
                     <?php case ('es'): ?>
-                        <img src="<?php echo e(URL::asset('/build/images/flags/spain.jpg')); ?>" alt="Header Language" height="16">
+                        <img src="<?php echo e(asset('build/images/flags/spain.jpg')); ?>" alt="Header Language" height="16">
                     <?php break; ?>
                     <?php default: ?>
-                        <img src="<?php echo e(URL::asset('/build/images/flags/us.jpg')); ?>" alt="Header Language" height="16">
+                        <img src="<?php echo e(asset('build/images/flags/us.jpg')); ?>" alt="Header Language" height="16">
                 <?php endswitch; ?>
             </button>
             <div class="dropdown-menu dropdown-menu-end">
 
                 <!-- item-->
                 <a href="<?php echo e(url('index/en')); ?>" class="dropdown-item notify-item language" data-lang="eng">
-                    <img src="<?php echo e(URL::asset ('/build/images/flags/us.jpg')); ?>" alt="user-image" class="me-1" height="12"> <span class="align-middle">English</span>
+                    <img src="<?php echo e(asset ('build/images/flags/us.jpg')); ?>" alt="user-image" class="me-1" height="12"> <span class="align-middle">English</span>
                 </a>
                 <!-- item-->
                 <a href="<?php echo e(url('index/ar')); ?>" class="dropdown-item notify-item language" data-lang="sp">
-                    <img src="<?php echo e(URL::asset ('/build/images/flags/spain.jpg')); ?>" alt="user-image" class="me-1" height="12"> <span class="align-middle">Arabic</span>
+                    <img src="<?php echo e(asset ('build/images/flags/spain.jpg')); ?>" alt="user-image" class="me-1" height="12"> <span class="align-middle">Arabic</span>
                 </a>
             </div>
         </div>
@@ -231,19 +231,19 @@
                     <div class="row g-0">
                         <div class="col">
                             <a class="dropdown-icon-item" href="#">
-                                <img src="<?php echo e(URL::asset ('/build/images/brands/github.png')); ?>" alt="Github">
+                                <img src="<?php echo e(asset ('build/images/brands/github.png')); ?>" alt="Github">
                                 <span>GitHub</span>
                             </a>
                         </div>
                         <div class="col">
                             <a class="dropdown-icon-item" href="#">
-                                <img src="<?php echo e(URL::asset ('/build/images/brands/bitbucket.png')); ?>" alt="bitbucket">
+                                <img src="<?php echo e(asset ('build/images/brands/bitbucket.png')); ?>" alt="bitbucket">
                                 <span>Bitbucket</span>
                             </a>
                         </div>
                         <div class="col">
                             <a class="dropdown-icon-item" href="#">
-                                <img src="<?php echo e(URL::asset ('/build/images/brands/dribbble.png')); ?>" alt="dribbble">
+                                <img src="<?php echo e(asset ('build/images/brands/dribbble.png')); ?>" alt="dribbble">
                                 <span>Dribbble</span>
                             </a>
                         </div>
@@ -252,19 +252,19 @@
                     <div class="row g-0">
                         <div class="col">
                             <a class="dropdown-icon-item" href="#">
-                                <img src="<?php echo e(URL::asset ('/build/images/brands/dropbox.png')); ?>" alt="dropbox">
+                                <img src="<?php echo e(asset ('build/images/brands/dropbox.png')); ?>" alt="dropbox">
                                 <span>Dropbox</span>
                             </a>
                         </div>
                         <div class="col">
                             <a class="dropdown-icon-item" href="#">
-                                <img src="<?php echo e(URL::asset ('/build/images/brands/mail_chimp.png')); ?>" alt="mail_chimp">
+                                <img src="<?php echo e(asset ('build/images/brands/mail_chimp.png')); ?>" alt="mail_chimp">
                                 <span>Mail Chimp</span>
                             </a>
                         </div>
                         <div class="col">
                             <a class="dropdown-icon-item" href="#">
-                                <img src="<?php echo e(URL::asset ('/build/images/brands/slack.png')); ?>" alt="slack">
+                                <img src="<?php echo e(asset ('build/images/brands/slack.png')); ?>" alt="slack">
                                 <span>Slack</span>
                             </a>
                         </div>
@@ -314,7 +314,7 @@
                     </a>
                     <a href="" class="text-reset notification-item">
                         <div class="d-flex">
-                            <img src="<?php echo e(URL::asset ('/build/images/users/avatar-3.jpg')); ?>"
+                            <img src="<?php echo e(asset ('build/images/users/avatar-3.jpg')); ?>"
                                 class="me-3 rounded-circle avatar-xs" alt="user-pic">
                             <div class="flex-grow-1">
                                 <h6 class="mt-0 mb-1"><?php echo app('translator')->get('translation.James_Lemire'); ?></h6>
@@ -344,7 +344,7 @@
 
                     <a href="" class="text-reset notification-item">
                         <div class="d-flex">
-                            <img src="<?php echo e(URL::asset ('/build/images/users/avatar-4.jpg')); ?>"
+                            <img src="<?php echo e(asset ('build/images/users/avatar-4.jpg')); ?>"
                                 class="me-3 rounded-circle avatar-xs" alt="user-pic">
                             <div class="flex-grow-1">
                                 <h6 class="mt-0 mb-1"><?php echo app('translator')->get('translation.Salena_Layfield'); ?></h6>

@@ -62,11 +62,10 @@ class ServicesController extends Controller
 
             // Fetch the data with the calculated offset and limit using Query Builder
             $services = DB::table($this->servicesMetaData->table_name) // Replace with your actual table name
-                            ->select('id', 'title_en', 'title_ar', 'desc_en', 'desc_ar', 'sequence')
+                            ->select('id', 'title_en', 'title_ar', 'desc_en', 'desc_ar', 'sequence', 'is_active')
                             ->selectRaw("CONCAT('$assetUrl', picture) AS picture")
                             ->where('setting_id', $this->settingId)
                             ->where('company_id', $this->authUser->company_id)
-                            ->where('is_deleted', 0)
                             ->offset($offset)
                             ->limit($perPage)
                             ->orderBy('sequence', 'ASC')
@@ -92,36 +91,6 @@ class ServicesController extends Controller
         
         }catch(Exception $e){
 
-            $code = $e->getCode();
-            $msg = $e->getMessage();
-
-            Log::error("Error | Controller: ServicesController | Function: getPaginatedData | Code: ".$code." | Message: ".$msg);
-
-            return response()->json(['message' => $msg], $code);
-        }
-    }
-
-    public function deleteService($serviceId){
-        try{
-            DB::beginTransaction();
-            $deleteService = DB::table($this->servicesMetaData->table_name) 
-                                ->where('setting_id', $this->settingId)
-                                ->where('company_id', $this->authUser->company_id)
-                                ->where('id', $serviceId)
-                                ->update(['is_deleted' => 1, 'updated_at' => now()]);
-
-            if($deleteService == 1){
-                DB::commit();
-                $code = 200;
-                $msg = lang::get('translation.service_deleted');
-            }else{
-                DB::rollBack();
-                $code = 400;
-                $msg = lang::get('translation.service_not_deleted');
-            }
-            return response()->json(['message' => $msg], $code);
-        }catch(Exception $e){
-            DB::rollBack();
             $code = $e->getCode();
             $msg = $e->getMessage();
 
@@ -200,6 +169,104 @@ class ServicesController extends Controller
             $msg = $e->getMessage();
 
             Log::error("Error | Controller: ServicesController | Function: saveCreatedService | Code: ".$code." | Message: ".$msg);
+
+            return response()->json(['message' => $msg], $code);
+        }
+    }
+
+    public function showServiceToUpdate($serviceId){
+        try{
+            $service = DB::table($this->servicesMetaData->table_name)
+                        ->where('company_id', $this->authUser->company_id)
+                        ->where('setting_id', $this->settingId)
+                        ->where('id', $serviceId)
+                        ->first();
+
+            return view('services.update-service', compact('service'));
+        }catch(Exception $e){
+            $code = $e->getCode();
+            $msg = $e->getMessage();
+
+            Log::error("Error | Controller: ServicesController | Function: showServiceToUpdate | Code: ".$code." | Message: ".$msg);
+            return view('errors.500');
+        }
+    }
+
+    public function saveUpdatedService(Request $request){
+        try{
+            DB::beginTransaction();
+            
+            $request->validate([
+                'picture' => ['nullable', 'image', 'mimes:jpg,jpeg,png', 'max:5120'],
+                'title_en' => ['required', 'string', 'max:255'],
+                'title_ar' => ['required', 'string', 'max:255'],
+                'description_en' => ['required', 'string', 'max:1000'],
+                'description_ar' => ['required', 'string', 'max:1000'],
+                'sequence' => ['required', 'integer'],
+                'is_active' => ['required', 'integer'],
+            ]);
+            
+            $serviceId = $request->get('service_id');
+            $service = [
+                'company_id' => $this->authUser->company_id,
+                'setting_id' => $this->settingId,
+                'title_en' => $request->get('title_en'),
+                'title_ar' => $request->get('title_ar'),
+                'desc_en' => $request->get('description_en'),
+                'desc_ar' => $request->get('description_ar'),
+                'sequence' => $request->get('sequence'),
+                'is_active' => $request->get('is_active'),
+                'updated_at' => now(),
+            ];
+                
+            $newPicture = $request->file('picture');
+            if($newPicture){
+
+                $dbPicture = $request->get('db_picture');
+                $dbPicturePath = public_path($dbPicture);
+                if (file_exists($dbPicturePath)) {
+                    unlink($dbPicturePath);
+                }
+
+                $uuid = Str::uuid();
+            
+                $pictureName = $uuid . '.' . $newPicture->getClientOriginalExtension();
+                $picturePath = public_path($this->imagePath);
+                $newPicture->move($picturePath, $pictureName);
+                $service['picture'] = $this->imagePath.$pictureName;
+            } 
+
+            $updateService = DB::table($this->servicesMetaData->table_name)
+                                ->where('company_id', $this->authUser->company_id)
+                                ->where('setting_id', $this->settingId)
+                                ->where('id', $serviceId)
+                                ->update($service);    
+
+            if($updateService == 1){
+                DB::commit();
+                $code = 200;
+                $msg = lang::get('translation.service_updated');
+            }else{
+                DB::rollBack();
+                $code = 400;
+                $msg = lang::get('translation.service_not_updated');
+            }
+            return response()->json(['message' => $msg], $code);
+        }catch(ValidationException $e){
+            DB::rollBack();
+        
+            // Handle validation errors
+            $errors = $e->validator->errors()->messages();
+
+            return response()->json([
+                'errors' => $errors
+            ], 422);
+        }catch(Exception $e){
+            DB::rollBack();
+            $code = $e->getCode();
+            $msg = $e->getMessage();
+
+            Log::error("Error | Controller: ServicesController | Function: saveUpdatedService | Code: ".$code." | Message: ".$msg);
 
             return response()->json(['message' => $msg], $code);
         }

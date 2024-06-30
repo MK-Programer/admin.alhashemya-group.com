@@ -28,7 +28,7 @@ $('#update_user_profile').on('submit', function(event) {
     let formData = new FormData(this);
     
     $.ajax({
-        url: "update-user-profile",
+        url: "/user/update-user-profile",
         type: "post",
         data: formData,
         contentType: false,
@@ -82,7 +82,7 @@ $('#update_user_password').on('submit', function(event) {
 
     let formData = new FormData(this);
     $.ajax({
-        url: "update-user-password",
+        url: "/user/update-user-password",
         type: "post",
         data: formData,
         contentType: false,

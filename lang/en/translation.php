@@ -229,12 +229,21 @@ return [
   'enter_description_ar' => 'Enter Description (AR)',
   'sequence' => 'Sequence',
   'enter_sequence' => 'Enter Sequence',
+  'is_active' => 'Is Active ?',
+  'yes' => 'Yes',
+  'no' => 'No',
+  'enter_status' => 'Enter Status',
+  'choose_picture' => 'Choose Picture',
+  
   'create' => 'Create',
+  'update_service' => 'Update Service',
 
   'service_created' => 'Service Created Successfully',
   'service_not_created' => 'Error While Creating The Service, Try Again Later...',
   'service_deleted' => 'Service Deleted Successfully',
   'service_not_deleted' => 'Error While Deleting The Service, Try Again Later...',
+  'service_updated' => 'Service Updated Successfully',
+  'service_not_updated' => 'Error While Updating The Service, Try Again Later...',
   
   'error_404' => 'Sorry, Page Not Found',
   'error_500' => 'Internal Server Error, Please Contact The Adminstrator',  

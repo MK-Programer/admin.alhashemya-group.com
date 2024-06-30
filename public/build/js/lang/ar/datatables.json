@@ -1,0 +1,17 @@
+{
+    "sEmptyTable": "لا توجد بيانات متاحة في الجدول",
+    "sInfo": "عرض _START_ إلى _END_ من أصل _TOTAL_ مدخل",
+    "sInfoEmpty": "عرض 0 إلى 0 من أصل 0 مدخل",
+    "sInfoFiltered": "(تصفية من _MAX_ مدخل إجمالي)",
+    "sLengthMenu": "أظهر _MENU_ مدخل",
+    "sLoadingRecords": "جارٍ التحميل...",
+    "sProcessing": "جارٍ المعالجة...",
+    "sSearch": "بحث:",
+    "sZeroRecords": "لم يتم العثور على سجلات مطابقة",
+    "oPaginate": {
+        "sFirst": "الأول",
+        "sLast": "الأخير",
+        "sNext": "التالي",
+        "sPrevious": "السابق"
+    }
+}

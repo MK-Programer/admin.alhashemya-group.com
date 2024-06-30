@@ -8,13 +8,22 @@
 </style>
 
 <script>
-    
-    function disableButtons(){
-        $('button, input[type="button"], input[type="submit"], input[type="reset"]').attr('disabled', true);
+
+    function buttonsClickHelper(canClick){
+        $('button, input[type="button"], input[type="submit"], input[type="reset"]').attr('disabled', !canClick);
+        var linksClass = canClick ? '' : 'disabled-links'; 
         // Disable links
         $('a').each(function() {
-            $(this).addClass('disabled-link');
+            $(this).addClass(linksClass);
         });
+    }
+    
+    function disableButtons(){
+        buttonsClickHelper(false);
+    }
+
+    function enableButtons(){
+        buttonsClickHelper(true)
     }
     
 </script><?php /**PATH E:\elhashemya_group\resources\views/layouts/utils/buttons-handler.blade.php ENDPATH**/ ?>

@@ -4,9 +4,16 @@
     function hideAlert(){
         $('#alert').empty();
         $('#alert').hide();
+        $('#alert').addClass('');
     }
 
     function alertHelper(msg){
+        if (Array.isArray(msg)) {
+            if(msg.length == 1){
+                msg = msg[0];
+            }
+        }
+
         if(Array.isArray(msg)){
             // Create a new ul element
             var ulElement = $('<ul>');
@@ -19,17 +26,20 @@
         }else{
             $('#alert').text(msg);
         }
-        
         $('#alert').show();
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'  // Optional: smooth scrolling
+        });
     }
     
     function setSuccess(msg){
-        alertsHelper(msg);
+        alertHelper(msg);
         $("#alert").addClass("alert alert-success");
     }
     
     function setDanger(msg){
-        alertsHelper(msg);
+        alertHelper(msg);
         $("#alert").addClass("alert alert-danger");
     }
 </script>

@@ -1,7 +1,7 @@
 
 
 <?php $__env->startSection('title'); ?>
-    <?php echo app('translator')->get('translation.services'); ?>
+    <?php echo app('translator')->get('translation.missions_and_visions'); ?>
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('css'); ?>
@@ -22,7 +22,7 @@
             <?php echo app('translator')->get('translation.dashboard'); ?>
         <?php $__env->endSlot(); ?>
         <?php $__env->slot('title'); ?>
-            <?php echo app('translator')->get('translation.services'); ?>
+            <?php echo app('translator')->get('translation.missions_and_visions'); ?>
         <?php $__env->endSlot(); ?>
     <?php echo $__env->renderComponent(); ?>
 
@@ -31,19 +31,19 @@
             <div class="card">
                 <div class="card-body">
                     <div class="mt-0 mb-3">
-                        <a href="<?php echo e(route('showCreateService')); ?>" id="create_service" class="btn btn-primary"><?php echo app('translator')->get('translation.create_new_service'); ?></a>
+                        <a href="#" id="create_mission_and_vision" class="btn btn-primary"><?php echo app('translator')->get('translation.create_new_mission_and_vision'); ?></a>
                     </div>
-                    <table id="services_table" class="table table-striped dt-responsive nowrap w-100">
+                    <table id="missions_and_visions_table" class="table table-striped dt-responsive nowrap w-100">
                         <thead>
                             <tr>
                                 <th><?php echo app('translator')->get('translation.id'); ?></th>
-                                <th><?php echo app('translator')->get('translation.picture'); ?></th>
-                                <th><?php echo app('translator')->get('translation.title_en'); ?></th>
-                                <th><?php echo app('translator')->get('translation.title_ar'); ?></th>
-                                <th><?php echo app('translator')->get('translation.description_en'); ?></th>
-                                <th><?php echo app('translator')->get('translation.description_ar'); ?></th>
+                                <th><?php echo app('translator')->get('translation.mission_title_en'); ?></th>
+                                <th><?php echo app('translator')->get('translation.mission_title_ar'); ?></th>
+                                <th><?php echo app('translator')->get('translation.vision_title_en'); ?></th>
+                                <th><?php echo app('translator')->get('translation.vision_title_ar'); ?></th>
                                 <th><?php echo app('translator')->get('translation.sequence'); ?></th>
                                 <th><?php echo app('translator')->get('translation.is_active'); ?></th>
+                                <th></th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -67,12 +67,13 @@
     
     
     <script>
+        var detailsText = '<?php echo app('translator')->get('translation.details'); ?>';
         var updateText = '<?php echo app('translator')->get('translation.update'); ?>';
         var yesText = '<?php echo app('translator')->get('translation.yes'); ?>';
         var noText = '<?php echo app('translator')->get('translation.no'); ?>';
     </script>
     
-    <script src="<?php echo e(asset('build/js/services/all-services.js')); ?>"></script>
+    <script src="<?php echo e(asset('build/js/missions-and-visions/all-missions-and-visions.js')); ?>"></script>
 <?php $__env->stopSection(); ?>
 
-<?php echo $__env->make('layouts.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH E:\elhashemya_group\resources\views/services/all-services.blade.php ENDPATH**/ ?>
+<?php echo $__env->make('layouts.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH E:\elhashemya_group\resources\views/missions-and-visions/all-missions-and-visions.blade.php ENDPATH**/ ?>

@@ -6,6 +6,7 @@ use App\Http\Controllers\AppController;
 use App\Http\Controllers\DashBoardController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\ServicesController;
+use App\Http\Controllers\MissionsAndVisionsController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -39,6 +40,10 @@ Route::middleware(['auth', 'active.user'])->group(function () {
     Route::post('/services/save-created-service', [ServicesController::class, 'saveCreatedService'])->name('saveCreatedService');
     Route::get('/services/update-service/{id}', [ServicesController::class, 'showServiceToUpdate'])->name('showServiceToUpdate');
     Route::post('/services/save-updated-service', [ServicesController::class, 'saveUpdatedService'])->name('saveUpdatedService');
+
+    //Missions And Visions 
+    Route::get('/missions-and-visions', [MissionsAndVisionsController::class, 'showMissionsAndVisions'])->name('showMissionsAndVisions');
+    Route::get('/missions-and-visions/get-paginated-missions-and-visions-data', [MissionsAndVisionsController::class, 'getPaginatedMissionsAndVisionsData'])->name('getPaginatedMissionsAndVisionsData');
 
     //Language Translation
     Route::get('/index/{locale}', [AppController::class, 'lang']);

@@ -37,7 +37,7 @@
                     <li>
                         <a href="{{ route($companySetting->action_route) }}">
                             <i class="{{ $companySetting->icon }}"></i>
-                            <span key="t-dashboards">{{ $companySetting->name }}</span>
+                            <span key="t-{{ $companySetting->name }}">{{ $companySetting->name }}</span>
                         </a>
                     </li>
                 @endforeach

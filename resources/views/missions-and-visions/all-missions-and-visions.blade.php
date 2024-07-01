@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('title')
-    @lang('translation.services')
+    @lang('translation.missions_and_visions')
 @endsection
 
 @section('css')
@@ -22,7 +22,7 @@
             @lang('translation.dashboard')
         @endslot
         @slot('title')
-            @lang('translation.services')
+            @lang('translation.missions_and_visions')
         @endslot
     @endcomponent
 
@@ -31,19 +31,19 @@
             <div class="card">
                 <div class="card-body">
                     <div class="mt-0 mb-3">
-                        <a href="{{ route('showCreateService') }}" id="create_service" class="btn btn-primary">@lang('translation.create_new_service')</a>
+                        <a href="#" id="create_mission_and_vision" class="btn btn-primary">@lang('translation.create_new_mission_and_vision')</a>
                     </div>
-                    <table id="services_table" class="table table-striped dt-responsive nowrap w-100">
+                    <table id="missions_and_visions_table" class="table table-striped dt-responsive nowrap w-100">
                         <thead>
                             <tr>
                                 <th>@lang('translation.id')</th>
-                                <th>@lang('translation.picture')</th>
-                                <th>@lang('translation.title_en')</th>
-                                <th>@lang('translation.title_ar')</th>
-                                <th>@lang('translation.description_en')</th>
-                                <th>@lang('translation.description_ar')</th>
+                                <th>@lang('translation.mission_title_en')</th>
+                                <th>@lang('translation.mission_title_ar')</th>
+                                <th>@lang('translation.vision_title_en')</th>
+                                <th>@lang('translation.vision_title_ar')</th>
                                 <th>@lang('translation.sequence')</th>
                                 <th>@lang('translation.is_active')</th>
+                                <th></th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -67,10 +67,11 @@
     
     {{-- lang --}}
     <script>
+        var detailsText = '@lang('translation.details')';
         var updateText = '@lang('translation.update')';
         var yesText = '@lang('translation.yes')';
         var noText = '@lang('translation.no')';
     </script>
     
-    <script src="{{ asset('build/js/services/all-services.js') }}"></script>
+    <script src="{{ asset('build/js/missions-and-visions/all-missions-and-visions.js') }}"></script>
 @endsection

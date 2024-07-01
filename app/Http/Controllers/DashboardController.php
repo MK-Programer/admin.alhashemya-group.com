@@ -16,26 +16,19 @@ class DashBoardController extends Controller
      *
      * @return void
      */
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Contracts\Support\Renderable
-     */
-    public function index(Request $request)
-    {
-        if (view()->exists($request->path())) {
-            return view($request->path());
-        }
-        return abort(404);
-    }
 
     public function root()
-    {
-        return view('index');
+    {   
+        try{
+            return view('index');
+        }catch(Exception $e){
+            $code = $e->getCode();
+            $msg = $e->getMessage();
+
+            Log::error("Error | Controller: DashBoardController | Function: root | Code: ".$code." | Message: ".$msg);
+
+            return abort(500);
+        }
+            
     }
 }

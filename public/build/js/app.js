@@ -7,6 +7,19 @@ Contact: themesbrand@gmail.com
 File: Main Js File
 */
 
+function rtlSwitchMode(){
+    // $(".bootstrap-style").attr('href', 'build/css/bootstrap-rtl.min.css');
+    $("html").attr("dir", 'rtl');
+    $(".app-style").attr('href', assetPath+'build/css/app-rtl.min.css');
+    sessionStorage.setItem("dir", "rtl-mode-switch");
+}
+
+function ltrSwitchMode(){
+    $("html").attr("dir", 'ltr');
+    $(".bootstrap-style").attr('href', 'build/css/bootstrap.min.css');
+    $(".app-style").attr('href', assetPath+'build/css/app.min.css');
+    sessionStorage.setItem("dir", "ltr-mode-switch");
+}
 
 (function ($) {
 
@@ -20,18 +33,10 @@ File: Main Js File
         if (document.getElementById("header-lang-img")) {
             if (lang == 'en') {
                 document.getElementById("header-lang-img").src = "build/images/flags/us.jpg";
-            } else if (lang == 'sp') {
-                document.getElementById("header-lang-img").src = "build/images/flags/spain.jpg";
+            } else if (lang == 'ar') {
+                document.getElementById("header-lang-img").src = "build/images/flags/eg.jpg";
             }
-            else if (lang == 'gr') {
-                document.getElementById("header-lang-img").src = "build/images/flags/germany.jpg";
-            }
-            else if (lang == 'it') {
-                document.getElementById("header-lang-img").src = "build/images/flags/italy.jpg";
-            }
-            else if (lang == 'ru') {
-                document.getElementById("header-lang-img").src = "build/images/flags/russia.jpg";
-            }
+            
             localStorage.setItem('language', lang);
             language = localStorage.getItem('language');
             getLanguage();
@@ -224,25 +229,15 @@ File: Main Js File
 
     function initSettings() {
         if (window.sessionStorage) {
-            var alreadyVisited = sessionStorage.getItem("is_visited");
+            var alreadyVisited = sessionStorage.getItem("mode");
             if (!alreadyVisited) {
-                if ($('html').attr('dir') === 'rtl' && $('body').attr('data-layout-mode') === 'dark') {
-                    $("#dark-rtl-mode-switch").prop('checked', true);
-                    $("#light-mode-switch").prop('checked', false);  
-                    sessionStorage.setItem("is_visited", "dark-rtl-mode-switch");
-                    updateThemeSetting(alreadyVisited);
-                }else if ($('html').attr('dir') === 'rtl') {
-                    $("#rtl-mode-switch").prop('checked', true);
-                    $("#light-mode-switch").prop('checked', false);
-                    sessionStorage.setItem("is_visited", "rtl-mode-switch");
-                    updateThemeSetting(alreadyVisited);
-                }else if ($('body').attr('data-layout-mode') === 'dark') {
+                if ($('body').attr('data-layout-mode') === 'dark') {
                     $("#dark-mode-switch").prop('checked', true);
                     $("#light-mode-switch").prop('checked', false);
-                    sessionStorage.setItem("is_visited", "dark-mode-switch");
+                    sessionStorage.setItem("mode", "dark-mode-switch");
                     updateThemeSetting(alreadyVisited);
                 } else {
-                    sessionStorage.setItem("is_visited", "light-mode-switch");
+                    sessionStorage.setItem("mode", "light-mode-switch");
                 }
             } else {
                 $(".right-bar input:checkbox").prop('checked', false);
@@ -250,7 +245,7 @@ File: Main Js File
                 updateThemeSetting(alreadyVisited);
             }
         }
-        $("#light-mode-switch, #dark-mode-switch, #rtl-mode-switch, #dark-rtl-mode-switch").on("change", function (e) {
+        $("#light-mode-switch, #dark-mode-switch").on("change", function (e) {
             updateThemeSetting(e.target.id);
         });
 
@@ -262,44 +257,38 @@ File: Main Js File
         })
     }
 
-    function updateThemeSetting(id) {
-        if ($("#light-mode-switch").prop("checked") == true && id === "light-mode-switch") {
-            $("html").removeAttr("dir");
-            $("#dark-mode-switch").prop("checked", false);
-            $("#rtl-mode-switch").prop("checked", false);
-            $("#dark-rtl-mode-switch").prop("checked", false);
-            $("#bootstrap-style").attr('href', 'build/css/bootstrap.min.css');
-            $('body').attr('data-layout-mode', 'light');
-            $("#app-style").attr('href', 'build/css/app.min.css');
-            sessionStorage.setItem("is_visited", "light-mode-switch");
-        } else if ($("#dark-mode-switch").prop("checked") == true && id === "dark-mode-switch") {
-            $("html").removeAttr("dir");
-            $("#light-mode-switch").prop("checked", false);
-            $("#rtl-mode-switch").prop("checked", false);
-            $("#dark-rtl-mode-switch").prop("checked", false);
-            $('body').attr('data-layout-mode', 'dark');
-            sessionStorage.setItem("is_visited", "dark-mode-switch");
-        } else if ($("#rtl-mode-switch").prop("checked") == true && id === "rtl-mode-switch") {
-            $("#light-mode-switch").prop("checked", false);
-            $("#dark-mode-switch").prop("checked", false);
-            $("#dark-rtl-mode-switch").prop("checked", false);
-            // $("#bootstrap-style").attr('href', 'build/css/bootstrap-rtl.min.css');
-            $("#app-style").attr('href', 'build/css/app-rtl.min.css');
-            $("html").attr("dir", 'rtl');
-            $('body').attr('data-layout-mode', 'light');
-            sessionStorage.setItem("is_visited", "rtl-mode-switch");
+    function initDirSetting(){
+        if (window.sessionStorage) {
+            var dir = sessionStorage.getItem("dir");
+            if (dir) {
+                if (dir === "rtl-mode-switch") {
+                    rtlSwitchMode();
+                }else if (id === "ltr-mode-switch") {
+                    ltrSwitchMode();
+                }
+            }else{
+                if(language == 'en'){
+                    ltrSwitchMode();
+                }else if(language == 'ar'){
+                    rtlSwitchMode();
+                }
+                
+            }
         }
-        else if ($("#dark-rtl-mode-switch").prop("checked") == true && id === "dark-rtl-mode-switch") {
-            $("#light-mode-switch").prop("checked", false);
-            $("#rtl-mode-switch").prop("checked", false);
-            $("#dark-mode-switch").prop("checked", false);
-            // $("#bootstrap-style").attr('href', 'build/css/bootstrap-rtl.min.css');
-            $("#app-style").attr('href', 'build/css/app-rtl.min.css');
-            $("html").attr("dir", 'rtl');
-            $('body').attr('data-layout-mode', 'dark');
-            sessionStorage.setItem("is_visited", "dark-rtl-mode-switch");
-        }
+    }
 
+    function updateThemeSetting(id) {
+        if (id === "light-mode-switch") {
+            $("#dark-mode-switch").prop("checked", false);
+            // $(".bootstrap-style").attr('href', assetPath+'build/css/bootstrap.min.css');
+            $('body').attr('data-layout-mode', 'light');
+            // $(".app-style").attr('href', assetPath+'build/css/app.min.css');
+            sessionStorage.setItem("mode", "light-mode-switch");
+        } else if (id === "dark-mode-switch") {
+            $("#light-mode-switch").prop("checked", false);
+            $('body').attr('data-layout-mode', 'dark');
+            sessionStorage.setItem("mode", "dark-mode-switch");
+        }
     }
 
     function initLanguage() {
@@ -335,6 +324,7 @@ File: Main Js File
         initDropdownMenu();
         initComponents();
         initSettings();
+        initDirSetting(); // handle initializing direction
         initLanguage();
         initPreloader();
         Waves.init();

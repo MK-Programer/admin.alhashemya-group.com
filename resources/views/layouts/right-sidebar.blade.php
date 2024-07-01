@@ -3,7 +3,7 @@
     <div data-simplebar class="h-100">
         <div class="rightbar-title d-flex align-items-center px-3 py-4">
             
-            <h5 class="m-0 me-2">Settings</h5>
+            <h5 class="m-0 me-2">@lang('translation.settings')</h5>
 
             <a href="javascript:void(0);" class="right-bar-toggle ms-auto">
                 <i class="mdi mdi-close noti-icon"></i>
@@ -12,43 +12,50 @@
 
         <!-- Settings -->
         <hr class="mt-0" />
-        <h6 class="text-center mb-0">Choose Layouts</h6>
-
         <div class="p-4">
-            <div class="mb-2">
-                <img src="{{ asset('build/images/layouts/layout-1.jpg') }}" class="img-fluid img-thumbnail" alt="">
+            <div class="mb-4 text-center">
+                <h5>@lang('translation.choose_theme')</h5>
             </div>
-
-            <div class="form-check form-switch mb-3">
-                <input class="form-check-input theme-choice" type="checkbox" id="light-mode-switch" checked>
-                <label class="form-check-label" for="light-mode-switch">Light Mode</label>
+        
+            <div class="theme-selection">
+                <div class="form-check form-switch mb-3">
+                    <input class="form-check-input theme-choice" type="radio" name="theme" id="light-mode-switch" checked>
+                    <label class="form-check-label" for="light-mode-switch">@lang('translation.light_theme')</label>
+                </div>
+        
+                <div class="form-check form-switch mb-3">
+                    <input class="form-check-input theme-choice" type="radio" name="theme" id="dark-mode-switch" data-bsStyle="build/css/bootstrap-dark.min.css" data-appStyle="build/css/app-dark.min.css">
+                    <label class="form-check-label" for="dark-mode-switch">@lang('translation.dark_theme')</label>
+                </div>
+        
+                {{-- Uncomment these if you want to include RTL options
+                <div class="form-check form-switch mb-3">
+                    <input class="form-check-input theme-choice" type="radio" name="theme" id="rtl-mode-switch" data-appStyle="build/css/app-rtl.min.css">
+                    <label class="form-check-label" for="rtl-mode-switch">RTL Mode</label>
+                </div>
+        
+                <div class="form-check form-switch mb-3">
+                    <input class="form-check-input theme-choice" type="radio" name="theme" id="dark-rtl-mode-switch">
+                    <label class="form-check-label" for="dark-rtl-mode-switch">Dark RTL Mode</label>
+                </div>
+                --}}
             </div>
-    
-            <div class="mb-2">
-                <img src="{{ asset('build/images/layouts/layout-2.jpg') }}" class="img-fluid img-thumbnail" alt="">
-            </div>
-            <div class="form-check form-switch mb-3">
-                <input class="form-check-input theme-choice" type="checkbox" id="dark-mode-switch" data-bsStyle="build/css/bootstrap-dark.min.css" data-appStyle="build/css/app-dark.min.css">
-                <label class="form-check-label" for="dark-mode-switch">Dark Mode</label>
-            </div>
-    
-            <div class="mb-2">
-                <img src="{{ asset('build/images/layouts/layout-3.jpg') }}" class="img-fluid img-thumbnail" alt="">
-            </div>
-            <div class="form-check form-switch mb-5">
-                <input class="form-check-input theme-choice" type="checkbox" id="rtl-mode-switch" data-appStyle="build/css/app-rtl.min.css">
-                <label class="form-check-label" for="rtl-mode-switch">RTL Mode</label>
-            </div>
-
-            <div class="mb-2">
-                <img src="{{ asset('build/images/layouts/layout-4.jpg') }}" class="img-thumbnail" alt="layout images">
-            </div>
-            <div class="form-check form-switch mb-5">
-                <input class="form-check-input theme-choice" type="checkbox" id="dark-rtl-mode-switch">
-                <label class="form-check-label" for="dark-rtl-mode-switch">Dark RTL Mode</label>
-            </div>
-            
         </div>
+        
+
+        {{-- Uncomment these if you want to include RTL options
+        <div class="form-check form-switch mb-3">
+            <input class="form-check-input theme-choice" type="radio" name="theme" id="rtl-mode-switch" data-appStyle="build/css/app-rtl.min.css">
+            <label class="form-check-label" for="rtl-mode-switch">RTL Mode</label>
+        </div>
+
+        <div class="form-check form-switch mb-3">
+            <input class="form-check-input theme-choice" type="radio" name="theme" id="dark-rtl-mode-switch">
+            <label class="form-check-label" for="dark-rtl-mode-switch">Dark RTL Mode</label>
+        </div>
+        --}}
+    </div>
+
 
     </div> <!-- end slimscroll-menu-->
 </div>

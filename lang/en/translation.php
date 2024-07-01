@@ -189,6 +189,8 @@ return [
   'Overview' => 'Overview',
   'Utilities' => 'Utilities',
 
+  'menu' => 'Menu',
+
   'alhashemya_group' => 'Al-Hashemya Group',
   'login' => 'Login',
   'loading' => 'Loading...',
@@ -196,6 +198,9 @@ return [
   'logout' => 'Logout',
   'dashboard' => 'Dashboard',
   
+  'english' => 'English',
+  'arabic' => 'Arabic',
+
   'back_to_dashboard' => 'Back To Dashboard',
   'name' => 'Name',
   'enter_name' => 'Enter Name',
@@ -219,14 +224,14 @@ return [
   'create_new_service' => 'Create New Service',
   'id' => 'ID',
   'picture' => 'Picture',
-  'title_en' => 'Title (EN)',
-  'enter_title_en' => 'Enter Title (EN)',
-  'title_ar' => 'Title (AR)',
-  'enter_title_ar' => 'Enter Title (AR)',
-  'description_en' => 'Description (EN)',
-  'enter_description_en' => 'Enter Description (EN)',
-  'description_ar' => 'Description (AR)',
-  'enter_description_ar' => 'Enter Description (AR)',
+  'title_en' => 'Title In English',
+  'enter_title_en' => 'Enter Title In English',
+  'title_ar' => 'Title In Arabic',
+  'enter_title_ar' => 'Enter Title In Arabic',
+  'description_en' => 'Description In English',
+  'enter_description_en' => 'Enter Description In English',
+  'description_ar' => 'Description In Arabic',
+  'enter_description_ar' => 'Enter Description In Arabic',
   'sequence' => 'Sequence',
   'enter_sequence' => 'Enter Sequence',
   'is_active' => 'Is Active ?',
@@ -244,7 +249,18 @@ return [
   'service_not_deleted' => 'Error While Deleting The Service, Try Again Later...',
   'service_updated' => 'Service Updated Successfully',
   'service_not_updated' => 'Error While Updating The Service, Try Again Later...',
+
+  'companies' => 'Companies',
+  'company_id_updated' => 'Company ID Updated',
+  'company_id_not_updated' => 'Error While Updating The Company ID, Try Again Later...',
   
+  'settings' => 'Settings',
+  'choose_theme' => 'Choose Theme',
+  'light_theme' => 'Light Theme',
+  'dark_theme' => 'Dark Theme',
+
+  'error' => 'Error',
+  'ok' => 'Ok',
   'error_404' => 'Sorry, Page Not Found',
   'error_500' => 'Internal Server Error, Please Contact The Adminstrator',  
 ];

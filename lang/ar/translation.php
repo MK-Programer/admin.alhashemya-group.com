@@ -1,12 +1,17 @@
 <?php
 
 return [
+    'menu' => 'القائمة',
+
     'alhashemya_group' => 'مجموعة الهاشمية',
     'login' => 'تسجيل دخول',
     'loading' => 'تحميل...',
     'profile' => 'الحساب الشخصي',
     'logout' => 'تسجيل خروج',
     'dashboard' => 'لوحة القيادة',
+    
+    'english' => 'الإنجليزية',
+    'arabic' => 'العربية',
     
     'back_to_dashboard' => 'العودة إلي لوحة القيادة',
     'name' => 'اسم',
@@ -29,16 +34,16 @@ return [
     'password_not_updated' => 'حدث خطأ أثناء تحديث كلمة السر، حاول مرة أخرى لاحقاً...',
     'services' => 'الخدمات',
     'create_new_service' => 'إنشاء خدمة جديدة',
-    'id' => 'الرقم',
+    'id' => 'الكود',
     'picture' => 'الصورة',
-    'title_en' => 'العنوان (EN)',
-    'enter_title_en' => 'أدخل العنوان (EN)',
-    'title_ar' => 'العنوان (AR)',
-    'enter_title_ar' => 'أدخل العنوان (AR)',
-    'description_en' => 'الوصف (EN)',
-    'enter_description_en' => 'أدخل الوصف (EN)',
-    'description_ar' => 'الوصف (AR)',
-    'enter_description_ar' => 'أدخل الوصف (AR)',
+    'title_en' => 'العنوان بالإنجليزية',
+    'enter_title_en' => 'أدخل العنوان بالإنجليزية',
+    'title_ar' => 'العنوان بالعربية',
+    'enter_title_ar' => 'أدخل العنوان بالعربية',
+    'description_en' => 'الوصف بالإنجليزية',
+    'enter_description_en' => 'أدخل الوصف بالإنجليزية',
+    'description_ar' => 'الوصف بالعربية',
+    'enter_description_ar' => 'أدخل الوصف بالعربية',
     'sequence' => 'التسلسل',
     'enter_sequence' => 'أدخل التسلسل',
     'is_active' => 'هل هو نشط؟',
@@ -56,7 +61,18 @@ return [
     'service_updated' => 'تم تحديث الخدمة بنجاح',
     'service_not_updated' => 'حدث خطأ أثناء تحديث الخدمة، يرجى المحاولة مرة أخرى لاحقًا...',
 
+    'companies' => 'الشركات',
+    'company_id_updated' => 'تم تحديث معرف الشركة',
+    'company_id_not_updated' => 'خطأ أثناء تحديث معرف الشركة، حاول مرة أخرى لاحقًا...',
 
+    'settings' => 'الأعدادات',
+    'choose_theme' => 'اختر المظهر',
+    'light_theme' => 'المظهر الفاتح',
+    'dark_theme' => 'المظهر الداكن',
+
+
+    'error' => 'خطأ',
+    'ok' => 'تم',
     'error_404' => 'عذرا، لم يتم العثور على الصفحة',
     'error_500' => 'خطأ داخلي في الخادم، يرجى الاتصال بالمسؤول',
 ];

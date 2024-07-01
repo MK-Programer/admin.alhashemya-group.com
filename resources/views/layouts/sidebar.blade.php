@@ -1,3 +1,20 @@
+@php
+    $authUser = Auth::user();
+    $lang = app()->getLocale();
+    $nameColumn = $lang === 'ar' ? 'settings.name_ar' : 'settings.name_en';
+    $companySettings = DB::table('company_settings_rel')
+                            ->select(
+                                DB::raw("$nameColumn as name"),
+                                'settings.icon',
+                                'settings.action_route',
+                                'settings.sequence',
+                                )
+                            ->leftJoin('settings', 'company_settings_rel.setting_id', 'settings.id')
+                            ->where('company_settings_rel.company_id', $authUser->company_id)
+                            ->orderBy('settings.sequence', 'ASC')
+                            ->get();
+@endphp
+
 <!-- ========== Left Sidebar Start ========== -->
 <div class="vertical-menu">
 
@@ -16,12 +33,15 @@
                     </a>
                 </li>
 
-                <li>
-                    <a href="{{ route('showServices') }}">
-                        <i class="fas fa-wrench"></i>
-                        <span key="t-dashboards">@lang('translation.services')</span>
-                    </a>
-                </li>
+                @foreach ($companySettings as $companySetting)
+                    <li>
+                        <a href="{{ route($companySetting->action_route) }}">
+                            <i class="{{ $companySetting->icon }}"></i>
+                            <span key="t-dashboards">{{ $companySetting->name }}</span>
+                        </a>
+                    </li>
+                @endforeach
+                
 
 
                 {{-- <li>

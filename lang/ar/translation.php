@@ -70,9 +70,26 @@ return [
     'light_theme' => 'المظهر الفاتح',
     'dark_theme' => 'المظهر الداكن',
 
+    'missions_and_visions' => 'المهمات و الرؤي',
+    'create_new_mission_and_vision' => 'إنشاء مهمة و رؤية جديدة',
+
+    'mission_picture' => 'صورة المهمة',
+    'mission_title_en' => 'عنوان المهمة بالإنجليزية',
+    'mission_title_ar' => 'عنوان المهمة بالعربية',
+    'mission_description_en' => 'وصف المهمة بالإنجليزية',
+    'mission_description_ar' => 'وصف المهمة بالعربية',
+
+    'vision_picture' => 'صورة الرؤية',
+    'vision_title_en' => 'عنوان الرؤية بالإنجليزية',
+    'vision_title_ar' => 'عنوان الرؤية بالعربية',
+    'vision_description_en' => 'وصف الرؤية بالإنجليزية',
+    'vision_description_ar' => 'وصف الرؤية بالعربية',
+    'details' => 'تفاصيل',
+
 
     'error' => 'خطأ',
     'ok' => 'تم',
+    'error_400' => 'طلب غير صالح: لم يتمكن الخادم من فهم الطلب بسبب صيغة غير صالحة',
     'error_404' => 'عذرا، لم يتم العثور على الصفحة',
     'error_500' => 'خطأ داخلي في الخادم، يرجى الاتصال بالمسؤول',
 ];

@@ -263,7 +263,7 @@ function ltrSwitchMode(){
             if (dir) {
                 if (dir === "rtl-mode-switch") {
                     rtlSwitchMode();
-                }else if (id === "ltr-mode-switch") {
+                }else if (dir === "ltr-mode-switch") {
                     ltrSwitchMode();
                 }
             }else{

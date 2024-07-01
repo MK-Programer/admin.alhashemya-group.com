@@ -14,8 +14,8 @@
     var assetPath = '{{ asset('') }}';
 
     var error = '@lang('translation.error')';
+    var error400 = '@lang('translation.error_400')';
     var ok = '@lang('translation.ok')';
-    var updateCompanyError = '@lang('translation.company_id_not_updated')';
 </script>
 
 @include('layouts.utils.buttons-handler')
@@ -27,5 +27,6 @@
 <script src="{{ asset('build/js/app.js')}}"></script>
 <script src="{{ asset('build/js/companies/change-user-company.js') }}"></script>
 <script src="{{ asset('build/js/lang/change-app-direction.js') }}"></script>
+<script src="{{ asset('build/js/popups/danger.js') }}"></script>
 
 @yield('script-bottom')

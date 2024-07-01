@@ -55,16 +55,16 @@
                     
                     <?php $__currentLoopData = $userCompanies; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $company): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                         <!-- item-->
-                        <a href="#" class="company-link dropdown-item notify-item" data-id="<?php echo e($authUser->company->id); ?>">
+                        <a href="#" class="company-link dropdown-item notify-item" data-id="<?php echo e($company->id); ?>">
                             <img src="<?php echo e(asset ($company->logo)); ?>" alt="company-logo" class="me-1" height="50" width="50"> 
                                 <span class="align-middle">
                                     <?php switch(app()->getLocale()):
                                         case ('en'): ?>
-                                            <?php echo e($authUser->company->name_en); ?>
+                                            <?php echo e($company->name_en); ?>
 
                                         <?php break; ?>
                                         <?php case ('ar'): ?>
-                                            <?php echo e($authUser->company->name_ar); ?>    
+                                            <?php echo e($company->name_ar); ?>    
                                         <?php break; ?>
                                     <?php endswitch; ?>
                                 </span>

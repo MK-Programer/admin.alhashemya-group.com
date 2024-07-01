@@ -26,16 +26,10 @@ $(document).ready(function() {
                 window.location.reload();
             },
             error: function(xhr, status, error) {
+                infoDangerAlert();
                 // Handle error response
                 console.error('Error:', error);
                 console.error('Response:', xhr);
-                // Error message with SweetAlert2
-                Swal.fire({
-                    icon: 'error',
-                    title: error,
-                    text: updateCompanyError,
-                    confirmButtonText: ok
-                });
             }
         });
     });

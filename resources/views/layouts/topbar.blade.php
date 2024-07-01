@@ -54,15 +54,15 @@
                     
                     @foreach ($userCompanies as $company)
                         <!-- item-->
-                        <a href="#" class="company-link dropdown-item notify-item" data-id="{{ $authUser->company->id }}">
+                        <a href="#" class="company-link dropdown-item notify-item" data-id="{{ $company->id }}">
                             <img src="{{ asset ($company->logo) }}" alt="company-logo" class="me-1" height="50" width="50"> 
                                 <span class="align-middle">
                                     @switch(app()->getLocale())
                                         @case('en')
-                                            {{ $authUser->company->name_en }}
+                                            {{ $company->name_en }}
                                         @break
                                         @case('ar')
-                                            {{ $authUser->company->name_ar }}    
+                                            {{ $company->name_ar }}    
                                         @break
                                     @endswitch
                                 </span>

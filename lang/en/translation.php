@@ -259,8 +259,26 @@ return [
   'light_theme' => 'Light Theme',
   'dark_theme' => 'Dark Theme',
 
+  'missions_and_visions' => 'Missions And Missions',
+  'create_new_mission_and_vision' => 'Create New Mission And Vision',
+
+  'mission_picture' => 'Mission Picture',
+  'mission_title_en' => 'Mission Title In English',
+  'mission_title_ar' => 'Mission Title In Arabic',
+  'mission_description_en' => 'Mission Description In English',
+  'mission_description_ar' => 'Mission Description In Arabic',
+
+  'vision_picture' => 'Vision Picture',
+  'vision_title_en' => 'Vision Title In English',
+  'vision_title_ar' => 'Vision Title In Arabic',
+  'vision_description_en' => 'Vision Description In English',
+  'vision_description_ar' => 'Vision Description In Arabic',
+  'details' => 'Details',
+  
   'error' => 'Error',
+  
   'ok' => 'Ok',
+  'error_400' => 'Bad Request: The server could not understand the request due to invalid syntax',
   'error_404' => 'Sorry, Page Not Found',
   'error_500' => 'Internal Server Error, Please Contact The Adminstrator',  
 ];

@@ -37,7 +37,7 @@
                     <li>
                         <a href="<?php echo e(route($companySetting->action_route)); ?>">
                             <i class="<?php echo e($companySetting->icon); ?>"></i>
-                            <span key="t-dashboards"><?php echo e($companySetting->name); ?></span>
+                            <span key="t-<?php echo e($companySetting->name); ?>"><?php echo e($companySetting->name); ?></span>
                         </a>
                     </li>
                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>

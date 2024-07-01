@@ -32,6 +32,11 @@ class UsersController extends Controller
         });
     }
 
+    public function getAuthUser(){
+        
+        return $this->authUser;
+    }
+
     public function showUserProfile(){
         try{
             $authUser = $this->authUser;
@@ -41,7 +46,7 @@ class UsersController extends Controller
             $msg = $e->getMessage();
 
             Log::error("Error | Controller: UsersControllers | Function: showUserProfile | Code: ".$code." | Message: ".$msg);
-            return view('errors.500');
+            return abort(500);
         }
     }
 
@@ -77,15 +82,15 @@ class UsersController extends Controller
             if ($isUserUpdated) {
                 DB::commit();
                 $code = 200;
-                $msg = lang::get('translation.profile_data_updated');
+                $msg = 'translation.profile_data_updated';
             } else {
                 DB::rollBack();
                 $code = 400;
-                $msg = lang::get('translation.profile_data_not_updated');
+                $msg = 'translation.profile_data_not_updated';
             }
             return response()->json(
                 [
-                'message' => $msg
+                'message' => lang::get($msg)
                 ],
                 $code); 
         }catch(ValidationException $e){
@@ -131,15 +136,15 @@ class UsersController extends Controller
             if ($isPassowrdUpdated) {
                 DB::commit();
                 $code = 200;
-                $msg = lang::get('translation.password_updated');
+                $msg = 'translation.password_updated';
                 
             } else {
                 DB::rollBack();
                 $code = 400;
-                $msg = lang::get('translation.password_not_updated');
+                $msg = 'translation.password_not_updated';
             }
             return response()->json([
-                'message' => $msg
+                'message' => lang::get($msg)
             ], $code);
         }catch(ValidationException $e){
             DB::rollBack();
@@ -160,6 +165,44 @@ class UsersController extends Controller
 
             return response()->json(['message' => lang::get('translation.error_500')], $code);
         }
+    }
+
+    public function getUserCompanies(){
+        $companies = DB::table('companies')
+                        ->where('is_active', 1)
+                        ->get();
+
+        return $companies;
+        
+    }
+
+    public function updateUserCompanyId(Request $request){
+        try{
+            DB::beginTransaction();
+            $authUser = $this->authUser;
+            $authUser->company_id = $request->get('id');
+            $updateUser = $authUser->update();
+            if($updateUser){
+                DB::commit();
+                $code = 200;
+                $msg = 'translation.company_id_updated';
+            }else{
+                DB::rollBack();
+                $code = 400;
+                $msg = 'translation.company_id_not_updated';
+            }
+            return response()->json(['message' => lang::get($msg)], $code);
+        }catch(Exception $e){
+            DB::rollBack();
+
+            $code = $e->getCode();
+            $msg = $e->getMessage();
+
+            Log::error("Error | Controller: UsersControllers | Function: updateUserCompanyId | Code: ".$code." | Message: ".$msg);
+
+            return response()->json(['message' => lang::get('translation.error_500')], $code);
+        }
+
     }
 
 }

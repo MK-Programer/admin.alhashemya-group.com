@@ -69,7 +69,6 @@
     
     
     <script>
-        var csrfToken = '<?php echo e(csrf_token()); ?>';
         var updateText = '<?php echo app('translator')->get('translation.update'); ?>';
         var deleteText = '<?php echo app('translator')->get('translation.delete'); ?>';
         var yesText = '<?php echo app('translator')->get('translation.yes'); ?>';

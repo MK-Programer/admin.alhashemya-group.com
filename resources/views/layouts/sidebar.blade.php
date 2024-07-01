@@ -7,7 +7,14 @@
         <div id="sidebar-menu">
             <!-- Left Menu Start -->
             <ul class="metismenu list-unstyled" id="side-menu">
-                <li class="menu-title" key="t-menu">@lang('translation.Menu')</li>
+                <li class="menu-title" key="t-menu">@lang('translation.menu')</li>
+
+                <li>
+                    <a href="{{ route('dashboard') }}">
+                        <i class="fas fa-bars"></i>
+                        <span key="t-dashboards">@lang('translation.dashboard')</span>
+                    </a>
+                </li>
 
                 <li>
                     <a href="{{ route('showServices') }}">
@@ -15,6 +22,7 @@
                         <span key="t-dashboards">@lang('translation.services')</span>
                     </a>
                 </li>
+
 
                 {{-- <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">

@@ -7,7 +7,14 @@
         <div id="sidebar-menu">
             <!-- Left Menu Start -->
             <ul class="metismenu list-unstyled" id="side-menu">
-                <li class="menu-title" key="t-menu"><?php echo app('translator')->get('translation.Menu'); ?></li>
+                <li class="menu-title" key="t-menu"><?php echo app('translator')->get('translation.menu'); ?></li>
+
+                <li>
+                    <a href="<?php echo e(route('dashboard')); ?>">
+                        <i class="fas fa-bars"></i>
+                        <span key="t-dashboards"><?php echo app('translator')->get('translation.dashboard'); ?></span>
+                    </a>
+                </li>
 
                 <li>
                     <a href="<?php echo e(route('showServices')); ?>">
@@ -15,6 +22,7 @@
                         <span key="t-dashboards"><?php echo app('translator')->get('translation.services'); ?></span>
                     </a>
                 </li>
+
 
                 
 

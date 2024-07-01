@@ -43,7 +43,7 @@ class ServicesController extends Controller
             $msg = $e->getMessage();
 
             Log::error("Error | Controller: ServicesController | Function: showServices | Code: ".$code." | Message: ".$msg);
-            return view('errors.500');
+            return abort(500);
         }
     }
 
@@ -108,7 +108,7 @@ class ServicesController extends Controller
             $msg = $e->getMessage();
 
             Log::error("Error | Controller: ServicesController | Function: showCreateService | Code: ".$code." | Message: ".$msg);
-            return view('errors.500');
+            return abort(500);
         }
     }
 
@@ -147,13 +147,13 @@ class ServicesController extends Controller
             if($insertService == 1){
                 DB::commit();
                 $code = 200;
-                $msg = lang::get('translation.service_created');
+                $msg = 'translation.service_created';
             }else{
                 DB::rollBack();
                 $code = 400;
-                $msg = lang::get('translation.service_not_created');
+                $msg = 'translation.service_not_created';
             }
-            return response()->json(['message' => $msg], $code);
+            return response()->json(['message' => lang::get($msg)], $code);
         }catch(ValidationException $e){
             DB::rollBack();
         
@@ -188,7 +188,7 @@ class ServicesController extends Controller
             $msg = $e->getMessage();
 
             Log::error("Error | Controller: ServicesController | Function: showServiceToUpdate | Code: ".$code." | Message: ".$msg);
-            return view('errors.500');
+            return abort(500);
         }
     }
 
@@ -245,13 +245,13 @@ class ServicesController extends Controller
             if($updateService == 1){
                 DB::commit();
                 $code = 200;
-                $msg = lang::get('translation.service_updated');
+                $msg = 'translation.service_updated';
             }else{
                 DB::rollBack();
                 $code = 400;
-                $msg = lang::get('translation.service_not_updated');
+                $msg = 'translation.service_not_updated';
             }
-            return response()->json(['message' => $msg], $code);
+            return response()->json(['message' => lang::get($msg)], $code);
         }catch(ValidationException $e){
             DB::rollBack();
         

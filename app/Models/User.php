@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
+use App\Models\Company;
 class User extends Authenticatable
 {
     use HasFactory, Notifiable;
@@ -21,6 +22,7 @@ class User extends Authenticatable
         'email',
         'password',
         'avatar',
+        'company_id',
     ];
 
     /**
@@ -39,4 +41,8 @@ class User extends Authenticatable
      */
     protected $casts = [
     ];
+
+    public function company(){
+        return $this->belongsTo(Company::class, 'company_id', 'id');
+    } 
 }

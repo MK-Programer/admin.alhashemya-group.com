@@ -69,7 +69,6 @@
     
     {{-- lang --}}
     <script>
-        var csrfToken = '{{ csrf_token() }}';
         var updateText = '@lang('translation.update')';
         var deleteText = '@lang('translation.delete')';
         var yesText = '@lang('translation.yes')';

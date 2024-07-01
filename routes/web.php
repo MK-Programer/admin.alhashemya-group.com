@@ -23,12 +23,14 @@ Auth::routes([
 ]);
 
 Route::middleware(['auth', 'active.user'])->group(function () {
-    Route::get('/', [DashBoardController::class, 'root'])->name('root');
+    //Dashboard
+    Route::get('/', [DashBoardController::class, 'root'])->name('dashboard');
 
     //User
     Route::get('/user/user-profile', [UsersController::class, 'showUserProfile'])->name('showUserProfile');
     Route::post('/user/update-user-profile', [UsersController::class, 'updateUserProfile'])->name('updateUserProfile');
     Route::post('/user/update-user-password', [UsersController::class, 'updateUserPassword'])->name('updateUserPassword');
+    Route::post('/user/update-user-company-id', [UsersController::class, 'updateUserCompanyId'])->name('updateUserCompanyId');
 
     //Services
     Route::get('/services', [ServicesController::class, 'showServices'])->name('showServices');
@@ -37,8 +39,6 @@ Route::middleware(['auth', 'active.user'])->group(function () {
     Route::post('/services/save-created-service', [ServicesController::class, 'saveCreatedService'])->name('saveCreatedService');
     Route::get('/services/update-service/{id}', [ServicesController::class, 'showServiceToUpdate'])->name('showServiceToUpdate');
     Route::post('/services/save-updated-service', [ServicesController::class, 'saveUpdatedService'])->name('saveUpdatedService');
-
-    Route::get('/{any}', [DashBoardController::class, 'index'])->name('index');
 
     //Language Translation
     Route::get('/index/{locale}', [AppController::class, 'lang']);

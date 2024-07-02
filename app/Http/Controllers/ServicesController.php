@@ -5,11 +5,11 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\App;
-use Illuminate\Support\Str;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Lang;
 use Illuminate\Validation\ValidationException;
+use App\Classes\Image;
 
 use Illuminate\Support\Facades\Log;
 use Exception;
@@ -123,11 +123,9 @@ class ServicesController extends Controller
                 'description_ar' => ['required', 'string', 'max:1000'],
                 'sequence' => ['required', 'integer'],
             ]);
-            $uuid = Str::uuid();
+
             $picture = $request->file('picture');
-            $pictureName = $uuid . '.' . $picture->getClientOriginalExtension();
-            $picturePath = public_path($this->imagePath);
-            $picture->move($picturePath, $pictureName);
+            $pictureName = Image::savePictureInStorage($picture, $this->imagePath);
             
             $service = [
                 'company_id' => $this->authUser->company_id,
@@ -223,16 +221,9 @@ class ServicesController extends Controller
             if($newPicture){
 
                 $dbPicture = $request->get('db_picture');
-                $dbPicturePath = public_path($dbPicture);
-                if (file_exists($dbPicturePath)) {
-                    unlink($dbPicturePath);
-                }
-
-                $uuid = Str::uuid();
-            
-                $pictureName = $uuid . '.' . $newPicture->getClientOriginalExtension();
-                $picturePath = public_path($this->imagePath);
-                $newPicture->move($picturePath, $pictureName);
+                Image::unlinkPicture($dbPicture);
+                
+                $pictureName = Image::savePictureInStorage($picture, $this->imagePath);
                 $service['picture'] = $this->imagePath.$pictureName;
             } 
 

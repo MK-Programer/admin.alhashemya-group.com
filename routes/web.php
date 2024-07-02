@@ -35,7 +35,6 @@ Route::middleware(['auth', 'active.user'])->group(function () {
         Route::post('update-user-company-id', [UsersController::class, 'updateUserCompanyId'])->name('updateUserCompanyId');
     });
     
-
     //Services
     Route::prefix('services')->group(function () {
         Route::get('/', [ServicesController::class, 'showServices'])->name('showServices');
@@ -53,7 +52,7 @@ Route::middleware(['auth', 'active.user'])->group(function () {
         Route::get('ru-mission-and-vision-details/{id}/{action}', [MissionsAndVisionsController::class, 'showRUMissionAndVision'])->name('showRUMissionAndVision');
         Route::get('create-new-mission-and-vision', [MissionsAndVisionsController::class, 'showCreateMissionAndVision'])->name('showCreateMissionAndVision');
         Route::post('save-created-mission-and-vision', [MissionsAndVisionsController::class, 'saveCreatedMissionAndVision'])->name('saveCreatedMissionAndVision');
-        Route::post('save-updated-mission-and-vision', [ServicesController::class, 'saveUpdatedMissionAndVision'])->name('saveUpdatedMissionAndVision');
+        Route::post('save-updated-mission-and-vision', [MissionsAndVisionsController::class, 'saveUpdatedMissionAndVision'])->name('saveUpdatedMissionAndVision');
     });
 
     //Language Translation

@@ -39,9 +39,9 @@ $(document).ready(function() {
                 }
             },
             "error": function (xhr, error, thrown) {
-                infoDangerAlert();
                 console.error("DataTables AJAX Error:", error, thrown);
                 console.error(xhr); // Log detailed error message
+                infoDangerAlert();
             }
         },
         "columns": [

@@ -27,7 +27,7 @@
 
                     <div class="mb-3">
                         <div class="text-start mt-2">
-                            <input type="hidden" id="mission_db_picture" name="mission_db_picture" value="<?php echo e(asset($mission->picture)); ?>">
+                            <input type="hidden" id="mission_db_picture" name="mission_db_picture" value="<?php echo e($mission->picture); ?>">
                             <img src="<?php echo e(asset($mission->picture)); ?>" alt="#" class="rounded-circle avatar-lg" id="mission_image">
                         </div>
                         <label for="mission_picture"><?php echo app('translator')->get('translation.mission_picture'); ?></label>
@@ -69,7 +69,7 @@
 
                     <div class="mb-3">
                         <div class="text-start mt-2">
-                            <input type="hidden" id="vision_db_picture" name="vision_db_picture" value="<?php echo e(asset($vision->picture)); ?>">
+                            <input type="hidden" id="vision_db_picture" name="vision_db_picture" value="<?php echo e($vision->picture); ?>">
                             <img src="<?php echo e(asset($vision->picture)); ?>" alt="#" class="rounded-circle avatar-lg" id="vision_image">
                         </div>
                         <label for="vision_picture"><?php echo app('translator')->get('translation.vision_picture'); ?></label>
@@ -108,17 +108,26 @@
                     <div class="card-header card-header-primary">
                         <h4 class="card-title "><?php echo app('translator')->get('translation.additional_data'); ?></h4>
                     </div>
-                    
+
                     <div class="mb-3">
                         <label for="sequence" class="form-label"><?php echo app('translator')->get('translation.sequence'); ?></label>
                         <input type="number" class="form-control" id="sequence" name="sequence" value="<?php echo e($mission->sequence); ?>" autofocus placeholder="<?php echo app('translator')->get('translation.enter_sequence'); ?>">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="is_active" class="form-label"><?php echo app('translator')->get('translation.is_active'); ?></label>
+                        <select class="form-control" id="is_active" name="is_active">
+                            <option disabled selected><?php echo app('translator')->get('translation.enter_status'); ?></option>
+                            <option value="1" <?php echo e($mission->is_active == 1 ? 'selected' : ''); ?>><?php echo app('translator')->get('translation.yes'); ?></option>
+                            <option value="0" <?php echo e($mission->is_active == 0 ? 'selected' : ''); ?>><?php echo app('translator')->get('translation.no'); ?></option>
+                        </select>
                     </div>
 
                 </div>
             </div>
 
             <div class="mt-3">
-                <button class="btn btn-primary waves-effect waves-light" type="submit"><?php echo app('translator')->get('translation.create'); ?></button>
+                <button class="btn btn-primary waves-effect waves-light" type="submit"><?php echo app('translator')->get('translation.update'); ?></button>
             </div>
         </form>       
     </div>

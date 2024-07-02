@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', function() {
     missionFileInput.addEventListener('change', function(event) {
         const file = event.target.files[0];
         if (file) {
-            
+
             // Create a temporary URL for the selected file and update the image src
             const imageUrl = URL.createObjectURL(file);
             missionPicture.src = imageUrl;
@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', function() {
     visionFileInput.addEventListener('change', function(event) {
         const file = event.target.files[0];
         if (file) {
-            
+
             // Create a temporary URL for the selected file and update the image src
             const imageUrl = URL.createObjectURL(file);
             visionPicture.src = imageUrl;
@@ -44,9 +44,9 @@ $('#update_mission_vision_form').on('submit', function(event) {
     disableButtons();
 
     let formData = new FormData(this);
-    
+
     $.ajax({
-        url: "#",
+        url: "/missions-and-visions/save-updated-mission-and-vision",
         type: "post",
         data: formData,
         contentType: false,
@@ -67,13 +67,13 @@ $('#update_mission_vision_form').on('submit', function(event) {
             console.log(xhr);
             hideLoading();
             if (xhr.status === 422) {
-                
+
                 // Validation errors
                 var errors = xhr.responseJSON.errors;
                 console.log(errors);
                 var errorsList = [];
                 // Example handling for email and name errors
-                
+
                 if (errors.hasOwnProperty('mission_picture')) {
                     errorsList = errorsList.concat(errors['mission_picture']);
                 }
@@ -109,7 +109,7 @@ $('#update_mission_vision_form').on('submit', function(event) {
                 if (errors.hasOwnProperty('sequence')) {
                     errorsList = errorsList.concat(errors['sequence']);
                 }
-                
+
                 setDanger(errorsList);
             } else {
                 setDanger(error);

@@ -296,6 +296,8 @@ return [
   'mission_and_vision_created' => 'Mission And Vision Created Successfully',
   'mission_and_vision_not_created' => 'Error While Creating The Mission And Vision, Try Again Later...',
 
+  'mission_and_vision_updated' => 'Mission And Vision Updated',
+  'mission_and_vision_not_updated' => 'Error While Updating The Mission And Vision, Try Again Later...',
   
   'details' => 'Details',
   

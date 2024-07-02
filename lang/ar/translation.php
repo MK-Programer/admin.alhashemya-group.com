@@ -109,8 +109,10 @@ return [
     'mission_and_vision_created' => 'تم إنشاء المهمة والرؤية بنجاح',
     'mission_and_vision_not_created' => 'حدث خطأ أثناء إنشاء المهمة والرؤية، يرجى المحاولة مرة أخرى لاحقًا...',
 
-    'details' => 'تفاصيل',
+    'mission_and_vision_updated' => 'تم تحديث الرؤية والرسالة',
+    'mission_and_vision_not_updated' => 'حدث خطأ أثناء تحديث الرؤية والرسالة، حاول مرة أخرى لاحقاً...',
 
+    'details' => 'تفاصيل',
 
     'error' => 'خطأ',
     'ok' => 'تم',

@@ -20,7 +20,7 @@
 
                     <div class="mb-3">
                         <div class="text-start mt-2">
-                            <input type="hidden" id="db_picture" name="db_picture" value="{{ asset($service->picture) }}">
+                            <input type="hidden" id="db_picture" name="db_picture" value="{{ $service->picture }}">
                             <img src = "{{ asset($service->picture) }}" alt="#" class="rounded-circle avatar-lg" id="service_image">
                         </div>
                         <label for="picture">@lang('translation.picture')</label>

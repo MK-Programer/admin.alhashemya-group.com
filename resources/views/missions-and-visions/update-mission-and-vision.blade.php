@@ -27,7 +27,7 @@
 
                     <div class="mb-3">
                         <div class="text-start mt-2">
-                            <input type="hidden" id="mission_db_picture" name="mission_db_picture" value="{{ asset($mission->picture) }}">
+                            <input type="hidden" id="mission_db_picture" name="mission_db_picture" value="{{ $mission->picture }}">
                             <img src="{{ asset($mission->picture) }}" alt="#" class="rounded-circle avatar-lg" id="mission_image">
                         </div>
                         <label for="mission_picture">@lang('translation.mission_picture')</label>
@@ -69,7 +69,7 @@
 
                     <div class="mb-3">
                         <div class="text-start mt-2">
-                            <input type="hidden" id="vision_db_picture" name="vision_db_picture" value="{{ asset($vision->picture) }}">
+                            <input type="hidden" id="vision_db_picture" name="vision_db_picture" value="{{ $vision->picture }}">
                             <img src="{{ asset($vision->picture) }}" alt="#" class="rounded-circle avatar-lg" id="vision_image">
                         </div>
                         <label for="vision_picture">@lang('translation.vision_picture')</label>
@@ -108,17 +108,26 @@
                     <div class="card-header card-header-primary">
                         <h4 class="card-title ">@lang('translation.additional_data')</h4>
                     </div>
-                    
+
                     <div class="mb-3">
                         <label for="sequence" class="form-label">@lang('translation.sequence')</label>
                         <input type="number" class="form-control" id="sequence" name="sequence" value="{{ $mission->sequence }}" autofocus placeholder="@lang('translation.enter_sequence')">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="is_active" class="form-label">@lang('translation.is_active')</label>
+                        <select class="form-control" id="is_active" name="is_active">
+                            <option disabled selected>@lang('translation.enter_status')</option>
+                            <option value="1" {{ $mission->is_active == 1 ? 'selected' : '' }}>@lang('translation.yes')</option>
+                            <option value="0" {{ $mission->is_active == 0 ? 'selected' : '' }}>@lang('translation.no')</option>
+                        </select>
                     </div>
 
                 </div>
             </div>
 
             <div class="mt-3">
-                <button class="btn btn-primary waves-effect waves-light" type="submit">@lang('translation.create')</button>
+                <button class="btn btn-primary waves-effect waves-light" type="submit">@lang('translation.update')</button>
             </div>
         </form>       
     </div>

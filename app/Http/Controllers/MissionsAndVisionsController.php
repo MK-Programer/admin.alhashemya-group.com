@@ -5,11 +5,11 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\App;
-use Illuminate\Support\Str;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Lang;
 use Illuminate\Validation\ValidationException;
+use App\Classes\Image;
 
 use Illuminate\Support\Facades\Log;
 use Exception;
@@ -104,11 +104,11 @@ class MissionsAndVisionsController extends Controller
 
     public function showRUMissionAndVision($missionVisionId, $action){
         try{
-            
+
             $missionVisionIds = explode(' - ', $missionVisionId);
             $missionId = $missionVisionIds[0];
             $visionId = $missionVisionIds[1];
-            
+
             $mission = DB::table($this->missionsAndVisionsMetaData->table_name)
                         ->where('company_id', $this->authUser->company_id)
                         ->where('setting_id', $this->settingId)
@@ -120,7 +120,7 @@ class MissionsAndVisionsController extends Controller
                         ->where('setting_id', $this->settingId)
                         ->where('id', $visionId)
                         ->first();
-                        
+
             $view = 'missions-and-visions.';
             if($action == 'update'){
                 $view .= 'update';
@@ -150,14 +150,6 @@ class MissionsAndVisionsController extends Controller
         }
     }
 
-    private function savePictureInStorage($picture){
-        $uuid = Str::uuid();
-        $pictureName = $uuid . '.' . $picture->getClientOriginalExtension();
-        $picturePath = public_path($this->imagePath);
-        $picture->move($picturePath, $pictureName);
-        return $pictureName;
-    }
-
     public function saveCreatedMissionAndVision(Request $request){
         try{
             DB::beginTransaction();
@@ -168,7 +160,7 @@ class MissionsAndVisionsController extends Controller
                 'mission_title_ar' => ['required', 'string', 'max:255'],
                 'mission_description_en' => ['required', 'string', 'max:1000'],
                 'mission_description_ar' => ['required', 'string', 'max:1000'],
-                
+
                 'vision_picture' => ['required', 'image', 'mimes:jpg,jpeg,png', 'max:5120'],
                 'vision_title_en' => ['required', 'string', 'max:255'],
                 'vision_title_ar' => ['required', 'string', 'max:255'],
@@ -180,7 +172,7 @@ class MissionsAndVisionsController extends Controller
 
             // mission
             $missionPicture = $request->file('mission_picture');
-            $missionPictureName = $this->savePictureInStorage($missionPicture);
+            $missionPictureName = Image::savePictureInStorage($missionPicture, $this->imagePath);
 
             $mission = [
                 'company_id' => $this->authUser->company_id,
@@ -194,13 +186,13 @@ class MissionsAndVisionsController extends Controller
                 'created_at' => now(),
                 'updated_at' => now(),
             ];
-            
+
             $missionId = DB::table($this->missionsAndVisionsMetaData->table_name)
                             ->insertGetId($mission);       
 
             // vision
             $visionPicture = $request->file('vision_picture');
-            $visionPictureName = $this->savePictureInStorage($visionPicture);
+            $visionPictureName = Image::savePictureInStorage($visionPicture, $this->imagePath);
 
             $vision = [
                 'company_id' => $this->authUser->company_id,
@@ -229,7 +221,7 @@ class MissionsAndVisionsController extends Controller
             return response()->json(['message' => lang::get($msg)], $code);
         }catch(ValidationException $e){
             DB::rollBack();
-        
+
             // Handle validation errors
             $errors = $e->validator->errors()->messages();
 
@@ -248,7 +240,111 @@ class MissionsAndVisionsController extends Controller
     }
 
     public function saveUpdatedMissionAndVision(Request $request){
-        
+        try{
+            DB::beginTransaction();
+
+            $request->validate([
+                'mission_picture' => ['nullable', 'image', 'mimes:jpg,jpeg,png', 'max:5120'],
+                'mission_title_en' => ['required', 'string', 'max:255'],
+                'mission_title_ar' => ['required', 'string', 'max:255'],
+                'mission_description_en' => ['required', 'string', 'max:1000'],
+                'mission_description_ar' => ['required', 'string', 'max:1000'],
+
+                'vision_picture' => ['nullable', 'image', 'mimes:jpg,jpeg,png', 'max:5120'],
+                'vision_title_en' => ['required', 'string', 'max:255'],
+                'vision_title_ar' => ['required', 'string', 'max:255'],
+                'vision_description_en' => ['required', 'string', 'max:1000'],
+                'vision_description_ar' => ['required', 'string', 'max:1000'],
+
+                'is_active' => ['required', 'integer'],
+                'sequence' => ['required', 'integer'],
+            ]);
+
+            $missionId = $request->get('mission_id');
+            $mission = [
+                'company_id' => $this->authUser->company_id,
+                'setting_id' => $this->settingId,
+                'title_en' => $request->get('mission_title_en'),
+                'title_ar' => $request->get('mission_title_ar'),
+                'desc_en' => $request->get('mission_description_en'),
+                'desc_ar' => $request->get('mission_description_ar'),
+                'sequence' => $request->get('sequence'),
+                'is_active' => $request->get('is_active'),
+                'updated_at' => now(),
+            ];
+
+            $newMissionPicture = $request->file('mission_picture');
+            if($newMissionPicture){
+                $missionDBPicture = $request->get('mission_db_picture');
+                Image::unlinkPicture($missionDBPicture);
+                $newMissionPictureName = Image::savePictureInStorage($newMissionPicture, $this->imagePath);
+                $mission['picture'] = $this->imagePath.$newMissionPictureName;
+            } 
+
+            $updateMission = DB::table($this->missionsAndVisionsMetaData->table_name)
+                                ->where('company_id', $this->authUser->company_id)
+                                ->where('setting_id', $this->settingId)
+                                ->where('id', $missionId)
+                                ->update($mission); 
+
+            $visionId = $request->get('vision_id');
+            $vision = [
+                'company_id' => $this->authUser->company_id,
+                'setting_id' => $this->settingId,
+                'title_en' => $request->get('vision_title_en'),
+                'title_ar' => $request->get('vision_title_ar'),
+                'desc_en' => $request->get('vision_description_en'),
+                'desc_ar' => $request->get('vision_description_ar'),
+                'sequence' => $request->get('sequence'),
+                'is_active' => $request->get('is_active'),
+                'updated_at' => now(),
+            ];
+
+            $newVisionPicture = $request->file('vision_picture');
+            if($newVisionPicture){
+
+                $visionDBPicture = $request->get('vision_db_picture');
+                Image::unlinkPicture($visionDBPicture);
+                $newVisionPictureName = Image::savePictureInStorage($newVisionPicture, $this->imagePath);
+                $vision['picture'] = $this->imagePath.$newVisionPictureName;
+            } 
+
+            $updateVision = DB::table($this->missionsAndVisionsMetaData->table_name)
+                                ->where('company_id', $this->authUser->company_id)
+                                ->where('setting_id', $this->settingId)
+                                ->where('id', $visionId)
+                                ->update($vision); 
+
+
+
+            if($updateMission == 1 && $updateVision == 1){
+                DB::commit();
+                $code = 200;
+                $msg = 'translation.mission_and_vision_updated';
+            }else{
+                DB::rollBack();
+                $code = 400;
+                $msg = 'translation.mission_and_vision_not_updated';
+            }
+            return response()->json(['message' => lang::get($msg)], $code);
+        }catch(ValidationException $e){
+            DB::rollBack();
+
+            // Handle validation errors
+            $errors = $e->validator->errors()->messages();
+
+            return response()->json([
+                'errors' => $errors
+            ], 422);
+        }catch(Exception $e){
+            DB::rollBack();
+            $code = $e->getCode();
+            $msg = $e->getMessage();
+
+            Log::error("Error | Controller: MissionsAndVisionsController | Function: saveUpdatedMissionAndVision | Code: ".$code." | Message: ".$msg);
+
+            return response()->json(['message' => $msg], $code);
+        }
     }
     
 }

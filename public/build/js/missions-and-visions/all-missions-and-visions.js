@@ -1,10 +1,20 @@
 $(document).ready(function() {
 
     $('#missions_and_visions_table').DataTable({
-      //   "processing": true,
-      //   "serverSide": true,
+        // "processing": true,
+        // "serverSide": true,
       //   "responsive": true,
-  
+        responsive: true,
+        autoWidth: false,
+        createdRow: function(row, data, dataIndex) {
+            $('td', row).css({
+                'width': '200px',
+                'word-wrap': 'break-word',
+                'word-break': 'break-all',
+                'white-space': 'normal',
+                'overflow-wrap': 'break-word'
+            });
+        },
         "ordering": false,
         "ajax": {
             "url": "/missions-and-visions/get-paginated-missions-and-visions-data",
@@ -43,13 +53,13 @@ $(document).ready(function() {
             { 
               "data": null,
               "render": function (data, type, row) {
-                  return '<button class="btn btn-light" onclick="redirectToMissionAndVisionDetails(' + data.id + ')">' + detailsText + '</button>';
+                  return '<button class="btn btn-light" onclick="redirectToRUMissionAndVision(\'' + data.id + '\', \'read\')">' + detailsText + '</button>';
               },
             },
             { 
                 "data": null,
                 "render": function (data, type, row) {
-                    return '<button class="btn btn-primary" onclick="redirectToUpdateMissionAndVision(' + data.id + ')">' + updateText + '</button>';
+                    return '<button class="btn btn-primary" onclick="redirectToRUMissionAndVision(\'' + data.id + '\', \'update\')">' + updateText + '</button>';
                 },
               },
         ],
@@ -63,12 +73,9 @@ $(document).ready(function() {
     });
 });
   
-function redirectToUpdateMissionAndVision(id) {
-    // window.location.href = '/services/update-service/' + id;
+function redirectToRUMissionAndVision(id, action) {
+    window.location.href = '/missions-and-visions/ru-mission-and-vision-details/' + id + '/' + action;
 }
 
-function redirectToMissionAndVisionDetails(id) {
-    // window.location.href = '/services/update-service/' + id;
-}
   
   

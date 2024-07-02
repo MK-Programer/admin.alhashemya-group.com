@@ -162,6 +162,18 @@ return [
         'sequence' => 'التسلسل',
         'is_active' => 'هل هو نشط؟',
 
+        'mission_picture' => 'صورة المهمة',
+        'mission_title_en' => 'عنوان المهمة بالإنجليزية',
+        'mission_title_ar' => 'عنوان المهمة بالعربية',
+        'mission_description_en' => 'وصف المهمة بالإنجليزية',
+        'mission_description_ar' => 'وصف المهمة بالعربية',
+
+        'vision_picture' => 'صورة الرؤية',
+        'vision_title_en' => 'عنوان الرؤية بالإنجليزية',
+        'vision_title_ar' => 'عنوان الرؤية بالعربية',
+        'vision_description_en' => 'وصف الرؤية بالإنجليزية',
+        'vision_description_ar' => 'وصف الرؤية بالعربية',
+
     ],
 
 ];

@@ -6,8 +6,8 @@
 
 @section('css')
 <!-- owl.carousel css -->
-    <link rel="stylesheet" href="{{ URL::asset('/build/libs/owl.carousel/assets/owl.carousel.min.css') }}">
-    <link rel="stylesheet" href="{{ URL::asset('/build/libs/owl.carousel/assets/owl.theme.default.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('/build/libs/owl.carousel/assets/owl.carousel.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('/build/libs/owl.carousel/assets/owl.theme.default.min.css') }}">
 @endsection
 
 @section('body')
@@ -25,7 +25,7 @@
                     <div class="auth-full-page-content p-md-5 p-4">
                         <div class="w-100">
                             <div class="d-flex flex-column h-100">
-                                <img src="{{URL::asset('build/icons/auth-login.jpg')}}" width="100%" height="100%">
+                                <img src="{{asset('build/icons/auth-login.jpg')}}" width="100%" height="100%">
                                 
                             </div>
                         </div>

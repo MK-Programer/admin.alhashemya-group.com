@@ -15,8 +15,10 @@
 
 
 <?php $__env->startSection('body'); ?>
-    <body data-sidebar="dark">
+
+<body data-sidebar="dark">
 <?php echo $__env->yieldSection(); ?>
+
     <!-- Begin page -->
     <div id="layout-wrapper">
         <?php echo $__env->make('layouts.topbar', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
@@ -45,6 +47,7 @@
     <!-- JAVASCRIPT -->
     <?php echo $__env->make('layouts.vendor-scripts', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 </body>
+
 
 </html>
 <?php /**PATH E:\elhashemya_group\resources\views/layouts/master.blade.php ENDPATH**/ ?>

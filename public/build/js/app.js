@@ -16,7 +16,7 @@ function rtlSwitchMode(){
 
 function ltrSwitchMode(){
     $("html").attr("dir", 'ltr');
-    $(".bootstrap-style").attr('href', 'build/css/bootstrap.min.css');
+    $(".bootstrap-style").attr('href', assetPath+'build/css/bootstrap.min.css');
     $(".app-style").attr('href', assetPath+'build/css/app.min.css');
     sessionStorage.setItem("dir", "ltr-mode-switch");
 }
@@ -260,6 +260,7 @@ function ltrSwitchMode(){
     function initDirSetting(){
         if (window.sessionStorage) {
             var dir = sessionStorage.getItem("dir");
+            
             if (dir) {
                 if (dir === "rtl-mode-switch") {
                     rtlSwitchMode();
@@ -275,6 +276,7 @@ function ltrSwitchMode(){
                 
             }
         }
+        
     }
 
     function updateThemeSetting(id) {
@@ -314,6 +316,9 @@ function ltrSwitchMode(){
     }
 
     function init() {
+        initDirSetting(); // handle initializing direction
+        initSettings();
+        
         initMetisMenu();
         initLeftMenuCollapse();
         initActiveMenu();
@@ -323,8 +328,6 @@ function ltrSwitchMode(){
         initRightSidebar();
         initDropdownMenu();
         initComponents();
-        initSettings();
-        initDirSetting(); // handle initializing direction
         initLanguage();
         initPreloader();
         Waves.init();

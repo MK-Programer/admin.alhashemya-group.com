@@ -31,7 +31,7 @@
             <div class="card">
                 <div class="card-body">
                     <div class="mt-0 mb-3">
-                        <a href="#" id="create_mission_and_vision" class="btn btn-primary"><?php echo app('translator')->get('translation.create_new_mission_and_vision'); ?></a>
+                        <a href="<?php echo e(route('showCreateMissionAndVision')); ?>" id="create_mission_and_vision" class="btn btn-primary"><?php echo app('translator')->get('translation.create_new_mission_and_vision'); ?></a>
                     </div>
                     <table id="missions_and_visions_table" class="table table-striped dt-responsive nowrap w-100">
                         <thead>

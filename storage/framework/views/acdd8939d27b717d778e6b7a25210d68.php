@@ -10,6 +10,7 @@
 <script>
     // lang
     var currentLang = '<?php echo e(app()->getLocale()); ?>';
+
     // assetPath
     var assetPath = '<?php echo e(asset('')); ?>';
 
@@ -22,7 +23,6 @@
 
 
 <?php echo $__env->yieldContent('script'); ?>
-
 <!-- App js -->
 <script src="<?php echo e(asset('build/js/app.js')); ?>"></script>
 <script src="<?php echo e(asset('build/js/companies/change-user-company.js')); ?>"></script>

@@ -4,7 +4,17 @@ $(document).ready(function() {
     //   "processing": true,
     //   "serverSide": true,
     //   "responsive": true,
-
+        responsive: true,
+        autoWidth: false,
+        createdRow: function(row, data, dataIndex) {
+            $('td', row).css({
+                'width': '200px',
+                'word-wrap': 'break-word',
+                'word-break': 'break-all',
+                'white-space': 'normal',
+                'overflow-wrap': 'break-word'
+            });
+       },
       "ordering": false,
       "ajax": {
           "url": "/services/get-paginated-services-data",

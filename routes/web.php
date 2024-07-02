@@ -28,22 +28,33 @@ Route::middleware(['auth', 'active.user'])->group(function () {
     Route::get('/', [DashBoardController::class, 'root'])->name('dashboard');
 
     //User
-    Route::get('/user/user-profile', [UsersController::class, 'showUserProfile'])->name('showUserProfile');
-    Route::post('/user/update-user-profile', [UsersController::class, 'updateUserProfile'])->name('updateUserProfile');
-    Route::post('/user/update-user-password', [UsersController::class, 'updateUserPassword'])->name('updateUserPassword');
-    Route::post('/user/update-user-company-id', [UsersController::class, 'updateUserCompanyId'])->name('updateUserCompanyId');
+    Route::prefix('user')->group(function () {
+        Route::get('user-profile', [UsersController::class, 'showUserProfile'])->name('showUserProfile');
+        Route::post('update-user-profile', [UsersController::class, 'updateUserProfile'])->name('updateUserProfile');
+        Route::post('update-user-password', [UsersController::class, 'updateUserPassword'])->name('updateUserPassword');
+        Route::post('update-user-company-id', [UsersController::class, 'updateUserCompanyId'])->name('updateUserCompanyId');
+    });
+    
 
     //Services
-    Route::get('/services', [ServicesController::class, 'showServices'])->name('showServices');
-    Route::get('/services/get-paginated-services-data', [ServicesController::class, 'getPaginatedServicesData'])->name('getPaginatedServicesData');
-    Route::get('/services/create-service', [ServicesController::class, 'showCreateService'])->name('showCreateService');
-    Route::post('/services/save-created-service', [ServicesController::class, 'saveCreatedService'])->name('saveCreatedService');
-    Route::get('/services/update-service/{id}', [ServicesController::class, 'showServiceToUpdate'])->name('showServiceToUpdate');
-    Route::post('/services/save-updated-service', [ServicesController::class, 'saveUpdatedService'])->name('saveUpdatedService');
-
+    Route::prefix('services')->group(function () {
+        Route::get('/', [ServicesController::class, 'showServices'])->name('showServices');
+        Route::get('get-paginated-services-data', [ServicesController::class, 'getPaginatedServicesData'])->name('getPaginatedServicesData');
+        Route::get('create-service', [ServicesController::class, 'showCreateService'])->name('showCreateService');
+        Route::post('save-created-service', [ServicesController::class, 'saveCreatedService'])->name('saveCreatedService');
+        Route::get('update-service/{id}', [ServicesController::class, 'showServiceToUpdate'])->name('showServiceToUpdate');
+        Route::post('save-updated-service', [ServicesController::class, 'saveUpdatedService'])->name('saveUpdatedService');
+    });
+    
     //Missions And Visions 
-    Route::get('/missions-and-visions', [MissionsAndVisionsController::class, 'showMissionsAndVisions'])->name('showMissionsAndVisions');
-    Route::get('/missions-and-visions/get-paginated-missions-and-visions-data', [MissionsAndVisionsController::class, 'getPaginatedMissionsAndVisionsData'])->name('getPaginatedMissionsAndVisionsData');
+    Route::prefix('missions-and-visions')->group(function () {
+        Route::get('/', [MissionsAndVisionsController::class, 'showMissionsAndVisions'])->name('showMissionsAndVisions');
+        Route::get('get-paginated-missions-and-visions-data', [MissionsAndVisionsController::class, 'getPaginatedMissionsAndVisionsData'])->name('getPaginatedMissionsAndVisionsData');
+        Route::get('ru-mission-and-vision-details/{id}/{action}', [MissionsAndVisionsController::class, 'showRUMissionAndVision'])->name('showRUMissionAndVision');
+        Route::get('create-new-mission-and-vision', [MissionsAndVisionsController::class, 'showCreateMissionAndVision'])->name('showCreateMissionAndVision');
+        Route::post('save-created-mission-and-vision', [MissionsAndVisionsController::class, 'saveCreatedMissionAndVision'])->name('saveCreatedMissionAndVision');
+        Route::post('save-updated-mission-and-vision', [ServicesController::class, 'saveUpdatedMissionAndVision'])->name('saveUpdatedMissionAndVision');
+    });
 
     //Language Translation
     Route::get('/index/{locale}', [AppController::class, 'lang']);

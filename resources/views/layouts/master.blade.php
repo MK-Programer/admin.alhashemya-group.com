@@ -15,8 +15,10 @@
 
 
 @section('body')
-    <body data-sidebar="dark">
+
+<body data-sidebar="dark">
 @show
+
     <!-- Begin page -->
     <div id="layout-wrapper">
         @include('layouts.topbar')
@@ -45,5 +47,6 @@
     <!-- JAVASCRIPT -->
     @include('layouts.vendor-scripts')
 </body>
+
 
 </html>

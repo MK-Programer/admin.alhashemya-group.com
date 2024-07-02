@@ -190,6 +190,8 @@ return [
   'Utilities' => 'Utilities',
 
   'menu' => 'Menu',
+  'welcome_back' => 'Welcome Back !',
+  'signin_to_continue' => 'Sign in to continue to',
 
   'alhashemya_group' => 'Al-Hashemya Group',
   'login' => 'Login',
@@ -258,9 +260,16 @@ return [
   'choose_theme' => 'Choose Theme',
   'light_theme' => 'Light Theme',
   'dark_theme' => 'Dark Theme',
+  
 
-  'missions_and_visions' => 'Missions And Missions',
+  'mission' => 'Mission',
+  'vision' => 'Vision',
+  'additional_data' => 'Additional Data',
+
+  'missions_and_visions' => 'Missions And Visions',
   'create_new_mission_and_vision' => 'Create New Mission And Vision',
+  'mission_and_vision_details' => 'Mission And Vision Details',
+  'update_mission_and_vision' => 'Update Mission And Vision',
 
   'mission_picture' => 'Mission Picture',
   'mission_title_en' => 'Mission Title In English',
@@ -268,11 +277,26 @@ return [
   'mission_description_en' => 'Mission Description In English',
   'mission_description_ar' => 'Mission Description In Arabic',
 
+  'enter_mission_title_en' => 'Enter Mission Title In English',
+  'enter_mission_title_ar' => 'Enter Mission Title In Arabic',
+  'enter_mission_description_en' => 'Enter Mission Description In English',
+  'enter_mission_description_ar' => 'Enter Mission Description In Arabic',
+
   'vision_picture' => 'Vision Picture',
   'vision_title_en' => 'Vision Title In English',
   'vision_title_ar' => 'Vision Title In Arabic',
   'vision_description_en' => 'Vision Description In English',
   'vision_description_ar' => 'Vision Description In Arabic',
+
+  'enter_vision_title_en' => 'Enter Vision Title In English',
+  'enter_vision_title_ar' => 'Enter Vision Title In Arabic',
+  'enter_vision_description_en' => 'Enter Vision Description In English',
+  'enter_vision_description_ar' => 'Enter Vision Description In Arabic',
+
+  'mission_and_vision_created' => 'Mission And Vision Created Successfully',
+  'mission_and_vision_not_created' => 'Error While Creating The Mission And Vision, Try Again Later...',
+
+  
   'details' => 'Details',
   
   'error' => 'Error',

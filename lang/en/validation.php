@@ -161,6 +161,17 @@ return [
         'description_ar' => 'Description In Arabic',
         'sequence' => 'Sequence',
         'is_active' => 'Is Active ?',
+        'mission_picture' => 'Mission Picture',
+        'mission_title_en' => 'Mission Title In English',
+        'mission_title_ar' => 'Mission Title In Arabic',
+        'mission_description_en' => 'Mission Description In English',
+        'mission_description_ar' => 'Mission Description In Arabic',
+        'vision_picture' => 'Vision Picture',
+        'vision_title_en' => 'Vision Title In English',
+        'vision_title_ar' => 'Vision Title In Arabic',
+        'vision_description_en' => 'Vision Description In English',
+        'vision_description_ar' => 'Vision Description In Arabic',
+        
     ],
 
 ];

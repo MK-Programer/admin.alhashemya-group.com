@@ -2,6 +2,8 @@
 
 return [
     'menu' => 'القائمة',
+    'welcome_back' => 'مرحبا بك',
+    'signin_to_continue' => 'قم بالتسجيل للدخول إلي',
 
     'alhashemya_group' => 'مجموعة الهاشمية',
     'login' => 'تسجيل دخول',
@@ -70,8 +72,16 @@ return [
     'light_theme' => 'المظهر الفاتح',
     'dark_theme' => 'المظهر الداكن',
 
+    
+    'mission' => 'المهمة',
+    'vision' => 'الرؤية',
+
+    'additional_data' => 'بيانات إضافية',
+
     'missions_and_visions' => 'المهمات و الرؤي',
     'create_new_mission_and_vision' => 'إنشاء مهمة و رؤية جديدة',
+    'mission_and_vision_details' => 'تفاصيل مهمة و رؤية',
+    'update_mission_and_vision' => 'تعديل مهمة و رؤية',
 
     'mission_picture' => 'صورة المهمة',
     'mission_title_en' => 'عنوان المهمة بالإنجليزية',
@@ -84,6 +94,21 @@ return [
     'vision_title_ar' => 'عنوان الرؤية بالعربية',
     'vision_description_en' => 'وصف الرؤية بالإنجليزية',
     'vision_description_ar' => 'وصف الرؤية بالعربية',
+
+    
+    'enter_mission_title_en' => 'أدخل عنوان المهمة بالإنجليزية',
+    'enter_mission_title_ar' => 'أدخل عنوان المهمة بالعربية',
+    'enter_mission_description_en' => 'أدخل وصف المهمة بالإنجليزية',
+    'enter_mission_description_ar' => 'أدخل وصف المهمة بالعربية',
+
+    'enter_vision_title_en' => 'أدخل عنوان الرؤية بالإنجليزية',
+    'enter_vision_title_ar' => 'أدخل عنوان الرؤية بالعربية',
+    'enter_vision_description_en' => 'أدخل وصف الرؤية بالإنجليزية',
+    'enter_vision_description_ar' => 'أدخل وصف الرؤية بالعربية',
+
+    'mission_and_vision_created' => 'تم إنشاء المهمة والرؤية بنجاح',
+    'mission_and_vision_not_created' => 'حدث خطأ أثناء إنشاء المهمة والرؤية، يرجى المحاولة مرة أخرى لاحقًا...',
+
     'details' => 'تفاصيل',
 
 

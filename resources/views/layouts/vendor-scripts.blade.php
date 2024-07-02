@@ -10,6 +10,7 @@
 <script>
     // lang
     var currentLang = '{{ app()->getLocale() }}';
+
     // assetPath
     var assetPath = '{{ asset('') }}';
 
@@ -22,7 +23,6 @@
 
 
 @yield('script')
-
 <!-- App js -->
 <script src="{{ asset('build/js/app.js')}}"></script>
 <script src="{{ asset('build/js/companies/change-user-company.js') }}"></script>

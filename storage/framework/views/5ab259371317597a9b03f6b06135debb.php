@@ -26,6 +26,7 @@
                     <thead>
                         <tr>
                             <th><?php echo app('translator')->get('translation.id'); ?></th>
+                            <th><?php echo app('translator')->get('translation.mission_picture'); ?></th>
                             <th><?php echo app('translator')->get('translation.mission_title_en'); ?></th>
                             <th><?php echo app('translator')->get('translation.mission_title_ar'); ?></th>
                             <th><?php echo app('translator')->get('translation.mission_description_en'); ?></th>
@@ -35,6 +36,7 @@
                     <tbody>
                         <tr>
                             <td><?php echo e($mission->id); ?></td>
+                            <th><img src="<?php echo e(asset($mission->picture)); ?>" alt="#" class="rounded-circle avatar-md"></th>
                             <td><?php echo e($mission->title_en); ?></td>
                             <td><?php echo e($mission->title_ar); ?></td>
                             <td><?php echo e($mission->desc_en); ?></td>
@@ -54,6 +56,7 @@
                     <thead>
                         <tr>
                             <th><?php echo app('translator')->get('translation.id'); ?></th>
+                            <th><?php echo app('translator')->get('translation.vision_picture'); ?></th>
                             <th><?php echo app('translator')->get('translation.vision_title_en'); ?></th>
                             <th><?php echo app('translator')->get('translation.vision_title_ar'); ?></th>
                             <th><?php echo app('translator')->get('translation.vision_description_en'); ?></th>
@@ -63,6 +66,7 @@
                     <tbody>
                         <tr>
                             <td><?php echo e($vision->id); ?></td>
+                            <th><img src="<?php echo e(asset($vision->picture)); ?>" alt="#" class="rounded-circle avatar-md"></th>
                             <td><?php echo e($vision->title_en); ?></td>
                             <td><?php echo e($vision->title_ar); ?></td>
                             <td><?php echo e($vision->desc_en); ?></td>

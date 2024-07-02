@@ -82,7 +82,7 @@ class MissionsAndVisionsController extends Controller
                             ->count() / 2;
     
             // Calculate total pages
-            $totalPages = ceil($totalRecords / $perPage / 2); // Adjust the total count if necessary
+            $totalPages = ceil($totalRecords / $perPage); // Adjust the total count if necessary
     
             return response()->json([
                 'data' => $missionsAndVisions,
@@ -245,6 +245,10 @@ class MissionsAndVisionsController extends Controller
 
             return response()->json(['message' => $msg], $code);
         }
+    }
+
+    public function saveUpdatedMissionAndVision(Request $request){
+        
     }
     
 }

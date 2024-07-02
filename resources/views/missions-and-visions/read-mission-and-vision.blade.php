@@ -25,6 +25,7 @@
                     <thead>
                         <tr>
                             <th>@lang('translation.id')</th>
+                            <th>@lang('translation.mission_picture')</th>
                             <th>@lang('translation.mission_title_en')</th>
                             <th>@lang('translation.mission_title_ar')</th>
                             <th>@lang('translation.mission_description_en')</th>
@@ -34,6 +35,7 @@
                     <tbody>
                         <tr>
                             <td>{{ $mission->id }}</td>
+                            <th><img src="{{ asset($mission->picture) }}" alt="#" class="rounded-circle avatar-md"></th>
                             <td>{{ $mission->title_en }}</td>
                             <td>{{ $mission->title_ar }}</td>
                             <td>{{ $mission->desc_en }}</td>
@@ -53,6 +55,7 @@
                     <thead>
                         <tr>
                             <th>@lang('translation.id')</th>
+                            <th>@lang('translation.vision_picture')</th>
                             <th>@lang('translation.vision_title_en')</th>
                             <th>@lang('translation.vision_title_ar')</th>
                             <th>@lang('translation.vision_description_en')</th>
@@ -62,6 +65,7 @@
                     <tbody>
                         <tr>
                             <td>{{ $vision->id }}</td>
+                            <th><img src="{{ asset($vision->picture) }}" alt="#" class="rounded-circle avatar-md"></th>
                             <td>{{ $vision->title_en }}</td>
                             <td>{{ $vision->title_ar }}</td>
                             <td>{{ $vision->desc_en }}</td>

@@ -1,14 +1,15 @@
 $(document).ready(function() {
 
   $('#services_table').DataTable({
-    //   "processing": true,
-    //   "serverSide": true,
-    //   "responsive": true,
+        // "serverSide": true,
+        processing: true,
         responsive: true,
         autoWidth: false,
+        paginate: true,
+        lengthMenu: [10], // Display only one row per page
         createdRow: function(row, data, dataIndex) {
             $('td', row).css({
-                'width': '200px',
+                'width': '150px',
                 'word-wrap': 'break-word',
                 'word-break': 'break-all',
                 'white-space': 'normal',

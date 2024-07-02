@@ -1,14 +1,15 @@
 $(document).ready(function() {
 
     $('#missions_and_visions_table').DataTable({
-        // "processing": true,
         // "serverSide": true,
-      //   "responsive": true,
+        processing: true,
         responsive: true,
         autoWidth: false,
+        paginate: true,
+        lengthMenu: [10], // Display only one row per page
         createdRow: function(row, data, dataIndex) {
             $('td', row).css({
-                'width': '200px',
+                'width': '150px',
                 'word-wrap': 'break-word',
                 'word-break': 'break-all',
                 'white-space': 'normal',
@@ -19,6 +20,12 @@ $(document).ready(function() {
         "ajax": {
             "url": "/missions-and-visions/get-paginated-missions-and-visions-data",
             "type": "GET",
+            "data": function (d) {
+                // Add start and length parameters for server-side pagination
+                d.start = d.start || 0;
+                d.length = d.length || 1; // Default length per page
+                return d;
+            },
             "dataSrc": function (json) {
                 console.log("Server Response:", json); // Log the JSON response for debugging
                 if (json && json.data) {
@@ -34,7 +41,7 @@ $(document).ready(function() {
             "error": function (xhr, error, thrown) {
                 infoDangerAlert();
                 console.error("DataTables AJAX Error:", error, thrown);
-                console.error(xhr.error); // Log detailed error message
+                console.error(xhr); // Log detailed error message
             }
         },
         "columns": [
@@ -66,7 +73,6 @@ $(document).ready(function() {
         "language": {
             "url": "lang/datatables_" + currentLang + ".json" // Adjust language file URL dynamically
         }, 
-        
         "initComplete": function () {
             console.log("DataTables initialization complete.");
         }

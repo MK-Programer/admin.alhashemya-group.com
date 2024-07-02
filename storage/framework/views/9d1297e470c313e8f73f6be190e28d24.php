@@ -5,7 +5,7 @@
 <!-- Icons Css -->
 <link href="<?php echo e(asset('/build/css/icons.min.css')); ?>" rel="stylesheet" type="text/css" />
 <!-- App Css-->
-<link href="<?php echo e(asset('/build/css/app.min.css')); ?>" class="app-style" rel="stylesheet" type="text/css" />
+<link href="<?php echo e(asset(app()->getLocale() == 'en' ? '/build/css/app.min.css' : '/build/css/app-rtl.min.css')); ?>" class="app-style" rel="stylesheet" type="text/css" />
 
 <link href="<?php echo e(asset('/build/css/sweetalert2.min.css')); ?>" rel="stylesheet" type="text/css" />
 

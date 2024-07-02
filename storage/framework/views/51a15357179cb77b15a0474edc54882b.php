@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="<?php echo e(str_replace('_', '-', app()->getLocale())); ?>">
+<html lang="<?php echo e(str_replace('_', '-', app()->getLocale())); ?>" dir="<?php echo e(app()->getLocale() == 'en' ? 'ltr' : 'rtl'); ?>">
 
 <head>
     <meta charset="utf-8" />

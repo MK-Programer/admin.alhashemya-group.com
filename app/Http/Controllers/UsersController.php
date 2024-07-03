@@ -3,9 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\App;
-use Illuminate\Support\Str;
 
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
@@ -13,6 +10,7 @@ use Illuminate\Support\Facades\Lang;
 use Illuminate\Validation\ValidationException;
 use App\Rules\MatchOldPasswordRule;
 use App\Rules\UniqueEmailRule;
+use App\Classes\Image;
 
 use Illuminate\Support\Facades\Log;
 use Exception;
@@ -30,11 +28,6 @@ class UsersController extends Controller
             $this->authUser = Auth::user();
             return $next($request);
         });
-    }
-
-    public function getAuthUser(){
-        
-        return $this->authUser;
     }
 
     public function showUserProfile(){
@@ -67,14 +60,12 @@ class UsersController extends Controller
             
             $authUser->name = $request->get('name');
             $authUser->email = $request->get('email');
-    
-            if ($request->file('avatar')) {
-                
-                $avatar = $request->file('avatar');
-                $uuid = Str::uuid();
-                $avatarName = $uuid . '.' . $avatar->getClientOriginalExtension();
-                $avatarPath = public_path($this->imagePath);
-                $avatar->move($avatarPath, $avatarName);
+            
+            $avatar = $request->file('avatar');
+            if ($avatar){
+                $userDBPicturePath = $request->get('user_db_picture');
+                Image::unlinkPicture($userDBPicturePath);
+                $avatarName = Image::savePictureInStorage($avatar, $this->imagePath);
                 $authUser->avatar = $this->imagePath.$avatarName;
             }
     

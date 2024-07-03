@@ -19,6 +19,7 @@
 
                     <div class="mb-3">
                         <div class="text-start mt-2">
+                            <input type="hidden" value="{{ $authUser->avatar }}" id="user_db_picture" name="user_db_picture">
                             <img src="{{ asset($authUser->avatar) }}" alt="#" class="rounded-circle avatar-lg" id="profile_image">
                         </div>
                         <label for="avatar">@lang('translation.profile_picture')</label>

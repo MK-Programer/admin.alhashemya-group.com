@@ -7,6 +7,7 @@ use App\Http\Controllers\DashBoardController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\ServicesController;
 use App\Http\Controllers\MissionsAndVisionsController;
+use App\Http\Controllers\MessagesController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -53,6 +54,13 @@ Route::middleware(['auth', 'active.user'])->group(function () {
         Route::get('create-new-mission-and-vision', [MissionsAndVisionsController::class, 'showCreateMissionAndVision'])->name('showCreateMissionAndVision');
         Route::post('save-created-mission-and-vision', [MissionsAndVisionsController::class, 'saveCreatedMissionAndVision'])->name('saveCreatedMissionAndVision');
         Route::post('save-updated-mission-and-vision', [MissionsAndVisionsController::class, 'saveUpdatedMissionAndVision'])->name('saveUpdatedMissionAndVision');
+    });
+
+    //Messages
+    Route::prefix('messages')->group(function () {
+        Route::get('/', [MessagesController::class, 'showMessages'])->name('showMessages');
+        Route::get('get-paginated-messages-data', [MessagesController::class, 'getPaginatedMessagesData'])->name('getPaginatedMessagesData');    
+        Route::post('change-message-reviewed-status', [MessagesController::class, 'changeMessageReviewedStatus'])->name('changeMessageReviewedStatus');    
     });
 
     //Language Translation

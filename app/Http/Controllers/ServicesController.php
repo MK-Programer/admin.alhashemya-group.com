@@ -3,9 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\App;
-
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Lang;
 use Illuminate\Validation\ValidationException;
@@ -47,58 +44,64 @@ class ServicesController extends Controller
         }
     }
 
-    public function getPaginatedServicesData(Request $request){
-        try{
+    public function getPaginatedServicesData(Request $request)
+    {
+        try {
             $assetUrl = asset('');
 
-            // Number of records to fetch per request
-            $perPage = 10;
+            // Get DataTables parameters
+            $draw = $request->input('draw');
+            $start = $request->input('start', 0);
+            $length = $request->input('length', 10);
+            $searchValue = $request->input('search.value'); // Search value from DataTables
 
-            // Get the current page from the request, default is 1
-            $currentPage = $request->input('page', 1);
+            // Base query
+            $query = DB::table($this->servicesMetaData->table_name) // Replace with your actual table name
+                ->select('id', 'title_en', 'title_ar', 'desc_en', 'desc_ar', 'sequence', 'is_active')
+                ->selectRaw("CONCAT('$assetUrl', picture) AS picture")
+                ->where('setting_id', $this->settingId)
+                ->where('company_id', $this->authUser->company_id);
 
-            // Calculate the offset
-            $offset = ($currentPage - 1) * $perPage;
+            // Apply search filter if search value is provided
+            if (!empty($searchValue)) {
+                $query->where(function($q) use ($searchValue) {
+                    $q->where('id', 'like', "%$searchValue%")
+                    ->orWhere('title_en', 'like', "%$searchValue%")
+                    ->orWhere('title_ar', 'like', "%$searchValue%")
+                    ->orWhere('desc_en', 'like', "%$searchValue%")
+                    ->orWhere('desc_ar', 'like', "%$searchValue%")
+                    ->orWhere('sequence', 'like', "%$searchValue%")
+                    ->orWhere('is_active', 'like', "%$searchValue%");
+                });
+            }
 
-            // Fetch the data with the calculated offset and limit using Query Builder
-            $services = DB::table($this->servicesMetaData->table_name) // Replace with your actual table name
-                            ->select('id', 'title_en', 'title_ar', 'desc_en', 'desc_ar', 'sequence', 'is_active')
-                            ->selectRaw("CONCAT('$assetUrl', picture) AS picture")
-                            ->where('setting_id', $this->settingId)
-                            ->where('company_id', $this->authUser->company_id)
-                            ->offset($offset)
-                            ->limit($perPage)
-                            ->orderBy('sequence', 'ASC')
-                            ->get();
+            // Get the total count of records before applying pagination
+            $totalRecords = $query->count();
 
-            // Count total records
-            $totalRecords = DB::table($this->servicesMetaData->table_name) 
-                                    ->where('setting_id', $this->settingId)
-                                    ->where('company_id', $this->authUser->company_id)
-                                    ->count();
-
-            // Calculate total pages
-            $totalPages = ceil($totalRecords / $perPage);
+            // Apply pagination
+            $services = $query
+                ->offset($start)
+                ->limit($length)
+                ->orderBy('sequence', 'ASC')
+                ->get();
 
             return response()->json([
-                'data' => $services,
-                'current_page' => $currentPage,
-                'total_pages' => $totalPages,
+                'draw' => $draw,
                 'recordsTotal' => $totalRecords,
                 'recordsFiltered' => $totalRecords,
-                'per_page' => $perPage,
+                'data' => $services,
             ]);
         
-        }catch(Exception $e){
-
+        } catch (Exception $e) {
             $code = $e->getCode();
             $msg = $e->getMessage();
 
-            Log::error("Error | Controller: ServicesController | Function: getPaginatedData | Code: ".$code." | Message: ".$msg);
+            Log::error("Error | Controller: ServicesController | Function: getPaginatedServicesData | Code: ".$code." | Message: ".$msg);
 
             return response()->json(['message' => $msg], $code);
         }
     }
+
 
     public function showCreateService(){
         try{

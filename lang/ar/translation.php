@@ -4,17 +4,14 @@ return [
     'menu' => 'القائمة',
     'welcome_back' => 'مرحبا بك',
     'signin_to_continue' => 'قم بالتسجيل للدخول إلي',
-
     'alhashemya_group' => 'مجموعة الهاشمية',
     'login' => 'تسجيل دخول',
     'loading' => 'تحميل...',
     'profile' => 'الحساب الشخصي',
     'logout' => 'تسجيل خروج',
     'dashboard' => 'لوحة القيادة',
-    
     'english' => 'الإنجليزية',
     'arabic' => 'العربية',
-    
     'back_to_dashboard' => 'العودة إلي لوحة القيادة',
     'name' => 'اسم',
     'enter_name' => 'أدخل الاسم',
@@ -55,65 +52,64 @@ return [
     'choose_picture' => 'أختر صورة',
     'create' => 'إنشاء',
     'update_service' => 'تعديل خدمة',
-
     'service_created' => 'تم إنشاء الخدمة بنجاح',
     'service_not_created' => 'حدث خطأ أثناء إنشاء الخدمة، حاول مرة أخرى لاحقًا...',
     'service_deleted' => 'تم حذف الخدمة بنجاح',
     'service_not_deleted' => 'حدث خطأ أثناء حذف الخدمة، حاول مرة أخرى لاحقًا...',
     'service_updated' => 'تم تحديث الخدمة بنجاح',
     'service_not_updated' => 'حدث خطأ أثناء تحديث الخدمة، يرجى المحاولة مرة أخرى لاحقًا...',
-
     'companies' => 'الشركات',
     'company_id_updated' => 'تم تحديث معرف الشركة',
     'company_id_not_updated' => 'خطأ أثناء تحديث معرف الشركة، حاول مرة أخرى لاحقًا...',
-
     'settings' => 'الأعدادات',
     'choose_theme' => 'اختر المظهر',
     'light_theme' => 'المظهر الفاتح',
     'dark_theme' => 'المظهر الداكن',
-
-    
     'mission' => 'المهمة',
     'vision' => 'الرؤية',
-
     'additional_data' => 'بيانات إضافية',
-
     'missions_and_visions' => 'المهمات و الرؤي',
     'create_new_mission_and_vision' => 'إنشاء مهمة و رؤية جديدة',
     'mission_and_vision_details' => 'تفاصيل مهمة و رؤية',
     'update_mission_and_vision' => 'تعديل مهمة و رؤية',
-
     'mission_picture' => 'صورة المهمة',
     'mission_title_en' => 'عنوان المهمة بالإنجليزية',
     'mission_title_ar' => 'عنوان المهمة بالعربية',
     'mission_description_en' => 'وصف المهمة بالإنجليزية',
     'mission_description_ar' => 'وصف المهمة بالعربية',
-
+    'enter_mission_title_en' => 'أدخل عنوان المهمة بالإنجليزية',
+    'enter_mission_title_ar' => 'أدخل عنوان المهمة بالعربية',
+    'enter_mission_description_en' => 'أدخل وصف المهمة بالإنجليزية',
+    'enter_mission_description_ar' => 'أدخل وصف المهمة بالعربية',    
     'vision_picture' => 'صورة الرؤية',
     'vision_title_en' => 'عنوان الرؤية بالإنجليزية',
     'vision_title_ar' => 'عنوان الرؤية بالعربية',
     'vision_description_en' => 'وصف الرؤية بالإنجليزية',
     'vision_description_ar' => 'وصف الرؤية بالعربية',
-
-    
-    'enter_mission_title_en' => 'أدخل عنوان المهمة بالإنجليزية',
-    'enter_mission_title_ar' => 'أدخل عنوان المهمة بالعربية',
-    'enter_mission_description_en' => 'أدخل وصف المهمة بالإنجليزية',
-    'enter_mission_description_ar' => 'أدخل وصف المهمة بالعربية',
-
     'enter_vision_title_en' => 'أدخل عنوان الرؤية بالإنجليزية',
     'enter_vision_title_ar' => 'أدخل عنوان الرؤية بالعربية',
     'enter_vision_description_en' => 'أدخل وصف الرؤية بالإنجليزية',
     'enter_vision_description_ar' => 'أدخل وصف الرؤية بالعربية',
-
     'mission_and_vision_created' => 'تم إنشاء المهمة والرؤية بنجاح',
     'mission_and_vision_not_created' => 'حدث خطأ أثناء إنشاء المهمة والرؤية، يرجى المحاولة مرة أخرى لاحقًا...',
-
     'mission_and_vision_updated' => 'تم تحديث الرؤية والرسالة',
     'mission_and_vision_not_updated' => 'حدث خطأ أثناء تحديث الرؤية والرسالة، حاول مرة أخرى لاحقاً...',
-
+    'messages' => 'الرسائل',
+    'message' => 'الرسالة',
+    'sender_details' => 'بيانات الراسل',
+    'product_details' => 'بيانات المنتج',
+    'product_id' => 'كود المنتج',
+    'sender_name' => 'أسم الراسل',
+    'sender_email' => 'البريد الإلكتروني للراسل',
+    'phone_number' => 'رقم الهاتف',
+    'subject' => 'الموضوع',
+    'body' => 'المحتوي',
+    'is_reviewed' => 'تمت مراجعتها ؟',
+    'messages_status_changed' => 'تم تغيير حالة الرسائل',
+    'messages_status_not_changed' => 'حدث خطأ أثناء تحديث الرسائل، يرجى المحاولة مرة أخرى لاحقاً...',
+    'change_to_reviewed' => 'تحويل إلي تمت المراجعة',
+    'message_details' => 'بيانات رسالة',
     'details' => 'تفاصيل',
-
     'error' => 'خطأ',
     'ok' => 'تم',
     'error_400' => 'طلب غير صالح: لم يتمكن الخادم من فهم الطلب بسبب صيغة غير صالحة',

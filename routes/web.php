@@ -61,6 +61,7 @@ Route::middleware(['auth', 'active.user'])->group(function () {
         Route::get('/', [MessagesController::class, 'showMessages'])->name('showMessages');
         Route::get('get-paginated-messages-data', [MessagesController::class, 'getPaginatedMessagesData'])->name('getPaginatedMessagesData');    
         Route::post('change-message-reviewed-status', [MessagesController::class, 'changeMessageReviewedStatus'])->name('changeMessageReviewedStatus');    
+        Route::get('message-details/{id}', [MessagesController::class, 'messageDetails'])->name('messageDetails');    
     });
 
     //Language Translation

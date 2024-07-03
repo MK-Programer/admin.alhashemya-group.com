@@ -110,6 +110,8 @@ return [
   'change_to_reviewed' => 'Change To Reviewed',
   'message_details' => 'Message Details',
   'details' => 'Details',
+  'product_name_en' => 'Product Name In English',
+  'product_name_ar' => 'Product Name In Arabic',
   'error' => 'Error',
   'ok' => 'Ok',
   'error_400' => 'Bad Request: The Server Could Not Understand The Request Due To Invalid Syntax',

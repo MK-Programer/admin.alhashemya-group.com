@@ -60,38 +60,38 @@
                         <tr>
                             <td>{{ $message->subject }}</td>
                             <th>{{ $message->body }}</th>
-                            <td>{{ @lang('translation.'.$message->is_checked ? 'yes' : 'no') }}</td>
+                            <td>@if($message->is_checked == 1) @lang('translation.yes') @else  @lang('translation.no') @endif</td>
                         </tr>
                     </tbody>
                 </table>
             </div>
         </div>  
         
-        <div class="card">
-            <div class="card-body">
-                <div class="card-header card-header-primary">
-                    <h4 class="card-title ">@lang('translation.product_details')</h4>
+        @if($product)
+            <div class="card">
+                <div class="card-body">
+                    <div class="card-header card-header-primary">
+                        <h4 class="card-title ">@lang('translation.product_details')</h4>
+                    </div>
+                    <table id="product_details_table" class="table table-striped dt-responsive nowrap w-100">
+                        <thead>
+                            <tr>
+                                <th>@lang('translation.id')</th>
+                                <th>@lang('translation.product_name_en')</th>
+                                <th>@lang('translation.product_name_ar')</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>{{ $product->product_code }}</td>
+                                <td>{{ $product->name_en }}</td>
+                                <td>{{ $product->name_ar }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
-                <table id="product_details_table" class="table table-striped dt-responsive nowrap w-100">
-                    <thead>
-                        <tr>
-                            <th>@lang('translation.id')</th>
-                            <th>@lang('translation.product_name_en')</th>
-                            <th>@lang('translation.product_name_ar')</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>  
+            </div>  
+        @endif
     </div>
 </div>
 <!-- end row -->

@@ -128,4 +128,29 @@ class MessagesController extends Controller{
             
     }
 
+    public function messageDetails($messageId){
+        try{
+            $message = DB::table($this->messagesMetaData->table_name)
+                            ->where('id', $messageId)
+                            ->first();
+
+            $productId = $message->product_id;
+
+            if($productId){
+                $product = DB::table('products')
+                                ->where('id', $productId)
+                                ->first();
+            }else{
+                $product = null;
+            }
+            return view('messages.read-message', compact('message', 'product'));
+        }catch(Exception $e){
+            $code = $e->getCode();
+            $msg = $e->getMessage();
+
+            Log::error("Error | Controller: MessagesController | Function: messageDetails | Code: ".$code." | Message: ".$msg);
+            return abort(500);
+        }
+    }
+
 }

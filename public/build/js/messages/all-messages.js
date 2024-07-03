@@ -60,7 +60,7 @@ $(document).ready(function() {
             { 
               data: null,
               render: function (data, type, row) {
-                  return '<button class="btn btn-light" onclick="redirectToMessageDetails(\'' + data.id + ')">' + detailsText + '</button>';
+                  return '<button class="btn btn-light" onclick="redirectToMessageDetails(' + data.id + ')">' + detailsText + '</button>';
               },
             },
         ],

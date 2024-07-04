@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Lang;
 use Illuminate\Validation\ValidationException;
@@ -12,39 +13,52 @@ use Illuminate\Support\Facades\Log;
 use Exception;
 use DB;
 
-
-class ServicesController extends Controller
+class PartnersOrClientsController extends Controller
 {
-
-    private $imagePath = 'images/services/';
-    private $settingId = 1;
-    private $servicesMetaData;
+    private $imagePath;
+    private $settingId;
+    private $partnersOrClientsMetaData;
     private $authUser;
 
     public function __construct(){
         $this->middleware(function ($request, $next) {
-            $this->servicesMetaData = DB::table('settings_meta_data')
-                                    ->where('setting_id', $this->settingId)
-                                    ->first();
-
             $this->authUser = Auth::user();
             return $next($request);
         });
     }
 
-    public function showServices(){
+    private function initSettings($type){
+        if($type == 'partners'){
+            $this->imagePath = 'images/partners/';
+            $this->settingId = 6;
+        }else if($type == 'clients'){
+            $this->imagePath = 'images/clients/';
+            $this->settingId = 7;
+        }
+        $this->partnersOrClientsMetaData = DB::table('settings_meta_data')
+                                                ->where('setting_id', $this->settingId)
+                                                ->first();  
+    }
+
+    public function showPartnersOrClients(){
         try{
-            return view('services.all-services');
+            $currentRouteName = Route::currentRouteName();
+            if($currentRouteName == 'showPartners'){
+                $type = 'partners';
+            }else if($currentRouteName == 'showClients'){
+                $type = 'clients';
+            }
+            return view('partners-or-clients.all-partners-or-clients', compact('type'));
         }catch(Exception $e){
             $code = $e->getCode();
             $msg = $e->getMessage();
 
-            Log::error("Error | Controller: ServicesController | Function: showServices | Code: ".$code." | Message: ".$msg);
+            Log::error("Error | Controller: PartnersOrClientsController | Function: showPartnersOrClients | Code: ".$code." | Message: ".$msg);
             return abort(500);
         }
     }
 
-    public function getPaginatedServicesData(Request $request)
+    public function getPaginatedPartnersOrClientsData(Request $request)
     {
         try {
             $assetUrl = asset('');
@@ -54,10 +68,12 @@ class ServicesController extends Controller
             $start = $request->input('start', 0);
             $length = $request->input('length', 10);
             $searchValue = $request->input('search.value'); // Search value from DataTables
+            $type = $request->input('type');
+            $this->initSettings($type);
 
             // Base query
-            $query = DB::table($this->servicesMetaData->table_name) // Replace with your actual table name
-                ->select('id', 'title_en', 'title_ar', 'desc_en', 'desc_ar', 'sequence', 'is_active')
+            $query = DB::table($this->partnersOrClientsMetaData->table_name) // Replace with your actual table name
+                ->select('id', 'title_en', 'title_ar', 'sequence', 'is_active')
                 ->selectRaw("CONCAT('$assetUrl', picture) AS picture")
                 ->where('setting_id', $this->settingId)
                 ->where('company_id', $this->authUser->company_id);
@@ -67,9 +83,7 @@ class ServicesController extends Controller
                 $query->where(function($q) use ($searchValue) {
                     $q->where('id', 'like', "%$searchValue%")
                     ->orWhere('title_en', 'like', "%$searchValue%")
-                    ->orWhere('title_ar', 'like', "%$searchValue%")
-                    ->orWhere('desc_en', 'like', "%$searchValue%")
-                    ->orWhere('desc_ar', 'like', "%$searchValue%");
+                    ->orWhere('title_ar', 'like', "%$searchValue%");
                 });
             }
 
@@ -77,7 +91,7 @@ class ServicesController extends Controller
             $totalRecords = $query->count();
 
             // Apply pagination
-            $services = $query
+            $partnersOrClients = $query
                 ->offset($start)
                 ->limit($length)
                 ->orderBy('sequence', 'ASC')
@@ -87,70 +101,78 @@ class ServicesController extends Controller
                 'draw' => $draw,
                 'recordsTotal' => $totalRecords,
                 'recordsFiltered' => $totalRecords,
-                'data' => $services,
+                'data' => $partnersOrClients,
             ]);
         
         } catch (Exception $e) {
             $code = $e->getCode();
             $msg = $e->getMessage();
 
-            Log::error("Error | Controller: ServicesController | Function: getPaginatedServicesData | Code: ".$code." | Message: ".$msg);
+            Log::error("Error | Controller: PartnersOrClientsController | Function: getPaginatedPartnersOrClientsData | Code: ".$code." | Message: ".$msg);
 
             return response()->json(['message' => $msg], $code);
         }
     }
 
-
-    public function showCreateService(){
+    public function showCreatePartnerOrClient($type){
         try{
-            return view('services.create-new-service');
+            return view('partners-or-clients.create-new-partner-or-client', compact('type'));
         }catch(Exception $e){
             $code = $e->getCode();
             $msg = $e->getMessage();
 
-            Log::error("Error | Controller: ServicesController | Function: showCreateService | Code: ".$code." | Message: ".$msg);
+            Log::error("Error | Controller: PartnersOrClientsController | Function: showCreatePartnerOrClient | Code: ".$code." | Message: ".$msg);
             return abort(500);
         }
     }
 
-    public function saveCreatedService(Request $request){
+    public function saveCreatedPartnerOrClient(Request $request){
         try{
             DB::beginTransaction();
             $request->validate([
                 'picture' => ['required', 'image', 'mimes:jpg,jpeg,png', 'max:5120'],
-                'title_en' => ['required', 'string', 'max:255'],
-                'title_ar' => ['required', 'string', 'max:255'],
-                'description_en' => ['required', 'string', 'max:1000'],
-                'description_ar' => ['required', 'string', 'max:1000'],
+                'name_en' => ['required', 'string', 'max:255'],
+                'name_ar' => ['required', 'string', 'max:255'],
                 'sequence' => ['required', 'integer'],
             ]);
+            
+            $type = $request->get('type');
+            $this->initSettings($type);
 
             $picture = $request->file('picture');
             $pictureName = Image::savePictureInStorage($picture, $this->imagePath);
             
-            $service = [
+            $partnerOrClient = [
                 'company_id' => $this->authUser->company_id,
                 'setting_id' => $this->settingId,
                 'title_en' => $request->get('title_en'),
                 'title_ar' => $request->get('title_ar'),
-                'desc_en' => $request->get('description_en'),
-                'desc_ar' => $request->get('description_ar'),
                 'sequence' => $request->get('sequence'),
                 'picture' => $this->imagePath . $pictureName,
                 'created_at' => now(),
                 'updated_at' => now(),
             ];
 
-            $insertService = DB::table($this->servicesMetaData->table_name)
-                                ->insert($service);       
-            if($insertService == 1){
+            $insertPartnerOrClient = DB::table($this->partnersOrClientsMetaData->table_name)
+                                ->insert($partnerOrClient); 
+
+            if($insertPartnerOrClient == 1){
                 DB::commit();
                 $code = 200;
-                $msg = 'translation.service_created';
+                if($type == 'partners'){
+                    $msg = 'translation.partner_created';
+                }else if($type == 'clients'){
+                    $msg = 'translation.client_created';
+                }
+                
             }else{
                 DB::rollBack();
                 $code = 400;
-                $msg = 'translation.service_not_created';
+                if($type == 'partners'){
+                    $msg = 'translation.partner_not_created';
+                }else if($type == 'clients'){
+                    $msg = 'translation.client_not_created';
+                }
             }
             return response()->json(['message' => lang::get($msg)], $code);
         }catch(ValidationException $e){
@@ -167,21 +189,22 @@ class ServicesController extends Controller
             $code = $e->getCode();
             $msg = $e->getMessage();
 
-            Log::error("Error | Controller: ServicesController | Function: saveCreatedService | Code: ".$code." | Message: ".$msg);
+            Log::error("Error | Controller: PartnersOrClientsController | Function: saveCreatedPartnerOrClient | Code: ".$code." | Message: ".$msg);
 
             return response()->json(['message' => $msg], $code);
         }
     }
 
-    public function showServiceToUpdate($serviceId){
+    public function showPartnerOrClientToUpdate($partnerOrClientid, $type){
         try{
-            $service = DB::table($this->servicesMetaData->table_name)
+            $this->initSettings($type);
+            $partnerOrClient = DB::table($this->partnersOrClientsMetaData->table_name)
                         ->where('company_id', $this->authUser->company_id)
                         ->where('setting_id', $this->settingId)
-                        ->where('id', $serviceId)
+                        ->where('id', $partnerOrClientid)
                         ->first();
 
-            return view('services.update-service', compact('service'));
+            return view('partners-or-clients.update-partner-or-client', compact('partnerOrClient', 'type'));
         }catch(Exception $e){
             $code = $e->getCode();
             $msg = $e->getMessage();
@@ -191,28 +214,27 @@ class ServicesController extends Controller
         }
     }
 
-    public function saveUpdatedService(Request $request){
+    public function saveUpdatedPartnerOrClient(Request $request){
         try{
             DB::beginTransaction();
             
             $request->validate([
                 'picture' => ['nullable', 'image', 'mimes:jpg,jpeg,png', 'max:5120'],
-                'title_en' => ['required', 'string', 'max:255'],
-                'title_ar' => ['required', 'string', 'max:255'],
-                'description_en' => ['required', 'string', 'max:1000'],
-                'description_ar' => ['required', 'string', 'max:1000'],
+                'name_en' => ['required', 'string', 'max:255'],
+                'name_ar' => ['required', 'string', 'max:255'],
                 'sequence' => ['required', 'integer'],
                 'is_active' => ['required', 'integer'],
             ]);
-            
-            $serviceId = $request->get('service_id');
-            $service = [
+
+            $type = $request->get('type');
+            $this->initSettings($type);
+
+            $partnerOrClientId = $request->get('id');
+            $partnerOrClient = [
                 'company_id' => $this->authUser->company_id,
                 'setting_id' => $this->settingId,
-                'title_en' => $request->get('title_en'),
-                'title_ar' => $request->get('title_ar'),
-                'desc_en' => $request->get('description_en'),
-                'desc_ar' => $request->get('description_ar'),
+                'title_en' => $request->get('name_en'),
+                'title_ar' => $request->get('name_ar'),
                 'sequence' => $request->get('sequence'),
                 'is_active' => $request->get('is_active'),
                 'updated_at' => now(),
@@ -225,23 +247,31 @@ class ServicesController extends Controller
                 Image::unlinkPicture($dbPicture);
                 
                 $pictureName = Image::savePictureInStorage($picture, $this->imagePath);
-                $service['picture'] = $this->imagePath.$pictureName;
+                $partnerOrClient['picture'] = $this->imagePath.$pictureName;
             } 
 
-            $updateService = DB::table($this->servicesMetaData->table_name)
+            $updatePartnerOrClient = DB::table($this->partnersOrClientsMetaData->table_name)
                                 ->where('company_id', $this->authUser->company_id)
                                 ->where('setting_id', $this->settingId)
-                                ->where('id', $serviceId)
-                                ->update($service);    
+                                ->where('id', $partnerOrClientId)
+                                ->update($partnerOrClient);    
 
-            if($updateService == 1){
+            if($updatePartnerOrClient == 1){
                 DB::commit();
                 $code = 200;
-                $msg = 'translation.service_updated';
+                if($type == 'partners'){
+                    $msg = 'translation.partner_updated';
+                }else if($type == 'clients'){
+                    $msg = 'translation.client_updated';
+                }
             }else{
                 DB::rollBack();
                 $code = 400;
-                $msg = 'translation.service_not_updated';
+                if($type == 'partners'){
+                    $msg = 'translation.partner_not_updated';
+                }else if($type == 'clients'){
+                    $msg = 'translation.client_not_updated';
+                }
             }
             return response()->json(['message' => lang::get($msg)], $code);
         }catch(ValidationException $e){
@@ -263,5 +293,4 @@ class ServicesController extends Controller
             return response()->json(['message' => $msg], $code);
         }
     }
-
 }

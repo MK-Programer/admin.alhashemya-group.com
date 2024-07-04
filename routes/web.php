@@ -8,6 +8,8 @@ use App\Http\Controllers\UsersController;
 use App\Http\Controllers\ServicesController;
 use App\Http\Controllers\MissionsAndVisionsController;
 use App\Http\Controllers\MessagesController;
+use App\Http\Controllers\PartnersOrClientsController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -63,6 +65,19 @@ Route::middleware(['auth', 'active.user'])->group(function () {
         Route::post('change-message-reviewed-status', [MessagesController::class, 'changeMessageReviewedStatus'])->name('changeMessageReviewedStatus');    
         Route::get('message-details/{id}', [MessagesController::class, 'messageDetails'])->name('messageDetails');    
     });
+
+    
+    //Partners Or Clients
+    Route::get('partners', [PartnersOrClientsController::class, 'showPartnersOrClients'])->name('showPartners');
+    Route::get('clients', [PartnersOrClientsController::class, 'showPartnersOrClients'])->name('showClients');
+    Route::prefix('partners-or-clients')->group(function () {
+        Route::get('get-paginated-partners-or-clients-data', [PartnersOrClientsController::class, 'getPaginatedPartnersOrClientsData'])->name('getPaginatedPartnersOrClientsData');    
+        Route::get('create-new-partner-or-client/{type}', [PartnersOrClientsController::class, 'showCreatePartnerOrClient'])->name('showCreatePartnerOrClient');    
+        Route::post('save-created-partner-or-client', [PartnersOrClientsController::class, 'saveCreatedPartnerOrClient'])->name('saveCreatedPartnerOrClient');    
+        Route::get('update-partner-or-client/{id}/{type}', [PartnersOrClientsController::class, 'showPartnerOrClientToUpdate'])->name('showPartnerOrClientToUpdate');    
+        Route::post('save-updated-partner-or-client', [PartnersOrClientsController::class, 'saveUpdatedPartnerOrClient'])->name('saveUpdatedPartnerOrClient');
+    });
+
 
     //Language Translation
     Route::get('/index/{locale}', [AppController::class, 'lang']);

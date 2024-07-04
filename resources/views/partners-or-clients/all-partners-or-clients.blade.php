@@ -1,7 +1,17 @@
+@php
+    if ($type == 'partners'){
+        $title = __('translation.partners');
+        $createTxt = __('translation.create_new_partner'); 
+    }else if($type == 'clients'){
+        $title = __('translation.clients');
+        $createTxt = __('translation.create_new_client');
+    }
+@endphp
+
 @extends('layouts.master')
 
 @section('title')
-    @lang('translation.missions_and_visions')
+    {{ $title }}
 @endsection
 
 @section('css')
@@ -22,7 +32,7 @@
             @lang('translation.dashboard')
         @endslot
         @slot('title')
-            @lang('translation.missions_and_visions')
+            {{ $title }}
         @endslot
     @endcomponent
 
@@ -31,18 +41,17 @@
             <div class="card">
                 <div class="card-body">
                     <div class="mt-0 mb-3">
-                        <a href="{{ route('showCreateMissionAndVision') }}" id="create_mission_and_vision" class="btn btn-primary">@lang('translation.create_new_mission_and_vision')</a>
+                        <a href="{{ route('showCreatePartnerOrClient', ['type' => $type]) }}" id="create_partner_or_client" class="btn btn-primary">{{ $createTxt }}</a>
                     </div>
-                    <table id="missions_and_visions_table" class="table table-striped dt-responsive nowrap w-100">
+                    <table id="partners_or_clients_table" class="table table-striped dt-responsive nowrap w-100">
                         <thead>
                             <tr>
                                 <th>@lang('translation.id')</th>
-                                <th>@lang('translation.mission_title_en')</th>
-                                <th>@lang('translation.mission_title_ar')</th>
-                                <th>@lang('translation.vision_title_en')</th>
-                                <th>@lang('translation.vision_title_ar')</th>
+                                <th>@lang('translation.picture')</th>
+                                <th>@lang('translation.name_en')</th>
+                                <th>@lang('translation.name_ar')</th>
+                                <th>@lang('translation.sequence')</th>
                                 <th>@lang('translation.is_active')</th>
-                                <th></th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -64,13 +73,16 @@
     <script src="{{ asset('build/libs/datatables.net-responsive/js/dataTables.responsive.min.js') }}"></script>
     <script src="{{ asset('build/libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js') }}"></script>
     
-    {{-- lang --}}
+   
     <script>
-        var detailsText = '@lang('translation.details')';
+        //lang
         var updateText = '@lang('translation.update')';
         var yesText = '@lang('translation.yes')';
         var noText = '@lang('translation.no')';
+
+        var type = '{{ $type }}';
+        
     </script>
     
-    <script src="{{ asset('build/js/missions-and-visions/all-missions-and-visions.js') }}"></script>
+    <script src="{{ asset('build/js/partners-or-clients/all-partners-or-clients.js') }}"></script>
 @endsection

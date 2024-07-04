@@ -44,68 +44,64 @@ class MissionsAndVisionsController extends Controller
     }
 
     public function getPaginatedMissionsAndVisionsData(Request $request)
-{
-    try {
-        // Get DataTables parameters
-        $draw = $request->input('draw');
-        $start = $request->input('start', 0);
-        $length = $request->input('length', 10);
-        $searchValue = $request->input('search.value'); // Search value from DataTables
+    {
+        try {
+            // Get DataTables parameters
+            $draw = $request->input('draw');
+            $start = $request->input('start', 0);
+            $length = $request->input('length', 10);
+            $searchValue = $request->input('search.value'); // Search value from DataTables
 
-        // Base query
-        $query = DB::table($this->missionsAndVisionsMetaData->table_name . ' as m')
-            ->join($this->missionsAndVisionsMetaData->table_name . ' as v', 'm.id', '=', 'v.link_with_id')
-            ->select(
-                DB::raw('CONCAT(m.id, " - ", v.id) as id'),
-                'm.title_en as mission_title_en',
-                'm.title_ar as mission_title_ar',
-                'v.title_en as vision_title_en',
-                'v.title_ar as vision_title_ar',
-                'm.sequence as sequence', // sequence of mission = vision
-                'm.is_active as is_active' // if mission is active then vision is also active
-            )
-            ->where('m.setting_id', $this->settingId)
-            ->where('m.company_id', $this->authUser->company_id);
+            // Base query
+            $query = DB::table($this->missionsAndVisionsMetaData->table_name . ' as m')
+                ->join($this->missionsAndVisionsMetaData->table_name . ' as v', 'm.id', '=', 'v.link_with_id')
+                ->select(
+                    DB::raw('CONCAT(m.id, " - ", v.id) as id'),
+                    'm.title_en as mission_title_en',
+                    'm.title_ar as mission_title_ar',
+                    'v.title_en as vision_title_en',
+                    'v.title_ar as vision_title_ar',
+                    'm.is_active as is_active' // if mission is active then vision is also active
+                )
+                ->where('m.setting_id', $this->settingId)
+                ->where('m.company_id', $this->authUser->company_id);
 
-        // Apply search filter if search value is provided
-        if (!empty($searchValue)) {
-            $query->where(function($q) use ($searchValue) {
-                $q->where(DB::raw('CONCAT(m.id, " - ", v.id)'), 'like', "%$searchValue%")
-                  ->orWhere('m.title_en', 'like', "%$searchValue%")
-                  ->orWhere('m.title_ar', 'like', "%$searchValue%")
-                  ->orWhere('v.title_en', 'like', "%$searchValue%")
-                  ->orWhere('v.title_ar', 'like', "%$searchValue%")
-                  ->orWhere('m.sequence', 'like', "%$searchValue%")
-                  ->orWhere('m.is_active', 'like', "%$searchValue%");
-            });
+            // Apply search filter if search value is provided
+            if (!empty($searchValue)) {
+                $query->where(function($q) use ($searchValue) {
+                    $q->where(DB::raw('CONCAT(m.id, " - ", v.id)'), 'like', "%$searchValue%")
+                    ->orWhere('m.title_en', 'like', "%$searchValue%")
+                    ->orWhere('m.title_ar', 'like', "%$searchValue%")
+                    ->orWhere('v.title_en', 'like', "%$searchValue%")
+                    ->orWhere('v.title_ar', 'like', "%$searchValue%");
+                });
+            }
+
+            // Clone the query to get the total count before applying pagination
+            $totalRecords = $query->count();
+
+            // Apply pagination
+            $missionsAndVisions = $query
+                ->offset($start)
+                ->limit($length)
+                ->orderBy('m.sequence', 'ASC')
+                ->get();
+
+            return response()->json([
+                'draw' => $draw,
+                'recordsTotal' => $totalRecords,
+                'recordsFiltered' => $totalRecords, // Update this to reflect actual filtered count if needed
+                'data' => $missionsAndVisions,
+            ]);
+        } catch (Exception $e) {
+            $code = $e->getCode();
+            $msg = $e->getMessage();
+
+            Log::error("Error | Controller: MissionsAndVisionsController | Function: getPaginatedMissionsAndVisionsData | Code: " . $code . " | Message: " . $msg);
+
+            return response()->json(['message' => $msg], $code);
         }
-
-        // Clone the query to get the total count before applying pagination
-        $totalRecords = $query->count();
-
-        // Apply pagination
-        $missionsAndVisions = $query
-            ->offset($start)
-            ->limit($length)
-            ->orderBy('m.sequence', 'ASC')
-            ->get();
-
-        return response()->json([
-            'draw' => $draw,
-            'recordsTotal' => $totalRecords,
-            'recordsFiltered' => $totalRecords, // Update this to reflect actual filtered count if needed
-            'data' => $missionsAndVisions,
-        ]);
-    } catch (Exception $e) {
-        $code = $e->getCode();
-        $msg = $e->getMessage();
-
-        Log::error("Error | Controller: MissionsAndVisionsController | Function: getPaginatedMissionsAndVisionsData | Code: " . $code . " | Message: " . $msg);
-
-        return response()->json(['message' => $msg], $code);
     }
-}
-
 
     public function showRUMissionAndVision($missionVisionId, $action){
         try{
@@ -171,8 +167,6 @@ class MissionsAndVisionsController extends Controller
                 'vision_title_ar' => ['required', 'string', 'max:255'],
                 'vision_description_en' => ['required', 'string', 'max:1000'],
                 'vision_description_ar' => ['required', 'string', 'max:1000'],
-
-                'sequence' => ['required', 'integer'],
             ]);
 
             // mission
@@ -186,7 +180,6 @@ class MissionsAndVisionsController extends Controller
                 'title_ar' => $request->get('mission_title_ar'),
                 'desc_en' => $request->get('mission_description_en'),
                 'desc_ar' => $request->get('mission_description_ar'),
-                'sequence' => $request->get('sequence'),
                 'picture' => $this->imagePath.$missionPictureName,
                 'created_at' => now(),
                 'updated_at' => now(),
@@ -206,7 +199,6 @@ class MissionsAndVisionsController extends Controller
                 'title_ar' => $request->get('vision_title_ar'),
                 'desc_en' => $request->get('vision_description_en'),
                 'desc_ar' => $request->get('vision_description_ar'),
-                'sequence' => $request->get('sequence'),
                 'picture' => $this->imagePath.$visionPictureName,
                 'link_with_id' => $missionId,
                 'created_at' => now(),
@@ -262,7 +254,6 @@ class MissionsAndVisionsController extends Controller
                 'vision_description_ar' => ['required', 'string', 'max:1000'],
 
                 'is_active' => ['required', 'integer'],
-                'sequence' => ['required', 'integer'],
             ]);
 
             $missionId = $request->get('mission_id');
@@ -273,7 +264,6 @@ class MissionsAndVisionsController extends Controller
                 'title_ar' => $request->get('mission_title_ar'),
                 'desc_en' => $request->get('mission_description_en'),
                 'desc_ar' => $request->get('mission_description_ar'),
-                'sequence' => $request->get('sequence'),
                 'is_active' => $request->get('is_active'),
                 'updated_at' => now(),
             ];
@@ -300,7 +290,6 @@ class MissionsAndVisionsController extends Controller
                 'title_ar' => $request->get('vision_title_ar'),
                 'desc_en' => $request->get('vision_description_en'),
                 'desc_ar' => $request->get('vision_description_ar'),
-                'sequence' => $request->get('sequence'),
                 'is_active' => $request->get('is_active'),
                 'updated_at' => now(),
             ];

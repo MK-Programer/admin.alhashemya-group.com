@@ -45,7 +45,6 @@ $(document).ready(function() {
             { data: "mission_title_ar" },
             { data: "vision_title_en" },
             { data: "vision_title_ar" },
-            { data: "sequence" },
             { 
               data: null,
               render: function (data, type, row) {

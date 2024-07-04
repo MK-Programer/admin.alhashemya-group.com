@@ -107,13 +107,9 @@ $('#new_mission_vision_form').on('submit', function(event) {
                     errorsList = errorsList.concat(errors['mission_description_ar']);
                 }
 
-                if (errors.hasOwnProperty('sequence')) {
-                    errorsList = errorsList.concat(errors['sequence']);
-                }
-                
                 setDanger(errorsList);
             } else {
-                setDanger(error);
+                setDanger(xhr.responseJSON.message);
             }
             enableButtons();
         }

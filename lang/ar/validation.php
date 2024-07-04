@@ -174,6 +174,9 @@ return [
         'vision_description_en' => 'وصف الرؤية بالإنجليزية',
         'vision_description_ar' => 'وصف الرؤية بالعربية',
 
+        'name_en' => 'الاسم بالإنجليزية',
+        'name_ar' => 'الاسم بالعربية',
+
     ],
 
 ];

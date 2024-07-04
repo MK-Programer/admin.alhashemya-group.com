@@ -25,11 +25,11 @@
                     <thead>
                         <tr>
                             <th>@lang('translation.id')</th>
-                            <th>@lang('translation.mission_picture')</th>
-                            <th>@lang('translation.mission_title_en')</th>
-                            <th>@lang('translation.mission_title_ar')</th>
-                            <th>@lang('translation.mission_description_en')</th>
-                            <th>@lang('translation.mission_description_ar')</th>
+                            <th>@lang('translation.picture')</th>
+                            <th>@lang('translation.title_en')</th>
+                            <th>@lang('translation.title_ar')</th>
+                            <th>@lang('translation.description_en')</th>
+                            <th>@lang('translation.description_ar')</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -55,11 +55,11 @@
                     <thead>
                         <tr>
                             <th>@lang('translation.id')</th>
-                            <th>@lang('translation.vision_picture')</th>
-                            <th>@lang('translation.vision_title_en')</th>
-                            <th>@lang('translation.vision_title_ar')</th>
-                            <th>@lang('translation.vision_description_en')</th>
-                            <th>@lang('translation.vision_description_ar')</th>
+                            <th>@lang('translation.picture')</th>
+                            <th>@lang('translation.title_en')</th>
+                            <th>@lang('translation.title_ar')</th>
+                            <th>@lang('translation.description_en')</th>
+                            <th>@lang('translation.description_ar')</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -85,13 +85,11 @@
                     <thead>
                         <tr>
                             <th>@lang('translation.is_active')</th>
-                            <th>@lang('translation.sequence')</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
                             <td>@if($mission->is_active == 1) @lang('translation.yes') @else @lang('translation.no') @endif</td>
-                            <td>{{ $mission->sequence }}</td>
                         </tr>
                     </tbody>
                 </table>

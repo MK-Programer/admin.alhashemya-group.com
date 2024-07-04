@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Lang;
 use Illuminate\Validation\ValidationException;
 
@@ -13,12 +14,15 @@ use DB;
 class MessagesController extends Controller{
     private $messagesMetaData;
     private $settingId = 2;
+    private $authUser;
 
     public function __construct(){
         $this->middleware(function ($request, $next) {
             $this->messagesMetaData = DB::table('settings_meta_data')
                                     ->where('setting_id', $this->settingId)
                                     ->first();
+
+            $this->authUser = Auth::user();
 
             return $next($request);
         });
@@ -48,6 +52,7 @@ class MessagesController extends Controller{
             // Base query
             $query = DB::table($this->messagesMetaData->table_name) // Replace with your actual table name
                 ->select('id', 'product_id', 'sender_name', 'subject', 'is_checked')
+                ->where('company_id', $this->authUser->company_id)
                 ->orderBy('id', 'DESC')
                 ->orderBy('is_checked', 'ASC');
 
@@ -57,8 +62,7 @@ class MessagesController extends Controller{
                     $q->where('id', 'like', "%$searchValue%")
                     ->orWhere('product_id', 'like', "%$searchValue%")
                     ->orWhere('sender_name', 'like', "%$searchValue%")
-                    ->orWhere('subject', 'like', "%$searchValue%")
-                    ->orWhere('is_checked', 'like', "%$searchValue%");
+                    ->orWhere('subject', 'like', "%$searchValue%");
                 });
             }
 

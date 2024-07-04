@@ -26,11 +26,11 @@
                     <thead>
                         <tr>
                             <th><?php echo app('translator')->get('translation.id'); ?></th>
-                            <th><?php echo app('translator')->get('translation.mission_picture'); ?></th>
-                            <th><?php echo app('translator')->get('translation.mission_title_en'); ?></th>
-                            <th><?php echo app('translator')->get('translation.mission_title_ar'); ?></th>
-                            <th><?php echo app('translator')->get('translation.mission_description_en'); ?></th>
-                            <th><?php echo app('translator')->get('translation.mission_description_ar'); ?></th>
+                            <th><?php echo app('translator')->get('translation.picture'); ?></th>
+                            <th><?php echo app('translator')->get('translation.title_en'); ?></th>
+                            <th><?php echo app('translator')->get('translation.title_ar'); ?></th>
+                            <th><?php echo app('translator')->get('translation.description_en'); ?></th>
+                            <th><?php echo app('translator')->get('translation.description_ar'); ?></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -56,11 +56,11 @@
                     <thead>
                         <tr>
                             <th><?php echo app('translator')->get('translation.id'); ?></th>
-                            <th><?php echo app('translator')->get('translation.vision_picture'); ?></th>
-                            <th><?php echo app('translator')->get('translation.vision_title_en'); ?></th>
-                            <th><?php echo app('translator')->get('translation.vision_title_ar'); ?></th>
-                            <th><?php echo app('translator')->get('translation.vision_description_en'); ?></th>
-                            <th><?php echo app('translator')->get('translation.vision_description_ar'); ?></th>
+                            <th><?php echo app('translator')->get('translation.picture'); ?></th>
+                            <th><?php echo app('translator')->get('translation.title_en'); ?></th>
+                            <th><?php echo app('translator')->get('translation.title_ar'); ?></th>
+                            <th><?php echo app('translator')->get('translation.description_en'); ?></th>
+                            <th><?php echo app('translator')->get('translation.description_ar'); ?></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -86,13 +86,11 @@
                     <thead>
                         <tr>
                             <th><?php echo app('translator')->get('translation.is_active'); ?></th>
-                            <th><?php echo app('translator')->get('translation.sequence'); ?></th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
                             <td><?php if($mission->is_active == 1): ?> <?php echo app('translator')->get('translation.yes'); ?> <?php else: ?> <?php echo app('translator')->get('translation.no'); ?> <?php endif; ?></td>
-                            <td><?php echo e($mission->sequence); ?></td>
                         </tr>
                     </tbody>
                 </table>

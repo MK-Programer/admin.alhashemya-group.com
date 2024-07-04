@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
     const fileInput = document.getElementById('picture');
-    const picture = document.getElementById('service_image');
+    const picture = document.getElementById('image');
 
     fileInput.addEventListener('change', function(event) {
         const file = event.target.files[0];
@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-$('#update_service').on('submit', function(event) {
+$('#update_partner_or_client').on('submit', function(event) {
     event.preventDefault();
     showLoading();
     hideAlert();
@@ -26,7 +26,7 @@ $('#update_service').on('submit', function(event) {
 
     let formData = new FormData(this);
     $.ajax({
-        url: "/services/save-updated-service",
+        url: "/partners-or-clients/save-updated-partner-or-client",
         type: "post",
         data: formData,
         contentType: false,
@@ -57,17 +57,8 @@ $('#update_service').on('submit', function(event) {
                 if (errors.hasOwnProperty('picture')) {
                     errorsList = errorsList.concat(errors['picture']);
                 }
-                if (errors.hasOwnProperty('title_en')) {
-                    errorsList = errorsList.concat(errors['title_en']);
-                }
-                if (errors.hasOwnProperty('title_ar')) {
-                    errorsList = errorsList.concat(errors['title_ar']);
-                }
-                if (errors.hasOwnProperty('description_en')) {
-                    errorsList = errorsList.concat(errors['description_en']);
-                }
-                if (errors.hasOwnProperty('description_ar')) {
-                    errorsList = errorsList.concat(errors['description_ar']);
+                if (errors.hasOwnProperty('name_en')) {
+                    errorsList = errorsList.concat(errors['name_ar']);
                 }
                 if (errors.hasOwnProperty('sequence')) {
                     errorsList = errorsList.concat(errors['sequence']);

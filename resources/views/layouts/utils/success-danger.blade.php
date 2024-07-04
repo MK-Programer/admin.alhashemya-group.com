@@ -4,7 +4,7 @@
     function hideAlert(){
         $('#alert').empty();
         $('#alert').hide();
-        $('#alert').addClass('');
+        $('#alert').removeClass();
     }
 
     function alertHelper(msg){

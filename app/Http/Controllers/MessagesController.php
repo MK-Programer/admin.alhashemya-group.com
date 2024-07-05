@@ -13,7 +13,7 @@ use DB;
 
 class MessagesController extends Controller{
     private $messagesMetaData;
-    private $settingId = 2;
+    private $settingId = 7;
     private $authUser;
 
     public function __construct(){

@@ -110,11 +110,6 @@
                     </div>
 
                     <div class="mb-3">
-                        <label for="sequence" class="form-label"><?php echo app('translator')->get('translation.sequence'); ?></label>
-                        <input type="number" class="form-control" id="sequence" name="sequence" value="<?php echo e($mission->sequence); ?>" autofocus placeholder="<?php echo app('translator')->get('translation.enter_sequence'); ?>">
-                    </div>
-
-                    <div class="mb-3">
                         <label for="is_active" class="form-label"><?php echo app('translator')->get('translation.is_active'); ?></label>
                         <select class="form-control" id="is_active" name="is_active">
                             <option disabled selected><?php echo app('translator')->get('translation.enter_status'); ?></option>

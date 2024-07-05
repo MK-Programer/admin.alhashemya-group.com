@@ -16,7 +16,7 @@ use DB;
 class MissionsAndVisionsController extends Controller
 {
     private $imagePath = 'images/missions-and-visions/';
-    private $settingId = 3;
+    private $settingId = 4;
     private $missionsAndVisionsMetaData;
     private $authUser;
 

@@ -110,11 +110,6 @@
                     </div>
 
                     <div class="mb-3">
-                        <label for="sequence" class="form-label">@lang('translation.sequence')</label>
-                        <input type="number" class="form-control" id="sequence" name="sequence" value="{{ $mission->sequence }}" autofocus placeholder="@lang('translation.enter_sequence')">
-                    </div>
-
-                    <div class="mb-3">
                         <label for="is_active" class="form-label">@lang('translation.is_active')</label>
                         <select class="form-control" id="is_active" name="is_active">
                             <option disabled selected>@lang('translation.enter_status')</option>

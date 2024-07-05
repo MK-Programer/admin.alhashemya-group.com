@@ -17,7 +17,7 @@ class ServicesController extends Controller
 {
 
     private $imagePath = 'images/services/';
-    private $settingId = 1;
+    private $settingId = 3;
     private $servicesMetaData;
     private $authUser;
 
@@ -224,7 +224,7 @@ class ServicesController extends Controller
                 $dbPicture = $request->get('db_picture');
                 Image::unlinkPicture($dbPicture);
                 
-                $pictureName = Image::savePictureInStorage($picture, $this->imagePath);
+                $pictureName = Image::savePictureInStorage($newPicture, $this->imagePath);
                 $service['picture'] = $this->imagePath.$pictureName;
             } 
 

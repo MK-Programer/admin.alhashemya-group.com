@@ -1,4 +1,5 @@
-@php
+<?php
+    $authUser = Auth::user();
     $lang = app()->getLocale();
     $nameColumn = $lang === 'ar' ? 'settings.name_ar' : 'settings.name_en';
     $companySettings = DB::table('company_settings_rel')
@@ -12,7 +13,7 @@
                             ->where('company_settings_rel.company_id', $authUser->company_id)
                             ->orderBy('settings.sequence', 'ASC')
                             ->get();
-@endphp
+?>
 
 <!-- ========== Left Sidebar Start ========== -->
 <div class="vertical-menu">
@@ -23,23 +24,23 @@
         <div id="sidebar-menu">
             <!-- Left Menu Start -->
             <ul class="metismenu list-unstyled" id="side-menu">
-                <li class="menu-title" key="t-menu">@lang('translation.menu')</li>
+                <li class="menu-title" key="t-menu"><?php echo app('translator')->get('translation.menu'); ?></li>
 
                 <li>
-                    <a href="{{ route('dashboard') }}">
+                    <a href="<?php echo e(route('dashboard')); ?>">
                         <i class="fas fa-bars"></i>
-                        <span key="t-dashboards">@lang('translation.dashboard')</span>
+                        <span key="t-dashboards"><?php echo app('translator')->get('translation.dashboard'); ?></span>
                     </a>
                 </li>
 
-                @foreach ($companySettings as $companySetting)
+                <?php $__currentLoopData = $companySettings; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $companySetting): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                     <li>
-                        <a href="{{ route($companySetting->action_route) }}">
-                            <i class="{{ $companySetting->icon }}"></i>
-                            <span key="t-{{ $companySetting->name }}">{{ $companySetting->name }}</span>
+                        <a href="<?php echo e(route($companySetting->action_route)); ?>">
+                            <i class="<?php echo e($companySetting->icon); ?>"></i>
+                            <span key="t-<?php echo e($companySetting->name); ?>"><?php echo e($companySetting->name); ?></span>
                         </a>
                     </li>
-                @endforeach
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
             </ul>
         </div>
@@ -47,3 +48,4 @@
     </div>
 </div>
 <!-- Left Sidebar End -->
+<?php /**PATH C:\laragon\www\elhashemya_group\resources\views/layouts/sidebar.blade.php ENDPATH**/ ?>

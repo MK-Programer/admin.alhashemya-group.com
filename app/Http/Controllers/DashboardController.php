@@ -19,8 +19,8 @@ class DashBoardController extends Controller
     {
         try{
             $user_company_id = Auth::user()->company_id;
-            $new_messages = DB::table('messages')->where('company_id', $user_company_id )->count();
-            $messages_count = DB::table('messages')->where('company_id', $user_company_id )->where('is_checked',0)->count();
+            $messages_count = DB::table('messages')->where('company_id', $user_company_id )->count();
+            $new_messages = DB::table('messages')->where('company_id', $user_company_id )->where('is_checked',0)->count();
 
 
             return view('index', compact('messages_count', 'new_messages'));

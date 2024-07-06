@@ -16,6 +16,7 @@
 
     var error = '@lang('translation.error')';
     var error400 = '@lang('translation.error_400')';
+    var error500 = '@lang('translation.error_500')';
     var ok = '@lang('translation.ok')';
 </script>
 

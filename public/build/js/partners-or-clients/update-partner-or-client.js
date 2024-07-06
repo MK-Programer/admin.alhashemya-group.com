@@ -69,7 +69,7 @@ $('#update_partner_or_client').on('submit', function(event) {
                 
                 setDanger(errorsList);
             } else {
-                setDanger(xhr.responseJSON.message);
+                setDanger(error500);
             }
             enableButtons();
         }

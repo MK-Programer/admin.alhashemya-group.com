@@ -78,7 +78,7 @@ $('#update_service').on('submit', function(event) {
                 
                 setDanger(errorsList);
             } else {
-                setDanger(xhr.responseJSON.message);
+                setDanger(error500);
             }
             enableButtons();
         }

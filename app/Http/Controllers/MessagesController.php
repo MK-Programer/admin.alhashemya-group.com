@@ -13,7 +13,7 @@ use DB;
 
 class MessagesController extends Controller{
     private $messagesMetaData;
-    private $settingId = 2;
+    private $settingId = 7;
     private $authUser;
 
     public function __construct(){
@@ -88,7 +88,6 @@ class MessagesController extends Controller{
 
             Log::error("Error | Controller: MessagesController | Function: getPaginatedMessagesData | Code: ".$code." | Message: ".$msg);
 
-            return response()->json(['message' => $msg], $code);
         }
     }
 
@@ -127,7 +126,7 @@ class MessagesController extends Controller{
             $msg = $e->getMessage();
 
             Log::error("Error | Controller: MessagesController | Function: changeMessageReviewedStatus | Code: ".$code." | Message: ".$msg);
-            return response()->json(['message' => $msg], $code);
+            
         }
             
     }

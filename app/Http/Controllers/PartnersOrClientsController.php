@@ -30,10 +30,10 @@ class PartnersOrClientsController extends Controller
     private function initSettings($type){
         if($type == 'partners'){
             $this->imagePath = 'images/partners/';
-            $this->settingId = 6;
+            $this->settingId = 5;
         }else if($type == 'clients'){
             $this->imagePath = 'images/clients/';
-            $this->settingId = 7;
+            $this->settingId = 6;
         }
         $this->partnersOrClientsMetaData = DB::table('settings_meta_data')
                                                 ->where('setting_id', $this->settingId)
@@ -110,7 +110,6 @@ class PartnersOrClientsController extends Controller
 
             Log::error("Error | Controller: PartnersOrClientsController | Function: getPaginatedPartnersOrClientsData | Code: ".$code." | Message: ".$msg);
 
-            return response()->json(['message' => $msg], $code);
         }
     }
 
@@ -138,21 +137,20 @@ class PartnersOrClientsController extends Controller
             
             $type = $request->get('type');
             $this->initSettings($type);
-
             $picture = $request->file('picture');
             $pictureName = Image::savePictureInStorage($picture, $this->imagePath);
             
             $partnerOrClient = [
                 'company_id' => $this->authUser->company_id,
                 'setting_id' => $this->settingId,
-                'title_en' => $request->get('title_en'),
-                'title_ar' => $request->get('title_ar'),
+                'title_en' => $request->get('name_en'),
+                'title_ar' => $request->get('name_ar'),
                 'sequence' => $request->get('sequence'),
                 'picture' => $this->imagePath . $pictureName,
                 'created_at' => now(),
                 'updated_at' => now(),
             ];
-
+            
             $insertPartnerOrClient = DB::table($this->partnersOrClientsMetaData->table_name)
                                 ->insert($partnerOrClient); 
 
@@ -191,7 +189,6 @@ class PartnersOrClientsController extends Controller
 
             Log::error("Error | Controller: PartnersOrClientsController | Function: saveCreatedPartnerOrClient | Code: ".$code." | Message: ".$msg);
 
-            return response()->json(['message' => $msg], $code);
         }
     }
 
@@ -290,7 +287,6 @@ class PartnersOrClientsController extends Controller
 
             Log::error("Error | Controller: ServicesController | Function: saveUpdatedService | Code: ".$code." | Message: ".$msg);
 
-            return response()->json(['message' => $msg], $code);
         }
     }
 }

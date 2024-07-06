@@ -1,5 +1,4 @@
 @php
-    $authUser = Auth::user();
     $lang = app()->getLocale();
     $nameColumn = $lang === 'ar' ? 'settings.name_ar' : 'settings.name_en';
     $companySettings = DB::table('company_settings_rel')

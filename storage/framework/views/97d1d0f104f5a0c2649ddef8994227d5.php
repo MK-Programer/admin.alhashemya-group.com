@@ -96,21 +96,6 @@
                 </div>
             </div>
 
-            <div class="card">
-                <div class="card-body">
-
-                    <div class="card-header card-header-primary">
-                        <h4 class="card-title "><?php echo app('translator')->get('translation.additional_data'); ?></h4>
-                    </div>
-                    
-                    <div class="mb-3">
-                        <label for="sequence" class="form-label"><?php echo app('translator')->get('translation.sequence'); ?></label>
-                        <input type="number" class="form-control" id="sequence" name="sequence" autofocus placeholder="<?php echo app('translator')->get('translation.enter_sequence'); ?>">
-                    </div>
-
-                </div>
-            </div>
-
             <div class="mt-3">
                 <button class="btn btn-primary waves-effect waves-light" type="submit"><?php echo app('translator')->get('translation.create'); ?></button>
             </div>

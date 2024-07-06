@@ -16,7 +16,7 @@ use DB;
 class MissionsAndVisionsController extends Controller
 {
     private $imagePath = 'images/missions-and-visions/';
-    private $settingId = 3;
+    private $settingId = 4;
     private $missionsAndVisionsMetaData;
     private $authUser;
 
@@ -99,7 +99,6 @@ class MissionsAndVisionsController extends Controller
 
             Log::error("Error | Controller: MissionsAndVisionsController | Function: getPaginatedMissionsAndVisionsData | Code: " . $code . " | Message: " . $msg);
 
-            return response()->json(['message' => $msg], $code);
         }
     }
 
@@ -232,7 +231,6 @@ class MissionsAndVisionsController extends Controller
 
             Log::error("Error | Controller: MissionsAndVisionsController | Function: saveCreatedMissionAndVision | Code: ".$code." | Message: ".$msg);
 
-            return response()->json(['message' => $msg], $code);
         }
     }
 
@@ -337,7 +335,6 @@ class MissionsAndVisionsController extends Controller
 
             Log::error("Error | Controller: MissionsAndVisionsController | Function: saveUpdatedMissionAndVision | Code: ".$code." | Message: ".$msg);
 
-            return response()->json(['message' => $msg], $code);
         }
     }
     

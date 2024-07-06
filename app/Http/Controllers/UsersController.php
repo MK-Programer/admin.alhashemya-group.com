@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
@@ -58,7 +59,7 @@ class UsersController extends Controller
             ]);
     
             
-            $authUser->name = $request->get('name');
+            $autxhUser->name = $request->get('name');
             $authUser->email = $request->get('email');
             
             $avatar = $request->file('avatar');
@@ -101,7 +102,6 @@ class UsersController extends Controller
 
             Log::error("Error | Controller: UsersControllers | Function: updateUserProfile | Code: ".$code." | Message: ".$msg);
 
-            return response()->json(['message' => lang::get('translation.error_500')], $code);
         }
         
     }
@@ -154,7 +154,6 @@ class UsersController extends Controller
 
             Log::error("Error | Controller: UsersControllers | Function: updatePassword | Code: ".$code." | Message: ".$msg);
 
-            return response()->json(['message' => lang::get('translation.error_500')], $code);
         }
     }
 
@@ -191,7 +190,6 @@ class UsersController extends Controller
 
             Log::error("Error | Controller: UsersControllers | Function: updateUserCompanyId | Code: ".$code." | Message: ".$msg);
 
-            return response()->json(['message' => lang::get('translation.error_500')], $code);
         }
 
     }

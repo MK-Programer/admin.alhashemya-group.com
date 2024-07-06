@@ -10,23 +10,16 @@
         <div class="d-flex">
             <!-- LOGO -->
             <div class="navbar-brand-box">
-                <a href="<?php echo e(route('dashboard')); ?>" class="logo logo-dark">
+
+                <a href="<?php echo e(route('dashboard')); ?>" class="logo">
                     <span class="logo-sm">
-                        <img src="<?php echo e(asset('build/images/logo.svg')); ?>" alt="" height="22">
+                        <img src="<?php echo e(asset($authUser->company->logo)); ?>" alt="" height="40" width="40">
                     </span>
                     <span class="logo-lg">
-                        <img src="<?php echo e(asset('build/images/logo-dark.png')); ?>" alt="" height="17">
+                        <img src="<?php echo e(asset($authUser->company->logo)); ?>" alt="" height="75" width="75">
                     </span>
                 </a>
 
-                <a href="<?php echo e(route('dashboard')); ?>" class="logo logo-light">
-                    <span class="logo-sm">
-                        <img src="<?php echo e(asset('build/images/logo-light.svg')); ?>" alt="" height="22">
-                    </span>
-                    <span class="logo-lg">
-                        <img src="<?php echo e(asset('build/images/logo-light.png')); ?>" alt="" height="19">
-                    </span>
-                </a>
             </div>
 
             <button type="button" class="btn btn-sm px-3 font-size-16 header-item waves-effect" id="vertical-menu-btn">

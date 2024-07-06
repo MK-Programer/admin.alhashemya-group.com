@@ -132,7 +132,7 @@ $(document).ready(function() {
                 error: function(xhr, status, error) {
                     hideLoading();
                     console.log(xhr);
-                    setDanger(xhr.responseJSON.message);
+                    setDanger(error500);
                     enableButtons();
                 }
             });

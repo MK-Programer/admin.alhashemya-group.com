@@ -16,6 +16,7 @@
 
     var error = '<?php echo app('translator')->get('translation.error'); ?>';
     var error400 = '<?php echo app('translator')->get('translation.error_400'); ?>';
+    var error500 = '<?php echo app('translator')->get('translation.error_500'); ?>';
     var ok = '<?php echo app('translator')->get('translation.ok'); ?>';
 </script>
 

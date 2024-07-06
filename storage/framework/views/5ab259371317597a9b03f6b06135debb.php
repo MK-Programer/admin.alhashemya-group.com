@@ -82,7 +82,7 @@
                 <div class="card-header card-header-primary">
                     <h4 class="card-title "><?php echo app('translator')->get('translation.additional_data'); ?></h4>
                 </div>
-                <table id="vision_table" class="table table-striped dt-responsive nowrap w-100">
+                <table id="additional_data" class="table table-striped dt-responsive nowrap w-100">
                     <thead>
                         <tr>
                             <th><?php echo app('translator')->get('translation.is_active'); ?></th>

@@ -24,7 +24,8 @@
                         <img src="{{ asset('build/images/logo-light.svg') }}" alt="" height="22">
                     </span>
                     <span class="logo-lg">
-                        <img src="{{ asset('build/images/logo-light.png') }}" alt="" height="19">
+                        {{-- <img src="{{ asset('build/images/elhashemya-group-logo.png') }}" alt="" class="mt-4" width="150"  height="150"> --}}
+                        <img src="{{ asset('build/images/logo-light.png') }}" alt=""   height="19">
                     </span>
                 </a>
             </div>
@@ -32,7 +33,7 @@
             <button type="button" class="btn btn-sm px-3 font-size-16 header-item waves-effect" id="vertical-menu-btn">
                 <i class="fa fa-fw fa-bars"></i>
             </button>
-        
+
             <div class="dropdown d-inline-block">
                 <button type="button" class="btn header-item waves-effect"
                     data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -44,25 +45,25 @@
                                     {{ $authUser->company->name_en }}
                                 @break
                                 @case('ar')
-                                    {{ $authUser->company->name_ar }}    
+                                    {{ $authUser->company->name_ar }}
                                 @break
                             @endswitch
                         </span>
 
                 </button>
                 <div class="dropdown-menu dropdown-menu-end">
-                    
+
                     @foreach ($userCompanies as $company)
                         <!-- item-->
                         <a href="#" class="company-link dropdown-item notify-item" data-id="{{ $company->id }}">
-                            <img src="{{ asset ($company->logo) }}" alt="company-logo" class="me-1" height="50" width="50"> 
+                            <img src="{{ asset ($company->logo) }}" alt="company-logo" class="me-1" height="50" width="50">
                                 <span class="align-middle">
                                     @switch(app()->getLocale())
                                         @case('en')
                                             {{ $company->name_en }}
                                         @break
                                         @case('ar')
-                                            {{ $company->name_ar }}    
+                                            {{ $company->name_ar }}
                                         @break
                                     @endswitch
                                 </span>
@@ -84,7 +85,7 @@
                     @case('ar')
                         <img src="{{ asset('build/images/flags/eg.jpg') }}" alt="Header Language" height="16">
                     @break
-                        
+
                 @endswitch
             </button>
             <div class="dropdown-menu dropdown-menu-end">
@@ -97,7 +98,7 @@
                 <a href="{{ url('index/ar') }}" class="dropdown-item notify-item language" data-lang="ar" id="rtl-mode-switch">
                     <img src="{{ asset ('build/images/flags/eg.jpg') }}" alt="EG Language Flag" class="me-1" height="12"> <span class="align-middle">@lang('translation.arabic')</span>
                 </a>
-                
+
             </div>
         </div>
 

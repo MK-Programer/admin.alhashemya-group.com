@@ -32,61 +32,15 @@
                         <span key="t-dashboards"><?php echo app('translator')->get('translation.dashboard'); ?></span>
                     </a>
                 </li>
-                <li>
-                    <a href="<?php echo e(route('showHome')); ?>" class="waves-effect">
-                        <i class="bx bx-home-circle"></i>
-                        <span key="t-dashboards">Home</span>
-                    </a>
 
-                </li>
-                <li>
-                    <a href="<?php echo e(route('showServices')); ?>" class="waves-effect">
-                        <i class="bx bx-home-circle"></i>
-                        <span key="t-dashboards">Services</span>
-                    </a>
-
-                </li>
-                <li>
-                    <a href="<?php echo e(route('showAboutUs')); ?>" class="waves-effect">
-                        <i class="bx bx-home-circle"></i>
-                        <span key="t-dashboards">AboutUs</span>
-                    </a>
-
-                </li>
-                <li>
-                    <a href="<?php echo e(route('showCategories')); ?>" class="waves-effect">
-                        <i class="bx bx-home-circle"></i>
-                        <span key="t-dashboards">Categories</span>
-                    </a>
-
-                </li>
-                <li>
-                    <a href="<?php echo e(route('showProducts')); ?>" class="waves-effect">
-                        <i class="bx bx-home-circle"></i>
-                        <span key="t-dashboards">Products</span>
-                    </a>
-
-                </li>
-                <li>
-                    <a href="<?php echo e(route('showCompany')); ?>" class="waves-effect">
-                        <i class="bx bx-home-circle"></i>
-                        <span key="t-dashboards">Comany</span>
-                    </a>
-
-                </li>
-                <li>
-                    <a href="<?php echo e(route('admin.orders')); ?>" class="waves-effect">
-                        <i class="bx bx-home-circle"></i>
-                        <span key="t-dashboards">orders</span>
-                    </a>
-
-                </li>
-
-                
-
-
-
-                
+                <?php $__currentLoopData = $companySettings; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $companySetting): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                    <li>
+                        <a href="<?php echo e(route($companySetting->action_route)); ?>">
+                            <i class="<?php echo e($companySetting->icon); ?>"></i>
+                            <span key="t-<?php echo e($companySetting->name); ?>"><?php echo e($companySetting->name); ?></span>
+                        </a>
+                    </li>
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
             </ul>
         </div>

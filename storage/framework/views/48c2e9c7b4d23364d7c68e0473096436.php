@@ -31,7 +31,7 @@
 
                             <div class="mb-3">
                                 <div class="text-start mt-2">
-                                    <input type="hidden" id="db_picture" name="db_picture" value="<?php echo e(asset($product->picture)); ?>">
+                                    <input type="hidden" id="db_picture" name="db_picture" value="<?php echo e($product->picture); ?>">
                                     <img src = "<?php echo e(asset($product->picture)); ?>" alt="#" class="rounded-circle avatar-lg" id="product_image">
                                 </div>
                                 <label for="picture"><?php echo app('translator')->get('translation.picture'); ?></label>

@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class DashBoardController extends Controller
 {
@@ -15,9 +16,14 @@ class DashBoardController extends Controller
      */
 
     public function root()
-    {   
+    {
         try{
-            return view('index');
+            $user_company_id = Auth::user()->company_id;
+            $new_messages = DB::table('messages')->where('company_id', $user_company_id )->count();
+            $messages_count = DB::table('messages')->where('company_id', $user_company_id )->where('is_checked',0)->count();
+
+
+            return view('index', compact('messages_count', 'new_messages'));
         }catch(Exception $e){
             $code = $e->getCode();
             $msg = $e->getMessage();
@@ -26,6 +32,6 @@ class DashBoardController extends Controller
 
             return abort(500);
         }
-            
+
     }
 }

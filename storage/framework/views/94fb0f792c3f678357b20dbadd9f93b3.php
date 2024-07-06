@@ -24,7 +24,8 @@
                         <img src="<?php echo e(asset('build/images/logo-light.svg')); ?>" alt="" height="22">
                     </span>
                     <span class="logo-lg">
-                        <img src="<?php echo e(asset('build/images/logo-light.png')); ?>" alt="" height="19">
+                        
+                        <img src="<?php echo e(asset('build/images/logo-light.png')); ?>" alt=""   height="19">
                     </span>
                 </a>
             </div>
@@ -117,7 +118,7 @@
                 <!-- item-->
                 <a class="dropdown-item" href="<?php echo e(route('showUserProfile')); ?>"><i class="bx bx-user font-size-16 align-middle me-1"></i> <span key="t-profile"><?php echo app('translator')->get('translation.profile'); ?></span></a>
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item text-danger" href="javascript:void();" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i class="bx bx-power-off font-size-16 align-middle me-1 text-danger"></i> <span key="t-logout"><?php echo app('translator')->get('translation.logout'); ?></span></a>
+                <a class="dropdown-item text-danger" href="javascript:void();" onclick="event.preventDefault(); ltrSwitchMode(); document.getElementById('logout-form').submit();"><i class="bx bx-power-off font-size-16 align-middle me-1 text-danger"></i> <span key="t-logout"><?php echo app('translator')->get('translation.logout'); ?></span></a>
                 <form id="logout-form" action="<?php echo e(route('logout')); ?>" method="POST" style="display: none;">
                     <?php echo csrf_field(); ?>
                 </form>

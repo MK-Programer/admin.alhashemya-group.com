@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="<?php echo e(str_replace('_', '-', app()->getLocale())); ?>">
+<html lang="<?php echo e(str_replace('_', '-', app()->getLocale())); ?>" dir="<?php echo e(app()->getLocale() == 'en' ? 'ltr' : 'rtl'); ?>">
 
 <head>
     <meta charset="utf-8" />
@@ -8,7 +8,6 @@
     <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
     <meta content="Themesbrand" name="author" />
     <meta name="csrf-token" content="<?php echo e(csrf_token()); ?>">
-
     <!-- App favicon -->
     <link rel="shortcut icon" href="<?php echo e(asset('build/images/favicon.ico')); ?>">
     <?php echo $__env->make('layouts.head-css', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
@@ -16,8 +15,10 @@
 
 
 <?php $__env->startSection('body'); ?>
-    <body data-sidebar="dark">
+
+<body data-sidebar="dark">
 <?php echo $__env->yieldSection(); ?>
+
     <!-- Begin page -->
     <div id="layout-wrapper">
         <?php echo $__env->make('layouts.topbar', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
@@ -46,6 +47,7 @@
     <!-- JAVASCRIPT -->
     <?php echo $__env->make('layouts.vendor-scripts', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 </body>
+
 
 </html>
 <?php /**PATH C:\laragon\www\elhashemya_group\resources\views/layouts/master.blade.php ENDPATH**/ ?>

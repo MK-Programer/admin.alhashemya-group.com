@@ -10,14 +10,14 @@
 @endcomponent
 
 <div class="row">
-    <div class="col-xl-4">
+    <div class="col-xl-12">
         <div class="card overflow-hidden">
             <div class="bg-primary bg-soft">
                 <div class="row">
                     <div class="col-7">
                         <div class="text-primary p-3">
                             <h5 class="text-primary">Welcome Back !</h5>
-                            <p>Skote Dashboard</p>
+                            <p>Elhashemya Group Admin Panel </p>
                         </div>
                     </div>
                     <div class="col-5 align-self-end">
@@ -32,31 +32,52 @@
                             <img src="{{ isset(Auth::user()->avatar) ? asset(Auth::user()->avatar) : asset('/build/images/users/avatar-1.jpg') }}" alt="" class="img-thumbnail rounded-circle">
                         </div>
                         <h5 class="font-size-15 text-truncate">{{ Str::ucfirst(Auth::user()->name) }}</h5>
-                        <p class="text-muted mb-0 text-truncate">UI/UX Designer</p>
+                        <p class="text-muted mb-0 text-truncate">Admin</p>
                     </div>
 
-                    <div class="col-sm-8">
+                    <div class="col-sm-4">
                         <div class="pt-4">
 
                             <div class="row">
                                 <div class="col-6">
-                                    <h5 class="font-size-15">125</h5>
-                                    <p class="text-muted mb-0">Projects</p>
+                                    <h5 class="font-size-15">{{  $new_messages }}</h5>
+                                    <p class="text-muted mb-0">New Messages</p>
                                 </div>
-                                <div class="col-6">
+
+                                {{-- <div class="col-6">
                                     <h5 class="font-size-15">$1245</h5>
-                                    <p class="text-muted mb-0">Revenue</p>
-                                </div>
+                                    <p class="text-muted mb-0">All</p>
+                                </div> --}}
                             </div>
                             <div class="mt-4">
-                                <a href="" class="btn btn-primary waves-effect waves-light btn-sm">View Profile <i class="mdi mdi-arrow-right ms-1"></i></a>
+                                <a href="{{ route('showMessages') }}" class="btn btn-primary waves-effect waves-light btn-sm">View  <i class="mdi mdi-arrow-right ms-1"></i></a>
                             </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-4">
+                        <div class="pt-4">
+
+                            <div class="row">
+                                <div class="col-6">
+                                    <h5 class="font-size-15">{{  $messages_count }}</h5>
+                                    <p class="text-muted mb-0">All Messages</p>
+                                </div>
+
+                                {{-- <div class="col-6">
+                                    <h5 class="font-size-15">$1245</h5>
+                                    <p class="text-muted mb-0">All</p>
+                                </div> --}}
+                            </div>
+                            {{-- <div class="mt-4">
+                                <a href="{{ route('showMessages') }}" class="btn btn-primary waves-effect waves-light btn-sm">View  <i class="mdi mdi-arrow-right ms-1"></i></a>
+                            </div> --}}
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="card">
+        {{-- <div class="card">
             <div class="card-body">
                 <h4 class="card-title mb-4">Monthly Earning</h4>
                 <div class="row">
@@ -78,9 +99,9 @@
                 </div>
                 <p class="text-muted mb-0">We craft digital, graphic and dimensional thinking.</p>
             </div>
-        </div>
+        </div> --}}
     </div>
-    <div class="col-xl-8">
+    {{-- <div class="col-xl-8">
         <div class="row">
             <div class="col-md-4">
                 <div class="card mini-stats-wid">
@@ -167,10 +188,10 @@
                 <div id="stacked-column-chart" data-colors='["--bs-primary", "--bs-warning", "--bs-success"]' class="apex-charts" dir="ltr"></div>
             </div>
         </div>
-    </div>
+    </div> --}}
 </div>
 <!-- end row -->
-
+{{--
 <div class="row">
     <div class="col-xl-4">
         <div class="card">
@@ -693,7 +714,7 @@
             </div>
         </div>
     </div>
-</div>
+</div> --}}
 <!-- end modal -->
 
 @endsection

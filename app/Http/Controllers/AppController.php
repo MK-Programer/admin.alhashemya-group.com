@@ -14,9 +14,8 @@ class AppController extends Controller
             App::setLocale($locale);
             Session::put('lang', $locale);
             Session::save();
-            
-            // return response()->json(['message' => 'Locale Added'], 200);
-            return redirect()->back()->with('locale', $locale);
+            return response()->json(['message' => 'Locale Added'], 200);
+            // return redirect()->back()->with('locale', $locale);
         } else {
             return response()->json(['message' => 'Locale Not Added'], 200);
             // return redirect()->back();

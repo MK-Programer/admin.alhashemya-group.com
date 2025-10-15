@@ -174,7 +174,12 @@ return [
 
         'name_en' => 'Name In English',
         'name_ar' => 'Name In Arabic',
-        
+
+        'password' => 'Password',
+
+        'groups' => 'Groups',
+        'role' => 'Role' ,
+        'menu' => 'Menu',
     ],
 
 ];

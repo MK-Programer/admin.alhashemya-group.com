@@ -5,12 +5,12 @@ namespace App\Http\Controllers;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Lang;
 use Illuminate\Validation\ValidationException;
 use App\Classes\Image;
+use Illuminate\Support\Facades\Crypt;
 
 class AboutUsController extends Controller
 {
@@ -51,11 +51,11 @@ class AboutUsController extends Controller
             $draw = $request->input('draw');
             $start = $request->input('start', 0);
             $length = $request->input('length', 10);
-            $searchValue = $request->input('search.value'); // Search value from DataTables
+            $searchValue = $request->input('search_value'); // Search value from DataTables
 
 
             $query = DB::table($this->aboutUsMetaData->table_name) // Replace with your actual table name
-                        ->select('id', 'title_en', 'title_ar', 'desc_en', 'desc_ar', 'is_active')
+                        ->select('id', 'title_en', 'title_ar', 'is_active')
                         ->selectRaw("CONCAT('$assetUrl', picture) AS picture")
                         ->where('setting_id', $this->settingId)
                         ->where('company_id', $this->authUser->company_id);
@@ -65,9 +65,7 @@ class AboutUsController extends Controller
                 $query->where(function($q) use ($searchValue) {
                     $q->where('id', 'like', "%$searchValue%")
                     ->orWhere('title_en', 'like', "%$searchValue%")
-                    ->orWhere('title_ar', 'like', "%$searchValue%")
-                    ->orWhere('desc_en', 'like', "%$searchValue%")
-                    ->orWhere('desc_ar', 'like', "%$searchValue%");
+                    ->orWhere('title_ar', 'like', "%$searchValue%");
                 });
             }
 
@@ -78,7 +76,11 @@ class AboutUsController extends Controller
             $about_us = $query
                             ->offset($start)
                             ->limit($length)
-                            ->get();
+                            ->get()
+                            ->map(function ($item) {
+                                $item->encrypted_id = Crypt::encrypt($item->id);
+                                return $item;
+                            });
 
 
             return response()->json([
@@ -94,6 +96,7 @@ class AboutUsController extends Controller
             $msg = $e->getMessage();
 
             Log::error("Error | Controller: AboutUsController | Function: getPaginatedData | Code: ".$code." | Message: ".$msg);
+            return response()->json(['message' => $msg], $code);
         }
     }
 
@@ -162,7 +165,7 @@ class AboutUsController extends Controller
             $msg = $e->getMessage();
 
             Log::error("Error | Controller: AboutUsController | Function: saveCreatedAboutUs | Code: ".$code." | Message: ".$msg);
-
+            return response()->json(['message' => $msg], $code);
         }
     }
 
@@ -171,10 +174,10 @@ class AboutUsController extends Controller
             $about_us = DB::table($this->aboutUsMetaData->table_name)
                         ->where('company_id', $this->authUser->company_id)
                         ->where('setting_id', $this->settingId)
-                        ->where('id', $AboutUsId)
+                        ->where('id', Crypt::decrypt($AboutUsId))
                         ->first();
 
-            return view('about-us.update-about-us', compact('about_us'));
+            return view('about-us.update-about-us', compact('about_us', 'AboutUsId'));
         }catch(Exception $e){
             $code = $e->getCode();
             $msg = $e->getMessage();
@@ -197,7 +200,7 @@ class AboutUsController extends Controller
                 'is_active' => ['required', 'integer'],
             ]);
 
-            $aboutUsId = $request->get('about_us_id');
+            $aboutUsId = Crypt::decrypt($request->get('about_us_id'));
             $aboutUs = [
                 'company_id' => $this->authUser->company_id,
                 'setting_id' => $this->settingId,
@@ -250,7 +253,7 @@ class AboutUsController extends Controller
             $msg = $e->getMessage();
 
             Log::error("Error | Controller: AboutUsController | Function: saveUpdatedAboutUs | Code: ".$code." | Message: ".$msg);
-
+            return response()->json(['message' => $msg], $code);
         }
     }
 

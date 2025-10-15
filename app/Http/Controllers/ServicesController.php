@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Lang;
 use Illuminate\Validation\ValidationException;
 use App\Classes\Image;
-
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Log;
 use Exception;
 use DB;
@@ -44,8 +44,7 @@ class ServicesController extends Controller
         }
     }
 
-    public function getPaginatedServicesData(Request $request)
-    {
+    public function getPaginatedServicesData(Request $request){
         try {
             $assetUrl = asset('');
 
@@ -53,11 +52,11 @@ class ServicesController extends Controller
             $draw = $request->input('draw');
             $start = $request->input('start', 0);
             $length = $request->input('length', 10);
-            $searchValue = $request->input('search.value'); // Search value from DataTables
+            $searchValue = $request->input('search_value'); // Search value from DataTables
 
             // Base query
             $query = DB::table($this->servicesMetaData->table_name) // Replace with your actual table name
-                ->select('id', 'title_en', 'title_ar', 'desc_en', 'desc_ar', 'sequence', 'is_active')
+                ->select('id', 'title_en', 'title_ar', 'sequence', 'is_active')
                 ->selectRaw("CONCAT('$assetUrl', picture) AS picture")
                 ->where('setting_id', $this->settingId)
                 ->where('company_id', $this->authUser->company_id);
@@ -67,9 +66,7 @@ class ServicesController extends Controller
                 $query->where(function($q) use ($searchValue) {
                     $q->where('id', 'like', "%$searchValue%")
                     ->orWhere('title_en', 'like', "%$searchValue%")
-                    ->orWhere('title_ar', 'like', "%$searchValue%")
-                    ->orWhere('desc_en', 'like', "%$searchValue%")
-                    ->orWhere('desc_ar', 'like', "%$searchValue%");
+                    ->orWhere('title_ar', 'like', "%$searchValue%");
                 });
             }
 
@@ -81,7 +78,11 @@ class ServicesController extends Controller
                 ->offset($start)
                 ->limit($length)
                 ->orderBy('sequence', 'ASC')
-                ->get();
+                ->get()
+                ->map(function ($item) {
+                    $item->encrypted_id = Crypt::encrypt($item->id);
+                    return $item;
+                });
 
             return response()->json([
                 'draw' => $draw,
@@ -95,10 +96,9 @@ class ServicesController extends Controller
             $msg = $e->getMessage();
 
             Log::error("Error | Controller: ServicesController | Function: getPaginatedServicesData | Code: ".$code." | Message: ".$msg);
-
+            return response()->json(['message' => $msg], $code);
         }
     }
-
 
     public function showCreateService(){
         try{
@@ -167,7 +167,7 @@ class ServicesController extends Controller
             $msg = $e->getMessage();
 
             Log::error("Error | Controller: ServicesController | Function: saveCreatedService | Code: ".$code." | Message: ".$msg);
-
+            return response()->json(['message' => $msg], $code);
         }
     }
 
@@ -176,10 +176,10 @@ class ServicesController extends Controller
             $service = DB::table($this->servicesMetaData->table_name)
                         ->where('company_id', $this->authUser->company_id)
                         ->where('setting_id', $this->settingId)
-                        ->where('id', $serviceId)
+                        ->where('id', Crypt::decrypt($serviceId))
                         ->first();
 
-            return view('services.update-service', compact('service'));
+            return view('services.update-service', compact('service', 'serviceId'));
         }catch(Exception $e){
             $code = $e->getCode();
             $msg = $e->getMessage();
@@ -203,7 +203,7 @@ class ServicesController extends Controller
                 'is_active' => ['required', 'integer'],
             ]);
             
-            $serviceId = $request->get('service_id');
+            $serviceId = Crypt::decrypt($request->get('service_id'));
             $service = [
                 'company_id' => $this->authUser->company_id,
                 'setting_id' => $this->settingId,
@@ -257,7 +257,7 @@ class ServicesController extends Controller
             $msg = $e->getMessage();
 
             Log::error("Error | Controller: ServicesController | Function: saveUpdatedService | Code: ".$code." | Message: ".$msg);
-
+            return response()->json(['message' => $msg], $code);
         }
     }
 

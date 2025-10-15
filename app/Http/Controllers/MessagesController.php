@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Lang;
 use Illuminate\Validation\ValidationException;
-
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Log;
 use Exception;
 use DB;
@@ -40,18 +40,22 @@ class MessagesController extends Controller{
         }
     }
 
-    public function getPaginatedMessagesData(Request $request)
-    {
+    public function getPaginatedMessagesData(Request $request){
         try {
             // Get DataTables parameters
             $draw = $request->input('draw');
             $start = $request->input('start', 0);
             $length = $request->input('length', 10);
-            $searchValue = $request->input('search.value'); // Search value from DataTables
+            $searchValue = $request->input('search_value'); // Search value from DataTables
+
+            // Custom filter inputs
+            $filterFromDate = $request->input('filter_from');
+            $filterToDate = $request->input('filter_to');
+            $filterIsReviewed = $request->input('filter_is_reviewed');
 
             // Base query
             $query = DB::table($this->messagesMetaData->table_name) // Replace with your actual table name
-                ->select('id', 'product_id', 'sender_name', 'subject', 'is_checked')
+                ->select('id', 'product_id', 'sender_name', 'sender_email', 'phone_number', 'subject', 'body', 'is_checked')
                 ->where('company_id', $this->authUser->company_id)
                 ->orderBy('id', 'DESC')
                 ->orderBy('is_checked', 'ASC');
@@ -66,14 +70,34 @@ class MessagesController extends Controller{
                 });
             }
 
+            if ($filterIsReviewed) {
+                $query->where('is_checked', $filterIsReviewed);
+            }
+    
+            if ($filterFromDate) {
+                $query->whereDate('created_at', '>=', $filterFromDate);
+            }
+    
+            if ($filterToDate) {
+                $query->whereDate('created_at', '<=', $filterToDate);
+            }
+
             // Get the total count of records before applying pagination
             $totalRecords = $query->count();
 
             // Apply pagination
+            if($length > -1){
+                $query = $query
+                            ->offset($start)
+                            ->limit($length);
+            }
+
             $messages = $query
-                ->offset($start)
-                ->limit($length)
-                ->get();
+                            ->get()
+                            ->map(function ($item) {
+                                $item->encrypted_id = Crypt::encrypt($item->id);
+                                return $item;
+                            });
 
             return response()->json([
                 'draw' => $draw,
@@ -87,7 +111,7 @@ class MessagesController extends Controller{
             $msg = $e->getMessage();
 
             Log::error("Error | Controller: MessagesController | Function: getPaginatedMessagesData | Code: ".$code." | Message: ".$msg);
-
+            return response()->json(['message' => $msg], $code);
         }
     }
 
@@ -126,13 +150,15 @@ class MessagesController extends Controller{
             $msg = $e->getMessage();
 
             Log::error("Error | Controller: MessagesController | Function: changeMessageReviewedStatus | Code: ".$code." | Message: ".$msg);
-            
+            return response()->json(['message' => $msg], $code);
         }
             
     }
 
     public function messageDetails($messageId){
         try{
+
+            $messageId = Crypt::decrypt($messageId);
             $message = DB::table($this->messagesMetaData->table_name)
                             ->where('id', $messageId)
                             ->first();

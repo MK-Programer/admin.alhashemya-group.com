@@ -14,8 +14,8 @@
         @include('layouts.utils.success-danger')
         <form class="form-horizontal" enctype="multipart/form-data" id="update_mission_vision_form">
 
-            <input type="hidden" id="mission_id" name="mission_id" value="{{ $mission->id }}">
-            <input type="hidden" id="vision_id" name="vision_id" value="{{ $vision->id }}">
+            <input type="hidden" id="mission_id" name="mission_id" value="{{ $mission->encrypted_id }}">
+            <input type="hidden" id="vision_id" name="vision_id" value="{{ $vision->encrypted_id }}">
 
             @csrf
             <div class="card">

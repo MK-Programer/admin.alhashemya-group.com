@@ -14,7 +14,7 @@ use App\Http\Controllers\AboutUsController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\ProductsController;
-
+use App\Http\Controllers\GroupsController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -31,9 +31,22 @@ Auth::routes([
     'reset' => false,    // Disable password reset/verification
 ]);
 
-Route::middleware(['auth', 'active.user'])->group(function () {
+use Illuminate\Support\Facades\Artisan;
+Route::get('/clear-cache', function() {
+    Artisan::call('cache:clear');
+    Artisan::call('route:clear');
+    Artisan::call('config:clear');
+    Artisan::call('view:clear');
+    return 'Caches cleared';
+});
+
+Route::middleware(['web', 'auth', 'active.user', 'restrict.route'])->group(function () {
+    
+    
+
     //Dashboard
-    Route::get('/', [DashBoardController::class, 'root'])->name('dashboard');
+    
+    Route::get('dashboard', [DashBoardController::class, 'root'])->name('dashboard');
 
     //User
     Route::prefix('user')->group(function () {
@@ -41,8 +54,9 @@ Route::middleware(['auth', 'active.user'])->group(function () {
         Route::post('update-user-profile', [UsersController::class, 'updateUserProfile'])->name('updateUserProfile');
         Route::post('update-user-password', [UsersController::class, 'updateUserPassword'])->name('updateUserPassword');
         Route::post('update-user-company-id', [UsersController::class, 'updateUserCompanyId'])->name('updateUserCompanyId');
+        Route::post('logout', [UsersController::class, 'logout'])->name('logout');
     });
-    
+
     //Services
     Route::prefix('services')->group(function () {
         Route::get('/', [ServicesController::class, 'showServices'])->name('showServices');
@@ -52,8 +66,8 @@ Route::middleware(['auth', 'active.user'])->group(function () {
         Route::get('update-service/{id}', [ServicesController::class, 'showServiceToUpdate'])->name('showServiceToUpdate');
         Route::post('save-updated-service', [ServicesController::class, 'saveUpdatedService'])->name('saveUpdatedService');
     });
-    
-    //Missions And Visions 
+
+    //Missions And Visions
     Route::prefix('missions-and-visions')->group(function () {
         Route::get('/', [MissionsAndVisionsController::class, 'showMissionsAndVisions'])->name('showMissionsAndVisions');
         Route::get('get-paginated-missions-and-visions-data', [MissionsAndVisionsController::class, 'getPaginatedMissionsAndVisionsData'])->name('getPaginatedMissionsAndVisionsData');
@@ -66,20 +80,19 @@ Route::middleware(['auth', 'active.user'])->group(function () {
     //Messages
     Route::prefix('messages')->group(function () {
         Route::get('/', [MessagesController::class, 'showMessages'])->name('showMessages');
-        Route::get('get-paginated-messages-data', [MessagesController::class, 'getPaginatedMessagesData'])->name('getPaginatedMessagesData');    
-        Route::post('change-message-reviewed-status', [MessagesController::class, 'changeMessageReviewedStatus'])->name('changeMessageReviewedStatus');    
-        Route::get('message-details/{id}', [MessagesController::class, 'messageDetails'])->name('messageDetails');    
+        Route::get('get-paginated-messages-data', [MessagesController::class, 'getPaginatedMessagesData'])->name('getPaginatedMessagesData');
+        Route::post('change-message-reviewed-status', [MessagesController::class, 'changeMessageReviewedStatus'])->name('changeMessageReviewedStatus');
+        Route::get('message-details/{id}', [MessagesController::class, 'messageDetails'])->name('messageDetails');
     });
-
     
-    //Partners Or Clients
     Route::get('partners', [PartnersOrClientsController::class, 'showPartnersOrClients'])->name('showPartners');
     Route::get('clients', [PartnersOrClientsController::class, 'showPartnersOrClients'])->name('showClients');
+    //Partners Or Clients
     Route::prefix('partners-or-clients')->group(function () {
-        Route::get('get-paginated-partners-or-clients-data', [PartnersOrClientsController::class, 'getPaginatedPartnersOrClientsData'])->name('getPaginatedPartnersOrClientsData');    
-        Route::get('create-new-partner-or-client/{type}', [PartnersOrClientsController::class, 'showCreatePartnerOrClient'])->name('showCreatePartnerOrClient');    
-        Route::post('save-created-partner-or-client', [PartnersOrClientsController::class, 'saveCreatedPartnerOrClient'])->name('saveCreatedPartnerOrClient');    
-        Route::get('update-partner-or-client/{id}/{type}', [PartnersOrClientsController::class, 'showPartnerOrClientToUpdate'])->name('showPartnerOrClientToUpdate');    
+        Route::get('get-paginated-partners-or-clients-data', [PartnersOrClientsController::class, 'getPaginatedPartnersOrClientsData'])->name('getPaginatedPartnersOrClientsData');
+        Route::get('create-new-partner-or-client/{type}', [PartnersOrClientsController::class, 'showCreatePartnerOrClient'])->name('showCreatePartnerOrClient');
+        Route::post('save-created-partner-or-client', [PartnersOrClientsController::class, 'saveCreatedPartnerOrClient'])->name('saveCreatedPartnerOrClient');
+        Route::get('update-partner-or-client/{id}/{type}', [PartnersOrClientsController::class, 'showPartnerOrClientToUpdate'])->name('showPartnerOrClientToUpdate');
         Route::post('save-updated-partner-or-client', [PartnersOrClientsController::class, 'saveUpdatedPartnerOrClient'])->name('saveUpdatedPartnerOrClient');
     });
 
@@ -92,8 +105,7 @@ Route::middleware(['auth', 'active.user'])->group(function () {
         Route::get('update-home/{id}', [AdminController::class, 'showHomeToUpdate'])->name('showHomeToUpdate');
         Route::post('save-updated-home', [AdminController::class, 'saveUpdatedHome'])->name('saveUpdatedHome');
     });
-     
- 
+
     //companies
     Route::prefix('companies')->group(function () {
         Route::get('/', [CompanyController::class, 'showCompany'])->name('showCompany');
@@ -103,9 +115,8 @@ Route::middleware(['auth', 'active.user'])->group(function () {
         Route::get('update-company/{id}', [CompanyController::class, 'showCompanyToUpdate'])->name('showCompanyToUpdate');
         Route::post('save-updated-company', [CompanyController::class, 'saveUpdatedCompany'])->name('saveUpdatedCompany');
     });
-     
- 
-     //AboutUs
+
+    //AboutUs
     Route::prefix('about-us')->group(function () {
         Route::get('/', [AboutUsController::class, 'showAboutUs'])->name('showAboutUs');
         Route::get('get-paginated-about-us-data', [AboutUsController::class, 'getPaginatedAboutUsData'])->name('getPaginatedAboutUsData');
@@ -114,8 +125,7 @@ Route::middleware(['auth', 'active.user'])->group(function () {
         Route::get('update-about-us/{id}', [AboutUsController::class, 'showAboutUsToUpdate'])->name('showAboutUsToUpdate');
         Route::post('save-updated-about-us', [AboutUsController::class, 'saveUpdatedAboutUs'])->name('saveUpdatedAboutUs');
     });
-     
- 
+
     //categories
     Route::prefix('categories')->group(function () {
         Route::get('/', [CategoryController::class, 'showCategories'])->name('showCategories');
@@ -125,7 +135,6 @@ Route::middleware(['auth', 'active.user'])->group(function () {
         Route::get('update-category/{id}', [CategoryController::class, 'showCategoryToUpdate'])->name('showCategoryToUpdate');
         Route::post('save-updated-category', [CategoryController::class, 'saveUpdatedCategory'])->name('saveUpdatedCategory');
     });
-     
 
     //Products
     Route::prefix('products')->group(function () {
@@ -136,11 +145,31 @@ Route::middleware(['auth', 'active.user'])->group(function () {
         Route::get('update-product/{id}', [ProductsController::class, 'showProductToUpdate'])->name('showProductToUpdate');
         Route::post('save-updated-product', [ProductsController::class, 'saveUpdatedProduct'])->name('saveUpdatedProduct');
     });
-     
- 
+    
+    //Groups
+    Route::prefix('groups')->group(function () {
+        Route::get('/', [GroupsController::class, 'showGroups'])->name('showGroups');
+        Route::get('get-paginated-groups-data', [GroupsController::class, 'getPaginatedGroupsData'])->name('getPaginatedGroupsData');
+        Route::get('create-group', [GroupsController::class, 'showCreateGroup'])->name('showCreateGroup');
+        Route::post('save-created-group', [GroupsController::class, 'saveCreatedGroup'])->name('saveCreatedGroup');
+        Route::get('update-group/{id}', [GroupsController::class, 'showGroupToUpdate'])->name('showGroupToUpdate');
+        Route::post('save-updated-group', [GroupsController::class, 'saveUpdatedGroup'])->name('saveUpdatedGroup');
+    });
 
+    //users
+    Route::prefix('users')->group(function () {
+        Route::get('/', [UsersController::class, 'showUsers'])->name('showUsers');
+        Route::get('get-paginated-users-data', [UsersController::class, 'getPaginatedUsersData'])->name('getPaginatedUsersData');
+        Route::get('create-user', [UsersController::class, 'showCreateUser'])->name('showCreateUser');
+        Route::post('save-created-user', [UsersController::class, 'saveCreatedUser'])->name('saveCreatedUser');
+        Route::get('user-details/{id}', [UsersController::class, 'getUserDetails'])->name('getUserDetails');
+        Route::get('update-user/{id}', [UsersController::class, 'showUserToUpdate'])->name('showUserToUpdate');
+        Route::post('save-updated-user', [UsersController::class, 'saveUpdatedUser'])->name('saveUpdatedUser');
+    });
 
     //Language Translation
-    Route::get('/index/{locale}', [AppController::class, 'lang']);
-    Route::get('/lang/datatables_{locale}.json', [AppController::class, 'dataTableLang'])->name('lang.datatables');
+    Route::get('index/{locale}', [AppController::class, 'lang']);
+    Route::get('lang/datatables_{locale}.json', [AppController::class, 'dataTableLang'])->name('lang.datatables');
+    
+    
 });

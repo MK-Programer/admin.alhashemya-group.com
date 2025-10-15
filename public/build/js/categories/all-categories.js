@@ -14,13 +14,17 @@ $(document).ready(function() {
                 'white-space': 'normal',
                 'overflow-wrap': 'break-word'
             });
-       },
-      ordering: false,
+        },
+        ordering: false,
         "ajax": {
             "url": "/categories/get-paginated-categories-data",
             "type": "GET",
-            "dataSrc": function (json) {
-                console.log("Server Response:", json); // Log the JSON response for debugging
+            data: function(d) {
+                // Add additional parameters for server-side processing if needed
+                d.search_value = d.search.value; // Search value from DataTables
+            },
+            "dataSrc": function(json) {
+                // console.log("Server Response:", json); // Log the JSON response for debugging
                 if (json && json.data) {
                     return json.data; // Return the data array to DataTables
                 } else {
@@ -29,7 +33,7 @@ $(document).ready(function() {
                     return []; // Return empty array to DataTables if no valid data
                 }
             },
-            "error": function (xhr, error, thrown) {
+            "error": function(xhr, error, thrown) {
                 console.error("DataTables AJAX Error:", error, thrown);
                 console.error(xhr.responseText); // Log detailed error message
                 infoDangerAlert();
@@ -42,16 +46,16 @@ $(document).ready(function() {
             { "data": "name_ar" },
 
             {
-              "data": null,
-              "render": function (data, type, row) {
-                  return data.is_active == 1 ? yesText : noText;
-              },
+                "data": null,
+                "render": function(data, type, row) {
+                    return data.is_active == 1 ? yesText : noText;
+                },
             },
             {
-              "data": null,
-              "render": function (data, type, row) {
-                  return '<button class="btn btn-primary" onclick="redirectToUpdateCategory(' + data.id + ')">' + updateText + '</button>';
-              },
+                "data": null,
+                "render": function(data, type, row) {
+                    return '<button class="btn btn-primary" onclick="redirectToUpdateCategory(\'' + data.encrypted_id + '\')">' + updateText + '</button>';
+                },
             },
 
         ],
@@ -60,13 +64,12 @@ $(document).ready(function() {
             "url": "lang/datatables_" + currentLang + ".json" // Adjust language file URL dynamically
         },
 
-        "initComplete": function () {
+        "initComplete": function() {
             console.log("DataTables initialization complete.");
         }
     });
-  });
+});
 
-  function redirectToUpdateCategory(id) {
-      window.location.href = '/categories/update-category/' + id;
-  }
-
+function redirectToUpdateCategory(id) {
+    window.location.href = '/categories/update-category/' + id;
+}

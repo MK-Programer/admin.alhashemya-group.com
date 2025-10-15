@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', function() {
     fileInput.addEventListener('change', function(event) {
         const file = event.target.files[0];
         if (file) {
-            
+
             // Create a temporary URL for the selected file and update the image src
             const imageUrl = URL.createObjectURL(file);
             picture.src = imageUrl;
@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', function() {
             picture.onload = function() {
                 URL.revokeObjectURL(imageUrl);
             };
-        } 
+        }
     });
 });
 
@@ -26,7 +26,7 @@ $('#new_partner_or_client').on('submit', function(event) {
     disableButtons();
 
     let formData = new FormData(this);
-    
+
     $.ajax({
         url: "/partners-or-clients/save-created-partner-or-client",
         type: "post",
@@ -49,13 +49,13 @@ $('#new_partner_or_client').on('submit', function(event) {
             console.log(xhr);
             hideLoading();
             if (xhr.status === 422) {
-                
+
                 // Validation errors
                 var errors = xhr.responseJSON.errors;
                 console.log(errors);
                 var errorsList = [];
                 // Example handling for email and name errors
-                
+
                 if (errors.hasOwnProperty('picture')) {
                     errorsList = errorsList.concat(errors['picture']);
                 }
@@ -68,7 +68,7 @@ $('#new_partner_or_client').on('submit', function(event) {
                 if (errors.hasOwnProperty('sequence')) {
                     errorsList = errorsList.concat(errors['sequence']);
                 }
-                
+
                 setDanger(errorsList);
             } else {
                 setDanger(error500);

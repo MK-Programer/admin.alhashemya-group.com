@@ -1,10 +1,18 @@
 @php
-    use App\Http\Controllers\UsersController;
+    use App\Classes\User;
     $authUser = Auth::user();
-    $usersController = new UsersController;
-    $userCompanies = $usersController->getUserCompanies();
+    $user = new User;
+    $userCompanies = $user->getUserCompanies();
 @endphp
 
+<style>
+    /* Hide the element on screens smaller than 576px */
+    @media (max-width: 576px) {
+        .hide-on-mobile {
+            display: none;
+        }
+    }    
+</style>
 <header id="page-topbar">
     <div class="navbar-header">
         <div class="d-flex">
@@ -13,10 +21,10 @@
 
                 <a href="{{ route('dashboard') }}" class="logo">
                     <span class="logo-sm">
-                        <img src="{{ asset($authUser->company->logo) }}" alt="" height="40" width="40">
+                        <img src="{{ asset($authUser->company->logo) }}" alt="" height="50" width="50">
                     </span>
                     <span class="logo-lg">
-                        <img src="{{ asset($authUser->company->logo) }}" alt="" height="75" width="75">
+                        <img src="{{ asset($authUser->company->logo) }}" alt="" height="70" width="70">
                     </span>
                 </a>
 
@@ -31,7 +39,7 @@
                     data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 
                     <img src="{{ asset ($authUser->company->logo) }}" alt="company-logo" class="me-1" height="50" width="50">
-                        <span class="align-middle">
+                        <span class="align-middle hide-on-mobile">
                             @switch(app()->getLocale())
                                 @case('en')
                                     {{ $authUser->company->name_en }}
@@ -119,6 +127,5 @@
             </button>
         </div>
     </div>
-</div>
 </header>
 

@@ -16,8 +16,9 @@
             <div class="card-body">
                 <form class="form-horizontal" enctype="multipart/form-data" id="update_company">
                     @csrf
-                    <input type="hidden" id="company_id" name="company_id" value="{{ $company->id }}">
-
+                    <input type="hidden" id="company_id" name="company_id" value="{{ $companyId }}">
+                    <!--<input type="hidden" id="is_active" name="is_active" value="{{ $company->is_active }}">-->
+                    
                     <div class="mb-3">
                         <div class="text-start mt-2">
                             <input type="hidden" id="db_picture" name="db_picture" value="{{ $company->logo }}">
@@ -57,15 +58,14 @@
                         <input type="text" class="form-control" value="{{ $company->other_link }}" id="other_link" name="other_link" autofocus placeholder="@lang('translation.enter_other_link')">
                     </div>
 
-
-                    <div class="mb-3">
-                        <label for="is_active" class="form-label">@lang('translation.is_active')</label>
-                        <select class="form-control" id="is_active" name="is_active">
-                            <option disabled selected>@lang('translation.enter_status')</option>
-                            <option value="1" {{ $company->is_active == 1 ? 'selected' : '' }}>@lang('translation.yes')</option>
-                            <option value="0" {{ $company->is_active == 0 ? 'selected' : '' }}>@lang('translation.no')</option>
-                        </select>
-                    </div>
+                    <!--<div class="mb-3">-->
+                    <!--    <label for="is_active" class="form-label">@lang('translation.is_active')</label>-->
+                    <!--    <select class="form-control" id="is_active" name="is_active">-->
+                    <!--        <option disabled selected>@lang('translation.enter_status')</option>-->
+                    <!--        <option value="1" {{ $company->is_active == 1 ? 'selected' : '' }}>@lang('translation.yes')</option>-->
+                    <!--        <option value="0" {{ $company->is_active == 0 ? 'selected' : '' }}>@lang('translation.no')</option>-->
+                    <!--    </select>-->
+                    <!--</div>-->
 
                     <div class="mt-3">
                         <button class="btn btn-primary waves-effect waves-light" type="submit">@lang('translation.update')</button>

@@ -33,6 +33,16 @@ return [
   'password_not_updated' => 'Error While Updating The Password, Try Again Later...',
   'services' => 'Services',
   'create_new_service' => 'Create New Service',
+  'companies' => 'Companies',
+  'create_new_company' => 'Create New Company',
+  'phone' => "Phone Number",
+  'fb_link' => 'Facebook Link' ,
+  'other_link' => 'Other Link',
+
+  'enter_phone' => 'Enter Phone Number' ,
+  'enter_fb_link' => 'Enter Facebook Link' ,
+  'enter_other_link' => 'Enter Other Link',
+
   'id' => 'ID',
   'picture' => 'Picture',
   'title_en' => 'Title In English',
@@ -58,7 +68,17 @@ return [
   'service_not_deleted' => 'Error While Deleting The Service, Try Again Later...',
   'service_updated' => 'Service Updated Successfully',
   'service_not_updated' => 'Error While Updating The Service, Try Again Later...',
+
+  'update_company' => 'Update Company',
+  'company_created' => 'Company Created Successfully',
+  'company_not_created' => 'Error While Creating The Company, Try Again Later...',
+  'company_deleted' => 'Company Deleted Successfully',
+  'company_not_deleted' => 'Error While Deleting The Company, Try Again Later...',
+  'company_updated' => 'Company Updated Successfully',
+  'company_not_updated' => 'Error While Updating The Company, Try Again Later...',
+
   'companies' => 'Companies',
+  'company' => 'Company',
   'company_id_updated' => 'Company ID Updated',
   'company_id_not_updated' => 'Error While Updating The Company ID, Try Again Later...',
   'settings' => 'Settings',
@@ -87,7 +107,7 @@ return [
   'mission_and_vision_updated' => 'Mission And Vision Updated',
   'mission_and_vision_not_updated' => 'Error While Updating The Mission And Vision, Try Again Later...',
   'messages' => 'Messages',
-  'message' => 'Message', 
+  'message' => 'Message',
   'product_details' => 'Product Details',
   'product_id' => 'Product ID',
   'sender_details' => 'Sender Details',
@@ -128,8 +148,8 @@ return [
   'partner_not_updated' => 'Error While Updating The Partner, Try Again Later...',
   'client_updated' => 'Client Updated Successfully',
   'client_not_updated' => 'Error While Updating The Client, Try Again Later...',
-  
-  
+
+
   'error' => 'Error',
   'ok' => 'Ok',
   'error_400' => 'Bad Request: The Server Could Not Understand The Request Due To Invalid Syntax',
@@ -158,7 +178,14 @@ return [
   'about_us' => 'About Us',
   'create_new_about_us' => 'Create New About Us',
 
-  
+
+  'products' => 'Products',
+  'create_new_product' => 'Create New Product',
+  "Add_Product" => "Add Product",
+  "Products" => "Products",
+  "Product_Detail" => "Product Detail",
+
+
   'products' => 'Products',
   'create_new_product' => 'Create New Product',
   "Add_Product" => "Add Product",
@@ -182,7 +209,7 @@ return [
   'length' => 'Length',
   'width' => 'Width',
   'height' => 'Height',
-  'total_height' => 'Totatl Height',
+  'total_height' => 'Total Height',
   'gross_weight' => 'Gross Weight',
 
   'enter_model' => 'Enter Your Model',
@@ -191,7 +218,7 @@ return [
   'enter_length' => 'Enter Your Length',
   'enter_width' => 'Enter Your Width',
   'enter_height' => 'Enter Your Height',
-  'enter_total_height' => 'Enter Your Totatl Height',
+  'enter_total_height' => 'Enter Your Total Height',
   'enter_gross_weight' => 'Enter Your Gross Weight',
 
   'applications' => 'Applications',
@@ -209,12 +236,53 @@ return [
   'enter_category' => 'Enter Category',
   'categories' => 'Categories',
   'create_new_category' => 'Create New Category',
-  
+
   'add' => 'Add',
   'at_company' => 'At Company',
   'view' => 'View',
   'new_messages' => 'New Messages',
   'all_messages' => 'All Messages',
 
+  'groups' => 'Groups',
+  'group' => 'group',
+  'update_group' => 'Update Group',
+
+  'create_new_group' => 'Create New Group',
+
+  'group_updated' => 'Group Updated Successfully',
+  'group_not_updated' => 'Error While Updating The Group, Try Again Later...',
+
+  'group_created' => 'Group Created Successfully',
+  'group_not_created' => 'Error While Creating The Group, Try Again Later...',
+
+  'users' => 'Users',
+
+  'role' => 'Role' ,
+
+  'create_new_user' => 'Create New User',
+
+  'password' => 'Password',
+
+  'user_created' => 'User Created Successfully',
+  'user_not_created' => 'Error While Creating The User, Try Again Later...',
+
+  'user_updated' => 'User Updated Successfully',
+  'user_not_updated' => 'Error While Updating The User, Try Again Later...',
+  
+  'role' => 'role',
+  'enter_role' => 'Enter The Role',
+  'enter_group' => 'Enter The Group',
+
+  'user_details' => 'User Details',
+
+  'user' => 'User',
+  'update_user' => 'Update User',
+
+  'from' => 'From',
+  'to' => 'To',
+
+  'all' => 'All',
+  'filter' => 'Filter',
+  'reset' => 'reset'
   
 ];

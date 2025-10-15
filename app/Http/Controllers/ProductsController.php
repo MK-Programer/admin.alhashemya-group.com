@@ -5,10 +5,10 @@ namespace App\Http\Controllers;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use App\Classes\Image;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Lang;
 use Illuminate\Validation\ValidationException;
 
@@ -50,11 +50,11 @@ class ProductsController extends Controller
             $draw = $request->input('draw');
             $start = $request->input('start', 0);
             $length = $request->input('length', 10);
-            $searchValue = $request->input('search.value'); // Search value from DataTables
+            $searchValue = $request->input('search_value'); // Search value from DataTables
 
             // Base query
             $query = DB::table($this->tableName) // Replace with your actual table name
-                        ->select('id', 'name_en', 'name_ar', 'desc_en', 'desc_ar', 'is_active')
+                        ->select('id', 'name_en', 'name_ar', 'is_active')
                         ->selectRaw("CONCAT('$assetUrl', picture) AS picture")
                         ->where('company_id', $this->authUser->company_id);
 
@@ -63,9 +63,7 @@ class ProductsController extends Controller
                 $query->where(function($q) use ($searchValue) {
                     $q->where('id', 'like', "%$searchValue%")
                     ->orWhere('name_en', 'like', "%$searchValue%")
-                    ->orWhere('name_ar', 'like', "%$searchValue%")
-                    ->orWhere('desc_en', 'like', "%$searchValue%")
-                    ->orWhere('desc_ar', 'like', "%$searchValue%");
+                    ->orWhere('name_ar', 'like', "%$searchValue%");
                 });
             }
 
@@ -76,7 +74,11 @@ class ProductsController extends Controller
             $products = $query
                 ->offset($start)
                 ->limit($length)
-                ->get();
+                ->get()
+                ->map(function ($item) {
+                    $item->encrypted_id = Crypt::encrypt($item->id);
+                    return $item;
+                });
 
             return response()->json([
                 'draw' => $draw,
@@ -92,7 +94,7 @@ class ProductsController extends Controller
             $msg = $e->getMessage();
 
             Log::error("Error | Controller: ProductsController | Function: getPaginatedData | Code: ".$code." | Message: ".$msg);
-
+            return response()->json(['message' => $msg], $code);
         }
     }
 
@@ -110,8 +112,6 @@ class ProductsController extends Controller
     }
 
     public function saveCreatedProduct(Request $request){
-
-
         try{
             DB::beginTransaction();
             $request->validate([
@@ -249,39 +249,36 @@ class ProductsController extends Controller
             return $msg;
 
             Log::error("Error | Controller: ProductsController | Function: saveCreatedProduct | Code: ".$code." | Message: ".$msg);
-
+            return response()->json(['message' => $msg], $code);
         }
     }
 
     public function showProductToUpdate($productId){
-
-
         try{
-
             $product = DB::table($this->tableName)
-            ->select('products.*', 'pd.*','c.name_en as category_name_en')
-            ->leftJoin('product_details as pd', 'pd.product_id', '=', 'products.id')
-            ->leftJoin('categories as c', 'products.category_id', '=', 'c.id')
-            ->where('products.company_id', $this->authUser->company_id)
-            ->where('products.id', $productId)
-            ->first();
+                            ->select('products.*', 'pd.*','c.name_en as category_name_en')
+                            ->leftJoin('product_details as pd', 'pd.product_id', '=', 'products.id')
+                            ->leftJoin('categories as c', 'products.category_id', '=', 'c.id')
+                            ->where('products.company_id', $this->authUser->company_id)
+                            ->where('products.id', Crypt::decrypt($productId))
+                            ->first();
 
             // Step 2: Retrieve the related product_info data
-                $productInfos = DB::table('product_info')
-                    ->select('name_en as info', 'type')
-                    ->where('product_id', $productId)
-                    ->get();
+            $productInfos = DB::table('product_info')
+                            ->select('name_en as info', 'type')
+                            ->where('product_id', Crypt::decrypt($productId))
+                            ->get();
 
             // Step 3: Combine the product data with the product_info data
-                if ($product) {
-                    $product->infos = $productInfos;
-                }
+            if ($product) {
+                $product->infos = $productInfos;
+            }
 
             // return $product;
 
             $categories = DB::table('categories')->get();
 
-            return view('products.update-product', compact('product','categories'));
+            return view('products.update-product', compact('product','categories', 'productId'));
         }catch(Exception $e){
             $code = $e->getCode();
             $msg = $e->getMessage();
@@ -313,7 +310,7 @@ class ProductsController extends Controller
             ]);
 
 
-            $productId = $request->get('product_id');
+            $productId = Crypt::decrypt($request->get('product_id'));
             $product = [
                 'company_id' => $this->authUser->company_id,
                 'category_id' =>$request->get('category_id'),
@@ -329,7 +326,9 @@ class ProductsController extends Controller
             if($newPicture){
 
                 $dbPicture = $request->get('db_picture');
-                Image::unlinkPicture($dbPicture);
+                if($dbPicture){    
+                    Image::unlinkPicture($dbPicture);
+                }
                 
                 $pictureName = Image::savePictureInStorage($newPicture, $this->imagePath);
                 $product['picture'] = $this->imagePath.$pictureName;
@@ -382,120 +381,99 @@ class ProductsController extends Controller
             }
 
 
-            $old_application = explode(',', $request->old_application);
-            $old_feature = explode(',', $request->old_feature);
-            return $request;
-            // return $old_application;
+            $productInfos = DB::table('product_info')
+            ->select('name_en as info', 'type')
+            ->where('product_id', $productId)
+            ->get();
+
+            foreach ($productInfos as $key => $value) {
+
+                if($value->type == 'application'){
+                    $old_application_with_key = 'old_application_'. $key;  //old_application_2
+
+                    $update_old_app = $request->input($old_application_with_key);
 
 
-            if($old_application !=null){
-                foreach ($old_application as $key => $app) {
+                    $old_application = [
+                        'product_id' => $productId,
+                        'type' => 'application',
+                        'name_en' => $update_old_app,
 
-                    if($app != null){
-                        $application = [
-                            'name_en' => $app,
-                            'updated_at' => now(),
-                        ];
-                        dump($app);
-                        $update_application = DB::table('product_info')
-                                                 ->where('product_id', $productId)
-                                                ->update($application);
-                    }
+                    ];
+
+                    $update_application = DB::table('product_info')
+                                            ->where('product_id', $productId)
+                                            ->where('type', 'application')
+                                            ->where('name_en' , $value->info)
+                                            ->update($old_application);
+
                 }
             }
 
-            if($update_application >= 1){
-                DB::commit();
-                $code = 200;
-            }else{
-                DB::rollBack();
-                $code = 400;
-                $msg = 'translation.product_not_created';
-                return response()->json(['message' => lang::get($msg)], $code);
-            }
 
-            // return 1;
-            if($request->applications !=null){
-                foreach ($request->applications as $key => $app) {
-                    if($app['application'] != null){
-                        $application = [
-                            'product_id' =>$productId,
-                            'type' => 'application',
-                            'name_en' => $app['application'],
-                            'updated_at' => now(),
-                        ];
+                foreach ($productInfos as $key => $value) {
 
-                        dump($app['application']);
-                        $insert_application = DB::table('product_info')
-                                                ->insert($application);
+                    if($value->type == 'feature'){
+                        $old_feature_with_key = 'old_feature_'.$key;
 
-                    }
-                }
-            }
+                        $update_old_app = $request->input($old_feature_with_key);
 
-            if($insert_application == 1){
-                DB::commit();
-                $code = 200;
-            }else{
-                DB::rollBack();
-                $code = 400;
-                $msg = 'translation.product_not_created';
-                return response()->json(['message' => lang::get($msg)], $code);
-            }
-
-            dd(5);
-
-            if($old_feature !=null){
-                foreach ($old_feature as $key2 => $user_feature) {
-                    if($user_feature != null){
-                        $feature = [
+                        $old_feature = [
+                            'product_id' => $productId,
                             'type' => 'feature',
-                            'name_en' => $user_feature,
-                            'updated_at' => now(),
+                            'name_en' => $update_old_app,
+
                         ];
+
                         $update_feature = DB::table('product_info')
                                                 ->where('product_id', $productId)
-                                                ->update($feature);
+                                                ->where('type', 'feature')
+                                                ->where('name_en' , $value->info)
+                                                ->update($old_feature);
 
-                        if($update_feature >= 1){
-                            DB::commit();
-                            $code = 200;
-                        }else{
-                            DB::rollBack();
-                            $code = 400;
-                            $msg = 'translation.product_not_created';
-                            return response()->json(['message' => lang::get($msg)], $code);
-                        }
+
                     }
                 }
-            }
-            if($request->features !=null){
-                foreach ($request->features as $key => $user_feature) {
-                    if($user_feature['feature'] != null){
-                        $feature = [
-                            'product_id' =>$productId,
-                            'type' => 'feature',
-                            'name_en' => $user_feature['feature'],
-                            'updated_at' => now(),
-                        ];
-                        $update_feature = DB::table('product_info')
-                                                ->insert($feature);
 
-                        if($update_feature == 1){
-                            DB::commit();
-                            $code = 200;
-                        }else{
-                            DB::rollBack();
-                            $code = 400;
-                            $msg = 'translation.product_not_created';
-                            return response()->json(['message' => lang::get($msg)], $code);
-                        }
-                    }
+
+
+
+            $apps = [];
+            foreach ($request->applications as $key => $value) {
+                if($value['application'] != null){
+                    $apps[] = $value['application'];
                 }
             }
+
+            foreach ($apps as  $app) {
+               $update_app =  DB::table('product_info')
+                    ->insert([
+                        'product_id' => $productId,
+                        'type' => 'application',
+                        'name_en' => $app
+                    ]);
+            }
+
+            $features = [];
+            foreach ($request->features as $key => $value) {
+                if($value['feature'] != null){
+                    $features[] = $value['feature'];
+                }
+            }
+
+            foreach ($features as  $feat) {
+               $update_feat =  DB::table('product_info')
+                    ->insert([
+                        'product_id' => $productId,
+                        'type' => 'feature',
+                        'name_en' => $feat
+                    ]);
+            }
+
 
                 $code = 200;
                 $msg = 'translation.product_updated';
+                // return redirect()->back()->with('message', lang::get($msg));
                 return response()->json(['message' => lang::get($msg)], $code);
 
         }catch(ValidationException $e){
@@ -513,7 +491,7 @@ class ProductsController extends Controller
             $msg = $e->getMessage();
 
             Log::error("Error | Controller: ProductsController | Function: saveUpdatedProduct | Code: ".$code." | Message: ".$msg);
-
+            return response()->json(['message' => $msg], $code);
         }
     }
 

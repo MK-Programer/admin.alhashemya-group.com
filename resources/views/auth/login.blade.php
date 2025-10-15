@@ -57,7 +57,7 @@
                                             @csrf
                                             <div class="mb-3">
                                                 <label for="username" class="form-label">Email</label>
-                                                <input name="email" type="email" class="form-control @error('email') is-invalid @enderror" value="{{ old('email', 'admin@themesbrand.com') }}" id="username" placeholder="Enter Email" autocomplete="email" autofocus>
+                                                <input name="email" type="email" class="form-control @error('email') is-invalid @enderror" value="{{ old('email') }}" id="username" placeholder="Enter Email" autocomplete="email" autofocus>
                                                 @error('email')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
@@ -68,7 +68,7 @@
                                             <div class="mb-3">
                                                 <label class="form-label">Password</label>
                                                 <div class="input-group auth-pass-inputgroup @error('password') is-invalid @enderror">
-                                                    <input type="password" name="password" class="form-control  @error('password') is-invalid @enderror" id="userpassword" value="123456" placeholder="Enter password" aria-label="Password" aria-describedby="password-addon">
+                                                    <input type="password" name="password" class="form-control  @error('password') is-invalid @enderror" id="userpassword" placeholder="Enter password" aria-label="Password" aria-describedby="password-addon">
                                                     <button class="btn btn-light " type="button" id="password-addon"><i class="mdi mdi-eye-outline"></i></button>
                                                     @error('password')
                                                     <span class="invalid-feedback" role="alert">
@@ -78,17 +78,17 @@
                                                 </div>
                                             </div>
 
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" id="remember" {{ old('remember') ? 'checked' : '' }}>
-                                                <label class="form-check-label" for="remember">
-                                                    Remember me
-                                                </label>
-                                                <div class="float-end">
-                                                    @if (Route::has('password.request'))
-                                                    <a href="{{ route('password.request') }}" class="text-muted">Forgot password?</a>
-                                                    @endif
-                                                </div>
-                                            </div>
+                                            <!--<div class="form-check">-->
+                                            <!--    <input class="form-check-input" type="checkbox" id="remember" {{ old('remember') ? 'checked' : '' }}>-->
+                                            <!--    <label class="form-check-label" for="remember">-->
+                                            <!--        Remember me-->
+                                            <!--    </label>-->
+                                            <!--    <div class="float-end">-->
+                                            <!--        @if (Route::has('password.request'))-->
+                                            <!--        <a href="{{ route('password.request') }}" class="text-muted">Forgot password?</a>-->
+                                            <!--        @endif-->
+                                            <!--    </div>-->
+                                            <!--</div>-->
 
                                             <div class="mt-3 d-grid">
                                                 <button class="btn btn-primary waves-effect waves-light" type="submit">Log

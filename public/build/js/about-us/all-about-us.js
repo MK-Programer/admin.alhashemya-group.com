@@ -14,17 +14,17 @@ $(document).ready(function() {
                 'white-space': 'normal',
                 'overflow-wrap': 'break-word'
             });
-       },
+        },
         ordering: false,
         "ajax": {
             "url": "/about-us/get-paginated-about-us-data",
             "type": "GET",
             data: function(d) {
                 // Add additional parameters for server-side processing if needed
-                d.searchValue = d.search.value; // Search value from DataTables
-              },
-            "dataSrc": function (json) {
-                console.log("Server Response:", json); // Log the JSON response for debugging
+                d.search_value = d.search.value; // Search value from DataTables
+            },
+            "dataSrc": function(json) {
+                // console.log("Server Response:", json); // Log the JSON response for debugging
                 if (json && json.data) {
                     return json.data; // Return the data array to DataTables
                 } else {
@@ -33,7 +33,7 @@ $(document).ready(function() {
                     return []; // Return empty array to DataTables if no valid data
                 }
             },
-            "error": function (xhr, error, thrown) {
+            "error": function(xhr, error, thrown) {
                 console.error("DataTables AJAX Error:", error, thrown);
                 console.error(xhr.responseText); // Log detailed error message
                 infoDangerAlert();
@@ -42,27 +42,25 @@ $(document).ready(function() {
         "columns": [
             { "data": "id" },
             {
-              "data": "picture",
-              "render": function (data, type, row) {
-                  // Assuming picture_path is a relative path to the image
-                  return '<img src="' + data + '" alt="#" class="img-thumbnail" style="max-width:100px;max-height:100px;">';
-              }
+                "data": "picture",
+                "render": function(data, type, row) {
+                    // Assuming picture_path is a relative path to the image
+                    return '<img src="' + data + '" alt="#" class="img-thumbnail" style="max-width:100px;max-height:100px;">';
+                }
             },
             { "data": "title_en" },
             { "data": "title_ar" },
-            { "data": "desc_en" },
-            { "data": "desc_ar" },
             {
-              "data": null,
-              "render": function (data, type, row) {
-                  return data.is_active == 1 ? yesText : noText;
-              },
+                "data": null,
+                "render": function(data, type, row) {
+                    return data.is_active == 1 ? yesText : noText;
+                },
             },
             {
-              "data": null,
-              "render": function (data, type, row) {
-                  return '<button class="btn btn-primary" onclick="redirectToUpdateAboutUs(' + data.id + ')">' + updateText + '</button>';
-              },
+                "data": null,
+                "render": function(data, type, row) {
+                    return '<button class="btn btn-primary" onclick="redirectToUpdateAboutUs(\'' + data.encrypted_id + '\')">' + updateText + '</button>';
+                },
             },
 
         ],
@@ -71,13 +69,12 @@ $(document).ready(function() {
             "url": "lang/datatables_" + currentLang + ".json" // Adjust language file URL dynamically
         },
 
-        "initComplete": function () {
+        "initComplete": function() {
             console.log("DataTables initialization complete.");
         }
     });
-  });
+});
 
-  function redirectToUpdateAboutUs(id) {
-      window.location.href = '/about-us/update-about-us/' + id;
-  }
-
+function redirectToUpdateAboutUs(id) {
+    window.location.href = '/about-us/update-about-us/' + id;
+}

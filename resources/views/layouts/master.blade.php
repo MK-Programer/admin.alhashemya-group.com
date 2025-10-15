@@ -8,8 +8,10 @@
     <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
     <meta content="Themesbrand" name="author" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
+
+    
     <!-- App favicon -->
-    <link rel="shortcut icon" href="{{ asset('build/images/favicon.ico') }}">
+    <link rel="shortcut icon" href="{{ asset($authUser->company->logo) }}">
     @include('layouts.head-css')
 </head>
 

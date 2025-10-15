@@ -21,9 +21,11 @@ $(document).ready(function() {
             },
             success: function(response) {
                 // Handle successful response
-                console.log('Success:', response);
+                // console.log('Success:', response);
                 // You can update the UI or perform other actions based on the response
-                window.location.reload();
+                // window.location.reload();
+                // alert(1);
+                window.location.href = '/dashboard'; // Navigate to the dashboard
             },
             error: function(xhr, status, error) {
                 // Handle error response

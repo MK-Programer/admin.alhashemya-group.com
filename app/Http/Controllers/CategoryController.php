@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Lang;
 use Illuminate\Validation\ValidationException;
-
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Log;
 use Exception;
 use DB;
@@ -47,7 +47,7 @@ class CategoryController extends Controller
             $draw = $request->input('draw');
             $start = $request->input('start', 0);
             $length = $request->input('length', 10);
-            $searchValue = $request->input('search.value'); // Search value from DataTables
+            $searchValue = $request->input('search_value'); // Search value from DataTables
 
             // Base query
             $query = DB::table($this->table_name) // Replace with your actual table name
@@ -69,7 +69,11 @@ class CategoryController extends Controller
             $categories = $query
                 ->offset($start)
                 ->limit($length)
-                ->get();
+                ->get()
+                ->map(function ($item) {
+                    $item->encrypted_id = Crypt::encrypt($item->id);
+                    return $item;
+                });
 
             return response()->json([
                 'draw' => $draw,
@@ -83,7 +87,7 @@ class CategoryController extends Controller
             $msg = $e->getMessage();
 
             Log::error("Error | Controller: CategoryController | Function: getPaginatedData | Code: ".$code." | Message: ".$msg);
-
+            return response()->json(['message' => $msg], $code);
         }
     }
 
@@ -145,17 +149,17 @@ class CategoryController extends Controller
             $msg = $e->getMessage();
 
             Log::error("Error | Controller: CategoryController | Function: saveCreatedCategory | Code: ".$code." | Message: ".$msg);
-
+            return response()->json(['message' => $msg], $code);
         }
     }
 
     public function showCategoryToUpdate($categoryId){
         try{
             $category = DB::table($this->table_name)
-                        ->where('id', $categoryId)
+                        ->where('id', Crypt::decrypt($categoryId))
                         ->first();
 
-            return view('categories.update-category', compact('category'));
+            return view('categories.update-category', compact('category', 'categoryId'));
         }catch(Exception $e){
             $code = $e->getCode();
             $msg = $e->getMessage();
@@ -175,7 +179,7 @@ class CategoryController extends Controller
                 'is_active' => ['required', 'integer'],
             ]);
 
-            $categoryId = $request->get('category_id');
+            $categoryId = Crypt::decrypt($request->get('category_id'));
             $category = [
                 'name_en' => $request->get('name_en'),
                 'name_ar' => $request->get('name_ar'),
@@ -214,7 +218,7 @@ class CategoryController extends Controller
             $msg = $e->getMessage();
 
             Log::error("Error | Controller: CategorysController | Function: saveUpdatedCategory | Code: ".$code." | Message: ".$msg);
-
+            return response()->json(['message' => $msg], $code);
         }
     }
 

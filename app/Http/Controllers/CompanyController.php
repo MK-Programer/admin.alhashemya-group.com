@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Classes\Image;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Lang;
 use Illuminate\Validation\ValidationException;
 
@@ -16,7 +17,7 @@ class CompanyController extends Controller
 {
     private $imagePath = 'images/companies/';
     private $authUser;
-
+    
     public function __construct(){
         $this->middleware(function ($request, $next) {
 
@@ -28,7 +29,15 @@ class CompanyController extends Controller
 
     public function showCompany(){
         try{
-            return view('companies.all-companies');
+            
+            $companyId = $this->authUser->company_id;
+            $company = DB::table('companies')
+                        ->where('id', $companyId)
+                        ->first();
+                        
+            $companyId = Crypt::encrypt($companyId);
+            return view('companies.update-company', compact('company', 'companyId'));
+            // return view('companies.all-companies');
         }catch(Exception $e){
             $code = $e->getCode();
             $msg = $e->getMessage();
@@ -49,10 +58,10 @@ class CompanyController extends Controller
             return abort(500);
         }
     }
+
     public function saveCreatedCompany(Request $request)
     {
 
-        // dd(44);
         try{
             DB::beginTransaction();
 
@@ -117,9 +126,9 @@ class CompanyController extends Controller
             $msg = $e->getMessage();
 
             Log::error("Error | Controller: CompanyController | Function: savecreatedCompany | Code: ".$code." | message: ".$msg);
+            return response()->json(['message' => $msg], $code);
         }
     }
-
 
     public function getPaginatedCompanyData(Request $request){
         try{
@@ -130,7 +139,7 @@ class CompanyController extends Controller
             $draw = $request->input('draw');
             $start = $request->input('start', 0);
             $length = $request->input('length', 10);
-            $searchValue = $request->input('search.value'); // Search value from DataTables
+            $searchValue = $request->input('search_value'); // Search value from DataTables
 
             // Base query
             $query = DB::table('companies') // Replace with your actual table name
@@ -156,7 +165,11 @@ class CompanyController extends Controller
             $company = $query
                 ->offset($start)
                 ->limit($length)
-                ->get();
+                ->get()
+                ->map(function ($item) {
+                    $item->encrypted_id = Crypt::encrypt($item->id);
+                    return $item;
+                });
 
             return response()->json([
                 'draw' => $draw,
@@ -170,16 +183,17 @@ class CompanyController extends Controller
             $msg = $e->getMessage();
 
             Log::error("Error | Controller: CompanyController | Function: getPaginatedData | Code: ".$code." | Message: ".$msg);
+            return response()->json(['message' => $msg], $code);
         }
     }
 
     public function showCompanyToUpdate($companyId){
         try{
             $company = DB::table('companies')
-                        ->where('id', $companyId)
+                        ->where('id', Crypt::decrypt($companyId))
                         ->first();
 
-            return view('companies.update-company', compact('company'));
+            return view('companies.update-company', compact('company', 'companyId'));
         }catch(Exception $e){
             $code = $e->getCode();
             $msg = $e->getMessage();
@@ -192,17 +206,16 @@ class CompanyController extends Controller
     public function saveUpdatedCompany(Request $request){
         try{
             DB::beginTransaction();
-
             $request->validate([
                 'picture' => ['nullable', 'image', 'mimes:jpg,jpeg,png', 'max:5120'],
                 'name_en' => ['required', 'string', 'max:255'],
                 'name_ar' => ['required', 'string', 'max:255'],
-                'is_active' => ['required', 'integer'],
-                'email' => ['email', 'max:255'],
-                'phone' => ['integer'],
+                // 'is_active' => ['required', 'integer'],
+                'email' => ['nullable','email', 'max:30'],
+                'phone' => ['regex:/^[0-9]{9,15}$/', 'numeric'],
             ]);
 
-            $companyId = $request->get('company_id');
+            $companyId = Crypt::decrypt($request->get('company_id'));
             $company = [
 
                 'name_en' => $request->get('name_en'),
@@ -211,7 +224,7 @@ class CompanyController extends Controller
                 'email' => $request->get('email'),
                 'fb_link' => $request->get('fb_link'),
                 'other_link' => $request->get('other_link'),
-                'is_active' => $request->get('is_active'),
+                // 'is_active' => $request->get('is_active'),
                 'updated_at' => now(),
             ];
 
@@ -219,11 +232,12 @@ class CompanyController extends Controller
             if($newPicture){
 
                 $dbPicture = $request->get('db_picture');
-                Image::unlinkPicture($dbPicture);
-                
+                if($dbPicture){
+                    Image::unlinkPicture($dbPicture);
+                }
                 $pictureName = Image::savePictureInStorage($newPicture, $this->imagePath);
                 $company['logo'] = $this->imagePath.$pictureName;
-            } 
+            }
 
             $updateCompany = DB::table('companies')
                                 ->where('id', $companyId)
@@ -254,7 +268,7 @@ class CompanyController extends Controller
             $msg = $e->getMessage();
 
             Log::error("Error | Controller: CompanyController | Function: saveUpdatedCompany | Code: ".$code." | Message: ".$msg);
-
+            return response()->json(['message' => $msg], $code);
         }
     }
 

@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Crypt;
 use App\Classes\Image;
 use Illuminate\Support\Facades\Lang;
 use Illuminate\Validation\ValidationException;
@@ -116,6 +117,7 @@ class AdminController extends Controller
             $msg = $e->getMessage();
 
             Log::error("Error | Controller: AdminController | Function: saveUpdateHome | Code: ".$code." | Message: ".$msg);
+            return response()->json(['message' => $msg], $code);
         }
     }
 
@@ -127,12 +129,12 @@ class AdminController extends Controller
             $draw = $request->input('draw');
             $start = $request->input('start', 0);
             $length = $request->input('length', 10);
-            $searchValue = $request->input('search.value'); // Search value from DataTables
+            $searchValue = $request->input('search_value'); // Search value from DataTables
 
 
             //Base query
             $query =  DB::table($this->HomeMetaData->table_name) // Replace with your actual table name
-                        ->select('id', 'title_en', 'title_ar', 'desc_en', 'desc_ar', 'is_active')
+                        ->select('id', 'title_en', 'title_ar', 'is_active')
                         ->selectRaw("CONCAT('$assetUrl', picture) AS picture")
                         ->where('setting_id', $this->settingId)
                         ->where('company_id', $this->authUser->company_id);
@@ -142,9 +144,7 @@ class AdminController extends Controller
                 $query->where(function($q) use ($searchValue) {
                     $q->where('id', 'like', "%$searchValue%")
                     ->orWhere('title_en', 'like', "%$searchValue%")
-                    ->orWhere('title_ar', 'like', "%$searchValue%")
-                    ->orWhere('desc_en', 'like', "%$searchValue%")
-                    ->orWhere('desc_ar', 'like', "%$searchValue%");
+                    ->orWhere('title_ar', 'like', "%$searchValue%");
                 });
             }
 
@@ -154,7 +154,11 @@ class AdminController extends Controller
             $home = $query
                         ->offset($start)
                         ->limit($length)
-                        ->get();
+                        ->get()
+                        ->map(function ($item) {
+                            $item->encrypted_id = Crypt::encrypt($item->id);
+                            return $item;
+                        });
             
             return response()->json([
                 'draw' => $draw,
@@ -169,6 +173,7 @@ class AdminController extends Controller
             $msg = $e->getMessage();
 
             Log::error("Error | Controller: AdminController | Function: getPaginatedData | Code: ".$code." | Message: ".$msg);
+            return response()->json(['message' => $msg], $code);
         }
     }
 
@@ -177,10 +182,10 @@ class AdminController extends Controller
             $home = DB::table($this->HomeMetaData->table_name)
                         ->where('company_id', $this->authUser->company_id)
                         ->where('setting_id', $this->settingId)
-                        ->where('id', $homeId)
+                        ->where('id', Crypt::decrypt($homeId))
                         ->first();
 
-            return view('home.update-home', compact('home'));
+            return view('home.update-home', compact('home', 'homeId'));
         }catch(Exception $e){
             $code = $e->getCode();
             $msg = $e->getMessage();
@@ -203,7 +208,7 @@ class AdminController extends Controller
                 'is_active' => ['required', 'integer'],
             ]);
 
-            $homeId = $request->get('home_id');
+            $homeId = Crypt::decrypt($request->get('home_id'));
             $home = [
                 'company_id' => $this->authUser->company_id,
                 'setting_id' => $this->settingId,
@@ -256,7 +261,7 @@ class AdminController extends Controller
             $msg = $e->getMessage();
 
             Log::error("Error | Controller: ServicesController | Function: saveUpdatedService | Code: ".$code." | Message: ".$msg);
-
+            return response()->json(['message' => $msg], $code);
         }
     }
 

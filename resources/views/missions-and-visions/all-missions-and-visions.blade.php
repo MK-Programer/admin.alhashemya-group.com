@@ -42,7 +42,7 @@
                                 <th>@lang('translation.vision_title_en')</th>
                                 <th>@lang('translation.vision_title_ar')</th>
                                 <th>@lang('translation.is_active')</th>
-                                <th></th>
+                                <!--<th></th>-->
                                 <th></th>
                             </tr>
                         </thead>

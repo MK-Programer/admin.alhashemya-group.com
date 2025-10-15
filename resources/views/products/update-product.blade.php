@@ -8,9 +8,9 @@
 @slot('title') @lang('translation.update_product') @endslot
 @endcomponent
 
-<form method="post" enctype="multipart/form-data" action="{{ route('saveUpdatedProduct') }}" >
+<form method="post" enctype="multipart/form-data" action="{{ route('saveUpdatedProduct') }}" id="update_product">
     @csrf
-    <input type="hidden" id="product_id" name="product_id" value="{{ $product->product_id }}">
+    <input type="hidden" id="product_id" name="product_id" value="{{ $productId }}">
 
     <div class="row">
             <div class="col-12">
@@ -164,7 +164,7 @@
         <div class="card">
             <div class="card-body" >
                 <h4 class="card-title mb-4">@lang('translation.applications')</h4>
-                    @foreach ($product->infos as $key=> $item)
+                    {{-- @foreach ($product->infos as $key=> $item)
                         @if($item->type == 'application')
                                     <div data-repeater-item class="row">
                                         <div class="mb-3 col-lg-10">
@@ -177,7 +177,25 @@
                                         </div>
                                     </div>
                         @endif
-                    @endforeach
+                    @endforeach --}}
+
+
+                    @foreach ($product->infos as $key=> $item)
+                    @if($item->type == 'application')
+
+                        <div data-repeater-item class="row">
+                            <div class="mb-3 col-lg-10">
+                                <input type="text" name="old_application_{{ $key }}" value="{{ $item->info }}" placeholder="@lang('translation.enter_application')" class="form-control" />
+                            </div>
+                            <div class="col-lg-2">
+                                <div class="d-grid">
+                                    <input data-repeater-delete type="button" class="btn btn-primary" value="@lang('translation.delete')" />
+                                </div>
+                            </div>
+                        </div>
+                    @endif
+                @endforeach
+
 
             <div id="applicationsRepeater">
                 <div data-repeater-list="applications">

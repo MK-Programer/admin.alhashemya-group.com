@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Lang;
 use Illuminate\Validation\ValidationException;
 use App\Classes\Image;
-
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Log;
 use Exception;
 use DB;
@@ -43,14 +43,13 @@ class MissionsAndVisionsController extends Controller
         }
     }
 
-    public function getPaginatedMissionsAndVisionsData(Request $request)
-    {
+    public function getPaginatedMissionsAndVisionsData(Request $request){
         try {
             // Get DataTables parameters
             $draw = $request->input('draw');
             $start = $request->input('start', 0);
             $length = $request->input('length', 10);
-            $searchValue = $request->input('search.value'); // Search value from DataTables
+            $searchValue = $request->input('search_value'); // Search value from DataTables
 
             // Base query
             $query = DB::table($this->missionsAndVisionsMetaData->table_name . ' as m')
@@ -85,7 +84,11 @@ class MissionsAndVisionsController extends Controller
                 ->offset($start)
                 ->limit($length)
                 ->orderBy('m.sequence', 'ASC')
-                ->get();
+                ->get()
+                ->map(function ($item) {
+                    $item->encrypted_id = Crypt::encrypt($item->id);
+                    return $item;
+                });
 
             return response()->json([
                 'draw' => $draw,
@@ -98,14 +101,14 @@ class MissionsAndVisionsController extends Controller
             $msg = $e->getMessage();
 
             Log::error("Error | Controller: MissionsAndVisionsController | Function: getPaginatedMissionsAndVisionsData | Code: " . $code . " | Message: " . $msg);
-
+            return response()->json(['message' => $msg], $code);
         }
     }
 
     public function showRUMissionAndVision($missionVisionId, $action){
         try{
 
-            $missionVisionIds = explode(' - ', $missionVisionId);
+            $missionVisionIds = explode(' - ', Crypt::decrypt($missionVisionId));
             $missionId = $missionVisionIds[0];
             $visionId = $missionVisionIds[1];
 
@@ -114,12 +117,14 @@ class MissionsAndVisionsController extends Controller
                         ->where('setting_id', $this->settingId)
                         ->where('id', $missionId)
                         ->first();
+            $mission->encrypted_id = Crypt::encrypt($missionId);
 
             $vision = DB::table($this->missionsAndVisionsMetaData->table_name)
                         ->where('company_id', $this->authUser->company_id)
                         ->where('setting_id', $this->settingId)
                         ->where('id', $visionId)
                         ->first();
+            $vision->encrypted_id = Crypt::encrypt($visionId);
 
             $view = 'missions-and-visions.';
             if($action == 'update'){
@@ -156,14 +161,14 @@ class MissionsAndVisionsController extends Controller
 
             $request->validate([
                 'mission_picture' => ['required', 'image', 'mimes:jpg,jpeg,png', 'max:5120'],
-                'mission_title_en' => ['required', 'string', 'max:255'],
-                'mission_title_ar' => ['required', 'string', 'max:255'],
+                'mission_title_en' => ['nullable', 'string', 'max:255'],
+                'mission_title_ar' => ['nullable', 'string', 'max:255'],
                 'mission_description_en' => ['required', 'string', 'max:1000'],
                 'mission_description_ar' => ['required', 'string', 'max:1000'],
 
                 'vision_picture' => ['required', 'image', 'mimes:jpg,jpeg,png', 'max:5120'],
-                'vision_title_en' => ['required', 'string', 'max:255'],
-                'vision_title_ar' => ['required', 'string', 'max:255'],
+                'vision_title_en' => ['nullable', 'string', 'max:255'],
+                'vision_title_ar' => ['nullable', 'string', 'max:255'],
                 'vision_description_en' => ['required', 'string', 'max:1000'],
                 'vision_description_ar' => ['required', 'string', 'max:1000'],
             ]);
@@ -230,31 +235,30 @@ class MissionsAndVisionsController extends Controller
             $msg = $e->getMessage();
 
             Log::error("Error | Controller: MissionsAndVisionsController | Function: saveCreatedMissionAndVision | Code: ".$code." | Message: ".$msg);
-
+            return response()->json(['message' => $msg], $code);
         }
     }
 
     public function saveUpdatedMissionAndVision(Request $request){
         try{
             DB::beginTransaction();
-
             $request->validate([
                 'mission_picture' => ['nullable', 'image', 'mimes:jpg,jpeg,png', 'max:5120'],
-                'mission_title_en' => ['required', 'string', 'max:255'],
-                'mission_title_ar' => ['required', 'string', 'max:255'],
+                'mission_title_en' => ['nullable', 'string', 'max:255'],
+                'mission_title_ar' => ['nullable', 'string', 'max:255'],
                 'mission_description_en' => ['required', 'string', 'max:1000'],
                 'mission_description_ar' => ['required', 'string', 'max:1000'],
 
                 'vision_picture' => ['nullable', 'image', 'mimes:jpg,jpeg,png', 'max:5120'],
-                'vision_title_en' => ['required', 'string', 'max:255'],
-                'vision_title_ar' => ['required', 'string', 'max:255'],
+                'vision_title_en' => ['nullable', 'string', 'max:255'],
+                'vision_title_ar' => ['nullable', 'string', 'max:255'],
                 'vision_description_en' => ['required', 'string', 'max:1000'],
                 'vision_description_ar' => ['required', 'string', 'max:1000'],
 
                 'is_active' => ['required', 'integer'],
             ]);
 
-            $missionId = $request->get('mission_id');
+            $missionId = Crypt::decrypt($request->get('mission_id'));
             $mission = [
                 'company_id' => $this->authUser->company_id,
                 'setting_id' => $this->settingId,
@@ -280,7 +284,7 @@ class MissionsAndVisionsController extends Controller
                                 ->where('id', $missionId)
                                 ->update($mission); 
 
-            $visionId = $request->get('vision_id');
+            $visionId = Crypt::decrypt($request->get('vision_id'));
             $vision = [
                 'company_id' => $this->authUser->company_id,
                 'setting_id' => $this->settingId,
@@ -334,7 +338,7 @@ class MissionsAndVisionsController extends Controller
             $msg = $e->getMessage();
 
             Log::error("Error | Controller: MissionsAndVisionsController | Function: saveUpdatedMissionAndVision | Code: ".$code." | Message: ".$msg);
-
+            return response()->json(['message' => $msg], $code);
         }
     }
     

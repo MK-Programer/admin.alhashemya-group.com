@@ -40,8 +40,6 @@
                                 <th>@lang('translation.picture')</th>
                                 <th>@lang('translation.title_en')</th>
                                 <th>@lang('translation.title_ar')</th>
-                                <th>@lang('translation.description_en')</th>
-                                <th>@lang('translation.description_ar')</th>
                                 <th>@lang('translation.sequence')</th>
                                 <th>@lang('translation.is_active')</th>
                                 <th></th>

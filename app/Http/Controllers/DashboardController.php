@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
-use DB;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
 
 class DashBoardController extends Controller
 {
@@ -17,22 +18,25 @@ class DashBoardController extends Controller
 
     public function root(){
         try{
-            $authUser = Auth::user();
-            $messages = DB::table('messages')
-                            ->select(
-                                DB::raw('COUNT(*) as total_messages'),
-                                DB::raw('COUNT(CASE WHEN is_checked = 0 THEN 1 END) as new_messages')
-                            )
-                            ->where('company_id', $authUser->companyId)
-                            ->first();
-            $messagesCount = $messages->total_messages;
-            $newMessages = $messages->new_messages;
+
+            $user_company_id = Auth::user()->company_id;
+
+            // return $user_company_id;
+
+            $messagesCount = DB::table('messages')->where('company_id', $user_company_id )->count();
+            $newMessages = DB::table('messages')->where('company_id', $user_company_id )->where('is_checked',0)->count();
+
+
+            // $messagesCount = $messages->total_messages;
+            // $newMessages = $messages->new_messages;
 
 
             return view('index', compact('messagesCount', 'newMessages'));
         }catch(Exception $e){
             $code = $e->getCode();
             $msg = $e->getMessage();
+
+            return $msg;
 
             Log::error("Error | Controller: DashBoardController | Function: root | Code: ".$code." | Message: ".$msg);
 

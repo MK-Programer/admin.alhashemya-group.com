@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Lang;
 use Illuminate\Validation\ValidationException;
 use App\Classes\Image;
-
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Log;
 use Exception;
 use DB;
@@ -58,8 +58,7 @@ class PartnersOrClientsController extends Controller
         }
     }
 
-    public function getPaginatedPartnersOrClientsData(Request $request)
-    {
+    public function getPaginatedPartnersOrClientsData(Request $request){
         try {
             $assetUrl = asset('');
 
@@ -67,7 +66,7 @@ class PartnersOrClientsController extends Controller
             $draw = $request->input('draw');
             $start = $request->input('start', 0);
             $length = $request->input('length', 10);
-            $searchValue = $request->input('search.value'); // Search value from DataTables
+            $searchValue = $request->input('search_value'); // Search value from DataTables
             $type = $request->input('type');
             $this->initSettings($type);
 
@@ -95,7 +94,11 @@ class PartnersOrClientsController extends Controller
                 ->offset($start)
                 ->limit($length)
                 ->orderBy('sequence', 'ASC')
-                ->get();
+                ->get()
+                ->map(function ($item) {
+                    $item->encrypted_id = Crypt::encrypt($item->id);
+                    return $item;
+                });
 
             return response()->json([
                 'draw' => $draw,
@@ -109,7 +112,7 @@ class PartnersOrClientsController extends Controller
             $msg = $e->getMessage();
 
             Log::error("Error | Controller: PartnersOrClientsController | Function: getPaginatedPartnersOrClientsData | Code: ".$code." | Message: ".$msg);
-
+            return response()->json(['message' => $msg], $code);
         }
     }
 
@@ -188,7 +191,7 @@ class PartnersOrClientsController extends Controller
             $msg = $e->getMessage();
 
             Log::error("Error | Controller: PartnersOrClientsController | Function: saveCreatedPartnerOrClient | Code: ".$code." | Message: ".$msg);
-
+            return response()->json(['message' => $msg], $code);
         }
     }
 
@@ -198,10 +201,10 @@ class PartnersOrClientsController extends Controller
             $partnerOrClient = DB::table($this->partnersOrClientsMetaData->table_name)
                         ->where('company_id', $this->authUser->company_id)
                         ->where('setting_id', $this->settingId)
-                        ->where('id', $partnerOrClientid)
+                        ->where('id', Crypt::decrypt($partnerOrClientid))
                         ->first();
 
-            return view('partners-or-clients.update-partner-or-client', compact('partnerOrClient', 'type'));
+            return view('partners-or-clients.update-partner-or-client', compact('partnerOrClient', 'type', 'partnerOrClientid'));
         }catch(Exception $e){
             $code = $e->getCode();
             $msg = $e->getMessage();
@@ -224,9 +227,9 @@ class PartnersOrClientsController extends Controller
             ]);
 
             $type = $request->get('type');
+            
             $this->initSettings($type);
-
-            $partnerOrClientId = $request->get('id');
+            $partnerOrClientId = Crypt::decrypt($request->get('id'));
             $partnerOrClient = [
                 'company_id' => $this->authUser->company_id,
                 'setting_id' => $this->settingId,
@@ -243,7 +246,8 @@ class PartnersOrClientsController extends Controller
                 $dbPicture = $request->get('db_picture');
                 Image::unlinkPicture($dbPicture);
                 
-                $pictureName = Image::savePictureInStorage($picture, $this->imagePath);
+                $pictureName = Image::savePictureInStorage($newPicture, $this->imagePath);
+                
                 $partnerOrClient['picture'] = $this->imagePath.$pictureName;
             } 
 
@@ -286,7 +290,7 @@ class PartnersOrClientsController extends Controller
             $msg = $e->getMessage();
 
             Log::error("Error | Controller: ServicesController | Function: saveUpdatedService | Code: ".$code." | Message: ".$msg);
-
+            return response()->json(['message' => $msg], $code);
         }
     }
 }

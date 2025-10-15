@@ -16,7 +16,7 @@
             <div class="card-body">
                 <form class="form-horizontal" enctype="multipart/form-data" id="update_home">
                     @csrf
-                    <input type="hidden" id="home_id" name="home_id" value="{{ $home->id }}">
+                    <input type="hidden" id="home_id" name="home_id" value="{{ $homeId }}">
 
                     <div class="mb-3">
                         <div class="text-start mt-2">

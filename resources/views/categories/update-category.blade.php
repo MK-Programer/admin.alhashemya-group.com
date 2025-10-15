@@ -16,7 +16,7 @@
             <div class="card-body">
                 <form class="form-horizontal" enctype="multipart/form-data" id="update_category">
                     @csrf
-                    <input type="hidden" id="category_id" name="category_id" value="{{ $category->id }}">
+                    <input type="hidden" id="category_id" name="category_id" value="{{ $categoryId }}">
 
 
                     <div class="mb-3">

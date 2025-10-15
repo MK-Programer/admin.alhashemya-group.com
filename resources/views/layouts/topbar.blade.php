@@ -1,32 +1,33 @@
 @php
-    use App\Http\Controllers\UsersController;
+    use App\Classes\User;
     $authUser = Auth::user();
-    $usersController = new UsersController;
-    $userCompanies = $usersController->getUserCompanies();
+    $user = new User;
+    $userCompanies = $user->getUserCompanies();
 @endphp
 
+<style>
+    /* Hide the element on screens smaller than 576px */
+    @media (max-width: 576px) {
+        .hide-on-mobile {
+            display: none;
+        }
+    }    
+</style>
 <header id="page-topbar">
     <div class="navbar-header">
         <div class="d-flex">
             <!-- LOGO -->
             <div class="navbar-brand-box">
-                <a href="{{ route('dashboard') }}" class="logo logo-dark">
+
+                <a href="{{ route('dashboard') }}" class="logo">
                     <span class="logo-sm">
-                        <img src="{{ asset('build/images/logo.svg') }}" alt="" height="22">
+                        <img src="{{ asset($authUser->company->logo) }}" alt="" height="50" width="50">
                     </span>
                     <span class="logo-lg">
-                        <img src="{{ asset('build/images/logo-dark.png') }}" alt="" height="17">
+                        <img src="{{ asset($authUser->company->logo) }}" alt="" height="70" width="70">
                     </span>
                 </a>
 
-                <a href="{{ route('dashboard') }}" class="logo logo-light">
-                    <span class="logo-sm">
-                        <img src="{{ asset('build/images/logo-light.svg') }}" alt="" height="22">
-                    </span>
-                    <span class="logo-lg">
-                        <img src="{{ asset('build/images/logo-light.png') }}" alt="" height="19">
-                    </span>
-                </a>
             </div>
 
             <button type="button" class="btn btn-sm px-3 font-size-16 header-item waves-effect" id="vertical-menu-btn">
@@ -38,7 +39,7 @@
                     data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 
                     <img src="{{ asset ($authUser->company->logo) }}" alt="company-logo" class="me-1" height="50" width="50">
-                        <span class="align-middle">
+                        <span class="align-middle hide-on-mobile">
                             @switch(app()->getLocale())
                                 @case('en')
                                     {{ $authUser->company->name_en }}
@@ -126,6 +127,5 @@
             </button>
         </div>
     </div>
-</div>
 </header>
 

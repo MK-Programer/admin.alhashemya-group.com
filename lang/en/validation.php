@@ -171,7 +171,15 @@ return [
         'vision_title_ar' => 'Vision Title In Arabic',
         'vision_description_en' => 'Vision Description In English',
         'vision_description_ar' => 'Vision Description In Arabic',
-        
+
+        'name_en' => 'Name In English',
+        'name_ar' => 'Name In Arabic',
+
+        'password' => 'Password',
+
+        'groups' => 'Groups',
+        'role' => 'Role' ,
+        'menu' => 'Menu',
     ],
 
 ];

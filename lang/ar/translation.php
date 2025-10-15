@@ -4,19 +4,16 @@ return [
     'menu' => 'القائمة',
     'welcome_back' => 'مرحبا بك',
     'signin_to_continue' => 'قم بالتسجيل للدخول إلي',
-
     'alhashemya_group' => 'مجموعة الهاشمية',
     'login' => 'تسجيل دخول',
     'loading' => 'تحميل...',
     'profile' => 'الحساب الشخصي',
     'logout' => 'تسجيل خروج',
     'dashboard' => 'لوحة القيادة',
-    
     'english' => 'الإنجليزية',
     'arabic' => 'العربية',
-    
     'back_to_dashboard' => 'العودة إلي لوحة القيادة',
-    'name' => 'اسم',
+    'name' => 'الاسم',
     'enter_name' => 'أدخل الاسم',
     'email' => 'البريد الإلكتروني',
     'enter_email' => 'أدخل البريد الألكتروني',
@@ -36,6 +33,15 @@ return [
     'password_not_updated' => 'حدث خطأ أثناء تحديث كلمة السر، حاول مرة أخرى لاحقاً...',
     'services' => 'الخدمات',
     'create_new_service' => 'إنشاء خدمة جديدة',
+    'create_new_company' => 'إنشاء شركة جديدة',
+
+    'fb_link' => 'الفيس بوك' ,
+    'other_link' => 'رابط أخر',
+    'phone' => "رقم الموبيل",
+    'enter_phone_number' => 'أدخل رقم الموبيل' ,
+    'enter_fb_link' => 'أدخل رابط الفيس بوك' ,
+    'enter_other_link' => 'أدخل رابط أخر',
+
     'id' => 'الكود',
     'picture' => 'الصورة',
     'title_en' => 'العنوان بالإنجليزية',
@@ -55,7 +61,6 @@ return [
     'choose_picture' => 'أختر صورة',
     'create' => 'إنشاء',
     'update_service' => 'تعديل خدمة',
-
     'service_created' => 'تم إنشاء الخدمة بنجاح',
     'service_not_created' => 'حدث خطأ أثناء إنشاء الخدمة، حاول مرة أخرى لاحقًا...',
     'service_deleted' => 'تم حذف الخدمة بنجاح',
@@ -63,26 +68,32 @@ return [
     'service_updated' => 'تم تحديث الخدمة بنجاح',
     'service_not_updated' => 'حدث خطأ أثناء تحديث الخدمة، يرجى المحاولة مرة أخرى لاحقًا...',
 
+    'enter_phone' => 'أدخل رقم الموبيل' ,
+    'company' => 'الشركة',
+    'update_company' => 'تعديل شركة',
+    'company_created' => 'تم إنشاء الشركة بنجاح',
+    'company_not_created' => 'حدث خطأ أثناء إنشاء الشركة، حاول مرة أخرى لاحقًا...',
+    'company_deleted' => 'تم حذف الشركة بنجاح',
+    'company_not_deleted' => 'حدث خطأ أثناء حذف الشركة، حاول مرة أخرى لاحقًا...',
+    'company_updated' => 'تم تحديث الشركة بنجاح',
+    'company_not_updated' => 'حدث خطأ أثناء تحديث الشركة، يرجى المحاولة مرة أخرى لاحقًا...',
+
+
+
     'companies' => 'الشركات',
     'company_id_updated' => 'تم تحديث معرف الشركة',
     'company_id_not_updated' => 'خطأ أثناء تحديث معرف الشركة، حاول مرة أخرى لاحقًا...',
-
     'settings' => 'الأعدادات',
     'choose_theme' => 'اختر المظهر',
     'light_theme' => 'المظهر الفاتح',
     'dark_theme' => 'المظهر الداكن',
-
-    
     'mission' => 'المهمة',
     'vision' => 'الرؤية',
-
     'additional_data' => 'بيانات إضافية',
-
     'missions_and_visions' => 'المهمات و الرؤي',
     'create_new_mission_and_vision' => 'إنشاء مهمة و رؤية جديدة',
     'mission_and_vision_details' => 'تفاصيل مهمة و رؤية',
     'update_mission_and_vision' => 'تعديل مهمة و رؤية',
-
     'mission_picture' => 'صورة المهمة',
     'mission_title_en' => 'عنوان المهمة بالإنجليزية',
     'mission_title_ar' => 'عنوان المهمة بالعربية',
@@ -95,26 +106,185 @@ return [
     'vision_description_en' => 'وصف الرؤية بالإنجليزية',
     'vision_description_ar' => 'وصف الرؤية بالعربية',
 
-    
-    'enter_mission_title_en' => 'أدخل عنوان المهمة بالإنجليزية',
-    'enter_mission_title_ar' => 'أدخل عنوان المهمة بالعربية',
-    'enter_mission_description_en' => 'أدخل وصف المهمة بالإنجليزية',
-    'enter_mission_description_ar' => 'أدخل وصف المهمة بالعربية',
-
-    'enter_vision_title_en' => 'أدخل عنوان الرؤية بالإنجليزية',
-    'enter_vision_title_ar' => 'أدخل عنوان الرؤية بالعربية',
-    'enter_vision_description_en' => 'أدخل وصف الرؤية بالإنجليزية',
-    'enter_vision_description_ar' => 'أدخل وصف الرؤية بالعربية',
-
     'mission_and_vision_created' => 'تم إنشاء المهمة والرؤية بنجاح',
     'mission_and_vision_not_created' => 'حدث خطأ أثناء إنشاء المهمة والرؤية، يرجى المحاولة مرة أخرى لاحقًا...',
-
+    'mission_and_vision_updated' => 'تم تحديث الرؤية والرسالة',
+    'mission_and_vision_not_updated' => 'حدث خطأ أثناء تحديث الرؤية والرسالة، حاول مرة أخرى لاحقاً...',
+    'messages' => 'الرسائل',
+    'message' => 'الرسالة',
+    'sender_details' => 'بيانات الراسل',
+    'product_details' => 'بيانات المنتج',
+    'product_id' => 'كود المنتج',
+    'sender_name' => 'اسم الراسل',
+    'sender_email' => 'البريد الإلكتروني للراسل',
+    'phone_number' => 'رقم الهاتف',
+    'subject' => 'الموضوع',
+    'body' => 'المحتوي',
+    'is_reviewed' => 'تمت مراجعتها ؟',
+    'messages_status_changed' => 'تم تغيير حالة الرسائل',
+    'messages_status_not_changed' => 'حدث خطأ أثناء تحديث الرسائل، يرجى المحاولة مرة أخرى لاحقاً...',
+    'change_to_reviewed' => 'تحويل إلي تمت المراجعة',
+    'message_details' => 'بيانات رسالة',
     'details' => 'تفاصيل',
-
+    'product_name_en' => 'اسم المنتج بالإنجليزية',
+    'product_name_ar' => 'اسم المنتج بالعربية',
+    'partners' => 'الشركاء',
+    'partner' => 'الشريك',
+    'create_new_partner' => 'إنشاء شريك جديد',
+    'partner_name_en' => 'اسم الشريك بالإنجليزية',
+    'enter_partner_name_en' => 'ادخل اسم الشريك بالإنجليزية',
+    'partner_name_ar' => 'اسم الشريك بالعربية',
+    'enter_partner_name_ar' => 'ادخل اسم الشريك بالعربية',
+    'clients' => 'العملاء',
+    'client' => 'العميل',
+    'create_new_client' => 'إنشاء عميل جديد',
+    'name_en' => 'الاسم بالإنجليزية',
+    'enter_name_en' => 'ادخل الاسم بالإنجليزية',
+    'name_ar' => 'الاسم بالعربية',
+    'enter_name_ar' => 'ادخل الاسم بالعربية',
+    'partner_created' => 'تم إنشاء الشريك بنجاح',
+    'partner_not_created' => 'حدث خطأ أثناء إنشاء الشريك، حاول مرة أخرى لاحقًا...',
+    'client_created' => 'تم إنشاء العميل بنجاح',
+    'client_not_created' => 'حدث خطأ أثناء إنشاء العميل، حاول مرة أخرى لاحقًا...',
+    'update_partner' => 'تحديث الشريك',
+    'update_client' => 'تحديث العميل',
+    'partner_updated' => 'تم تحديث الشريك بنجاح',
+    'partner_not_updated' => 'حدث خطأ أثناء تحديث الشريك، حاول مرة أخرى لاحقًا...',
+    'client_updated' => 'تم تحديث العميل بنجاح',
+    'client_not_updated' => 'حدث خطأ أثناء تحديث العميل، حاول مرة أخرى لاحقًا...',
 
     'error' => 'خطأ',
     'ok' => 'تم',
     'error_400' => 'طلب غير صالح: لم يتمكن الخادم من فهم الطلب بسبب صيغة غير صالحة',
     'error_404' => 'عذرا، لم يتم العثور على الصفحة',
     'error_500' => 'خطأ داخلي في الخادم، يرجى الاتصال بالمسؤول',
+
+    'home' => 'الصفحة الرئيسية',
+    'create_new_home' => 'إنشاء صفحة رئيسية جديدة',
+
+    'home_created' => 'تم إنشاء الصفحة الرئيسية بنجاح',
+    'home_not_created' => 'حدث خطأ أثناء إنشاء الصفحة الرئيسية، حاول مرة أخرى لاحقًا...',
+    'home_deleted' => 'تم حذف الصفحة الرئيسية بنجاح',
+    'home_not_deleted' => 'حدث خطأ أثناء حذف الصفحة الرئيسية، حاول مرة أخرى لاحقًا...',
+    'home_updated' => 'تم تحديث الصفحة الرئيسية بنجاح',
+    'home_not_updated' => 'حدث خطأ أثناء تحديث الصفحة الرئيسية، يرجى المحاولة مرة أخرى لاحقًا...',
+    'home' => 'الصفحة الرئيسية',
+    'create_new_home' => 'إنشاء صفحة رئيسية جديدة',
+    'update_home' => 'تعديل صفحة الرئيسية',
+
+    'about_us_created' => 'تم إنشاء معلومات عنا بنجاح',
+    'about_us_not_created' => 'حدث خطأ أثناء إنشاء معلومات عنا، حاول مرة أخرى لاحقًا...',
+    'about_us_deleted' => 'تم حذف معلومات عنا بنجاح',
+    'about_us_not_deleted' => 'حدث خطأ أثناء حذف معلومات عنا، حاول مرة أخرى لاحقًا...',
+    'about_us_updated' => 'تم تحديث معلومات عنا بنجاح',
+    'about_us_not_updated' => 'حدث خطأ أثناء تحديث معلومات عنا، يرجى المحاولة مرة أخرى لاحقًا...',
+    'update_about_us' => 'تعديل معلومات عنا',
+    'about_us' => 'عنا',
+    'create_new_about_us' => 'إنشاء صفحة معلومات عنا جديدة',
+
+    'product_created' => 'تم إنشاء المنتج بنجاح',
+    'product_not_created' => 'حدث خطأ أثناء إنشاء المنتج، حاول مرة أخرى لاحقًا...',
+    'product_deleted' => 'تم حذف المنتج بنجاح',
+    'product_not_deleted' => 'حدث خطأ أثناء حذف المنتج، حاول مرة أخرى لاحقًا...',
+    'product_updated' => 'تم تحديث المنتج بنجاح',
+    'product_not_updated' => 'حدث خطأ أثناء تحديث المنتج، يرجى المحاولة مرة أخرى لاحقًا...',
+
+    'product_id_updated' => 'تم تحديث المنتج',
+    'product_id_not_updated' => 'خطأ أثناء تحديث المنتج، حاول مرة أخرى لاحقًا...',
+    'update_product' => 'تحديث المنتج',
+    'product_category' => 'التصنيف',
+    'product_code' => 'كود المنتج',
+    'enter_product_code' => 'أدخل كود المنتج',
+
+    "products" => "المنتجات",
+    'product' => ' المنتج',
+    'create_new_product' => 'إنشاء منتج جديد',
+
+    'model' => 'النوع',
+    'voltage' => 'الفولت',
+    'capacity' => 'القدرة',
+    'length' => 'الطول',
+    'width' => 'العرض',
+    'height' => 'الارتفاع',
+    'total_height' => ' الطول الكلي',
+    'gross_weight' => 'العرض الكلي ',
+
+    'enter_model' => 'أدخل النوع',
+    'enter_voltage' => 'أدخل الفولت',
+    'enter_capacity' => 'أدخل القدرة',
+    'enter_length' => 'أدخل الطول',
+    'enter_width' => 'أدخل العرض',
+    'enter_height' => 'أدخل الارتفاع',
+    'enter_total_height' => 'أدخل الطول الكلي',
+    'enter_gross_weight' => 'أدخل العرض الكلي',
+
+    'applications' => 'التطبيقات العمليه',
+    'features_and_benefits' => 'المميزات والفوائد',
+    'enter_application' => 'أدخل تطبيق عملي',
+    'enter_features_and_benefits' => 'أدخل ميزه او فائده',
+
+
+
+    'category_created' => 'تم إنشاء القسم بنجاح',
+    'category_not_created' => 'حدث خطأ أثناء إنشاء القسم، حاول مرة أخرى لاحقًا...',
+    'category_deleted' => 'تم حذف القسم بنجاح',
+    'category_not_deleted' => 'حدث خطأ أثناء حذف القسم، حاول مرة أخرى لاحقًا...',
+    'category_updated' => 'تم تحديث القسم بنجاح',
+    'category_not_updated' => 'حدث خطأ أثناء تحديث القسم، يرجى المحاولة مرة أخرى لاحقًا...',
+    'update_category' => 'تعديل قسم',
+    'enter_category' => 'أختر تصنيف',
+
+    'categories' => 'الأقسام',
+    'create_new_category' => 'إنشاء قسم جديد',
+
+    'add' => 'أضافة',
+    'at_company' => 'في شركة',
+    'view' => 'عرض',
+    'new_messages' => 'رسائل جديدة',
+    'all_messages' => 'كل الرسائل',
+
+    
+    'groups' => 'المجموعات',
+    'group' => 'مجموعة',
+    'update_group' => 'تعديل مجموعة',
+
+    'create_new_group' => 'إنشاء مجموعة جديدة',
+
+    'group_updated' => 'تم تحديث المجموعة بنجاح',
+    'group_not_updated' => 'حدث خطأ أثناء تحديث المجموعة، يرجى المحاولة مرة أخرى لاحقًا...',
+
+    'group_created' => 'تم إنشاء المجموعة بنجاح',
+    'group_not_created' => 'حدث خطأ أثناء إنشاء المجموعة، حاول مرة أخرى لاحقًا...',
+
+    'users' => 'المستخدمين',
+
+    'role' => 'الدور',
+
+    'create_new_user' => 'إنشاء مستخدم جديد',
+
+    'password' => 'كلمة السر',
+
+    'user_created' => 'تم إنشاء المستخدم بنجاح',
+    'user_not_created' => 'حدث خطأ أثناء إنشاء المستخدم، حاول مرة أخرى لاحقاً...',
+
+    'user_updated' => 'تم تحديث المستخدم بنجاح',
+    'user_not_updated' => 'حدث خطأ أثناء تحديث المستخدم، حاول مرة أخرى لاحقاً...',
+
+    'role' => 'الدور',
+    'enter_role' => 'أدخل الدور',
+    'enter_group' => 'أدخل المجموعة',
+
+    'user_details' => 'بيانات مستخدم',
+
+    
+    'user' => 'مستخدم',
+    'update_user' => 'تعديل مستخدم',
+
+    
+    'from' => 'من',
+    'to' => 'إلي',
+    'all' => 'الكل',
+    'filter' => 'تصفية',
+    'reset' => 'إعادة تعيين'
+    
 ];

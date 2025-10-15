@@ -67,7 +67,8 @@ $('#update_user_profile').on('submit', function(event) {
                 
                 setDanger(errorsList);
             } else {
-                setDanger(error);
+                console.log(xhr);
+                setDanger(error500);
             }
             enableButtons();
         }
@@ -121,7 +122,7 @@ $('#update_user_password').on('submit', function(event) {
                 setDanger(errorsList);
             } else {
                 console.log(xhr);
-                setDanger(error);
+                setDanger(error500);
             }
             enableButtons();
         }
